@@ -23,6 +23,14 @@ The engine follow these stages:
 
 ## Use case proposals:
 
+### Base use case
+
+Say: "turn on the lights"
+Output: "I turned on the lights"
+
+Say: "turn off the lights"
+Output: "I turned off the lights"
+
 ### Robobutler
 
 TODO: control a robot, do stuff like: "bring me the yellow box"
