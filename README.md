@@ -25,10 +25,10 @@ The engine follow these stages:
 
 ### Base use case
 
-Say: "turn on the lights"
+Say: "turn on the lights"<br/>
 Output: "I turned on the lights"
 
-Say: "turn off the lights"
+Say: "turn off the lights"<br/>
 Output: "I turned off the lights"
 
 ### Robobutler
