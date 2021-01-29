@@ -31,9 +31,7 @@ Output: "I turned on the lights"
 Say: "turn off the lights"<br/>
 Output: "I turned off the lights"
 
-### Robobutler
-
-TODO: control a robot, do stuff like: "bring me the yellow box"
+### [Robobutler](Robobutler.md)
 
 ### Pac-Scream
 
