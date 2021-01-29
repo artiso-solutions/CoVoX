@@ -47,8 +47,6 @@ TODO: browser game<br/>
 TODO: Flutter app, using video stream<br/>
 [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
 
-### Voice-Unlock
 
-TODO: only the owner can open its lock<br/>
-[Speaker Recognition](https://azure.microsoft.com/en-us/services/cognitive-services/speaker-recognition/)
+### [Voice-Unlock](Voice-Unlock.md)
 
