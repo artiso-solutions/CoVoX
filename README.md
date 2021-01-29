@@ -42,11 +42,7 @@ TODO: browser game
 TODO: browser game<br/>
 [Face](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
 
-### Find-It
-
-TODO: Flutter app, using video stream<br/>
-[Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
-
+### [Find-It](Find-It.md)
 
 ### [Voice-Unlock](Voice-Unlock.md)
 
