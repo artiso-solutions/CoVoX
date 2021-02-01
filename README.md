@@ -1,6 +1,24 @@
 # CoVoX
 
-A plug-in enabled framework for voice-activated commands.
+Covox allows the interaction with an application through voice
+
+Covox must be used inside an application and configured with eligible commands, containing a list of sentences used as voice triggers.
+Covox is able to take an audio feed and detect an available command in it.
+
+Taking a simple usecase (light switch application): the client application must use Covox and configure it with a set of commands (i.e. switch on the light, switch off the light). Each of the commands will have a unique identifier and a set of voice triggers.  
+
+| Identifier   |      Voice Triggers
+|----------|:-------------:
+| TURN_ON_COMMAND |  switch on the light, turn on light ...
+| TURN_OFF_COMMAND |    switch off the light, turn off light ...
+
+<br>
+The application starts the Covox engine audio recognition that listens for voice triggers. 
+When Covox detects that a voice trigger matches one of the given commands voice trigger [i.e. switch on the light], it returns the corresponding command (i.e. TURN_ON_COMMAND) to the client application.
+
+Then the application will perform the action matching with the recognized command.
+
+![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CovoxDrawDraw.png)
 
 ## Overview
 
