@@ -21,28 +21,59 @@ The engine follow these stages:
 
 4) **executing:** invokes the command using the use case's logic
 
-## Use case proposals:
+## Use case proposals
 
-### Base use case
+<details>
+  <summary><b>Base use case</b></summary>
 
-Say: "turn on the lights"<br/>
-Output: "I turned on the lights"
+Basic showcase of the engine and commands invocation.
 
-Say: "turn off the lights"<br/>
-Output: "I turned off the lights"
+**Commands:**
+- turn on the lights<br/>
+  output: "I turned on the lights"
+- turn off the lights<br/>
+  output: "I turned off the lights"
 
-### [Robobutler](Robobutler.md)
+**Technologies**
+- CoVoX engine
 
-### Pac-Scream
+<hr/>
 
-TODO: browser game
+</details>
 
-### Guess-Who
+**[Robobutler](Robobutler.md)**
+
+**[Pac-Scream](docs/use-cases/pac-scream.md)**
+
+<details>
+  <summary><b>Pac-Scream</b></summary>
+
+Pac-Scream is a variant on the popular game Pac-Man in which movements are defined via voice commands instead of keys press.
+
+**Commands:**
+- left / move left
+- right / move right
+- up / move up
+- down / move down
+- *(proposal)* stop / cancel / no<br/>
+  *to cancel the previous command*
+
+**Technologies**
+- CoVoX engine
+- ASP.NET Core 5
+- SignalR
+- WebGL
+
+<hr/>
+
+</details>
+
+**Guess-Who**
 
 TODO: browser game<br/>
 [Face](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
 
-### [Find-It](Find-It.md)
+**[Find-It](Find-It.md)**
 
-### [Voice-Unlock](Voice-Unlock.md)
+**[Voice-Unlock](Voice-Unlock.md)**
 
