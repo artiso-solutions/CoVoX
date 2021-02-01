@@ -43,8 +43,6 @@ Basic showcase of the engine and commands invocation.
 
 **[Robobutler](Robobutler.md)**
 
-**[Pac-Scream](docs/use-cases/pac-scream.md)**
-
 <details>
   <summary><b>Pac-Scream</b></summary>
 
