@@ -68,9 +68,29 @@ Pac-Scream is a variant on the popular game Pac-Man, in which movements are defi
 
 </details>
 
-**Guess-Who**
+<details>
+  <summary><b>Guess-Who</b></summary>
 
-TODO: browser game<br/>
+Guess Who is a game for 2 players.  Each player has a "playing field" with different people and a fixed person, which must be guessed by the opponent, by exclusion questions.  
+Via Voice commands you should be able to ask a question, such as, "Does the woman have red hair?" 
+Image recognition should then return the answer yes / no. 
+
+![image](https://cdn-gamesworldau.pressidium.com/wp-content/uploads/2020/05/guess-who-2.jpg)
+
+**Procedure:**
+1. Asking a Question via Voice Command
+2. Recognize and process question
+3. Looking at e.g. Image and detect the answer 
+4. Returning Answer (Yes / No)
+
+**Technologies**
+- CoVoX engine
+- Python / Tensorflow 
+
+<hr/>
+
+</details>
+
 [Face](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
 
 **[Find-It](Find-It.md)**
