@@ -48,7 +48,9 @@ Basic showcase of the engine and commands invocation.
 <details>
   <summary><b>Pac-Scream</b></summary>
 
-Pac-Scream is a variant on the popular game Pac-Man in which movements are defined via voice commands instead of keys press.
+Pac-Scream is a variant on the popular game Pac-Man, in which movements are defined via voice commands instead of keys press.
+
+![image](https://user-images.githubusercontent.com/8939890/106443307-9e549e00-647c-11eb-921f-dd25ed5d0bfb.png)
 
 **Commands:**
 - left / move left
