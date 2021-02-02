@@ -50,6 +50,8 @@ The engine follow these stages:
 
 <details>
   <summary><b>Base use case</b></summary>
+  
+## Overview
 
 Basic showcase of the engine and commands invocation.
 
@@ -148,9 +150,38 @@ Image recognition should then return the answer yes / no.
 
 </details>
 
-**[Find-It](Find-It.md)**
+<details>
+  <summary><b>Find-It</b></summary>
 
-**[Voice-Unlock](Voice-Unlock.md)**
+## Overview 
+Find-it it's a Mobile App that is able to recognize objects in an image, or in a video, from user voice request.
+Given an image or a video, if the user requests to see a particular object, the application will create a box around the object that match the description.
+
+
+## Technologies
+- CoVoX engine
+- [Flutter](https://flutter.dev/?gclid=CjwKCAiAgc-ABhA7EiwAjev-j209M2n1IrpNH86tVHhSkPU5ED2KyUM6Rj8IkBVu2N8kD-fgoxIC_RoCuI4QAvD_BwE&gclsrc=aw.ds)
+- [Azure computer vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
+
+<hr/>
+
+</details>
+
+<details>
+  <summary><b>Voice-Unlock</b></summary>
+
+## Overview 
+Voice-Unlock showcases the voice recognition service from azure. An application will display a locked lock. If the authorized user says "Unlock", the lock should unlock. Instead, if an unauthorized users says "Unlock" the background flashes a few seconds in red.
+
+
+## Technologies
+- CoVoX engine
+- [Speaker Recognition](https://azure.microsoft.com/en-us/services/cognitive-services/speaker-recognition/)
+- VueJS application
+
+<hr/>
+
+</details>
 
 ## Technologies
 The library is developed in .NET 5 and uses the Azure's Cognitive Services.
