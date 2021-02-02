@@ -1,10 +1,9 @@
 # CoVoX 
 ### Cloud enabled library providing a customizable voice-interface for your application or your device
 
-Covox allows the interaction with an application or device through voice.
-
 ![DraftDraw](assets/CoVoXGraph.png)
 
+Covox allows the interaction with an application or device through voice.
 You provide a list of _Commands_, i.e. operations that can be invoked via the voice interface,
 Covox then listens to the audio and when a command matches with the spoken words, it's executed.
 It also has multi-language support!
@@ -28,7 +27,7 @@ When Covox detects that a voice trigger matches one of the given commands voice 
 
 Then the application will perform the action matching with the recognized command.
 
-## Overview
+## The Engine
 
 With the use of cloud cognitive services, this engine enables to convert voice instructions into actions or intents defined by a use case.
 
@@ -112,12 +111,11 @@ Image recognition should then return the answer yes / no.
 **Technologies**
 - CoVoX engine
 - Python / Tensorflow 
+- [Face](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
 
 <hr/>
 
 </details>
-
-[Face](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
 
 **[Find-It](Find-It.md)**
 
