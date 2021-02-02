@@ -53,13 +53,13 @@ The engine follow these stages:
 
 Basic showcase of the engine and commands invocation.
 
-**Commands:**
+## Commands:
 - turn on the lights<br/>
   output: "I turned on the lights"
 - turn off the lights<br/>
   output: "I turned off the lights"
 
-**Technologies**
+## Technologies
 - CoVoX engine
 
 <hr/>
@@ -98,12 +98,14 @@ The desired configuration would be an industrial arm on top of a body with wheel
 
 <details>
   <summary><b>Pac-Scream</b></summary>
+  
+## Overview
 
 Pac-Scream is a variant on the popular game Pac-Man, in which movements are defined via voice commands instead of keys press.
 
 ![image](https://user-images.githubusercontent.com/8939890/106443307-9e549e00-647c-11eb-921f-dd25ed5d0bfb.png)
 
-**Commands:**
+## Commands:
 - left / move left
 - right / move right
 - up / move up
@@ -111,7 +113,7 @@ Pac-Scream is a variant on the popular game Pac-Man, in which movements are defi
 - *(proposal)* stop / cancel / no<br/>
   *to cancel the previous command*
 
-**Technologies**
+## Technologies
 - CoVoX engine
 - ASP.NET Core 5
 - SignalR
@@ -124,19 +126,20 @@ Pac-Scream is a variant on the popular game Pac-Man, in which movements are defi
 <details>
   <summary><b>Guess-Who</b></summary>
 
+## Overview 
 Guess Who is a game for 2 players.  Each player has a "playing field" with different people and a fixed person, which must be guessed by the opponent, by exclusion questions.  
 Via Voice commands you should be able to ask a question, such as, "Does the woman have red hair?" 
 Image recognition should then return the answer yes / no. 
 
 ![image](https://user-images.githubusercontent.com/8939890/106584417-716cbd80-6546-11eb-8fe4-40b047dee3c4.png)
 
-**Procedure:**
+## Procedure:
 1. Asking a Question via Voice Command
 2. Recognize and process question
 3. Looking at e.g. Image and detect the answer 
 4. Returning Answer (Yes / No)
 
-**Technologies**
+## Technologies
 - CoVoX engine
 - Python / Tensorflow 
 - [Face](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
