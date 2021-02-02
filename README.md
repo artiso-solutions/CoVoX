@@ -9,6 +9,8 @@ You provide a list of _Commands_, i.e. operations that can be invoked via the vo
 Covox then listens to the audio and when a command matches with the spoken words, it's executed.
 It also has multi-language support!
 
+![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoX_MLGraph.png)
+
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
 ## Sample
@@ -25,8 +27,6 @@ The application starts the Covox engine audio recognition that listens for voice
 When Covox detects that a voice trigger matches one of the given commands voice trigger [i.e. switch on the light], it returns the corresponding command (i.e. TURN_ON_COMMAND) to the client application.
 
 Then the application will perform the action matching with the recognized command.
-
-![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoX_MLGraph.png)
 
 ## Overview
 
@@ -123,3 +123,18 @@ Image recognition should then return the answer yes / no.
 
 **[Voice-Unlock](Voice-Unlock.md)**
 
+## Technologies
+The library is developed in .NET 5 and uses the Azure's Cognitive Services.
+
+## RoadMap
+#### Fist Release
+- Simple commands
+- No commands-context
+- Multi-language support
+- Dll only
+
+#### Second Release
+- Simple commands
+- No commands-context
+- Multi-language support
+- Dll only
