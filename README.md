@@ -1,9 +1,17 @@
-# CoVoX
+# CoVoX 
+### Cloud enabled library providing a customizable voice-interface for your application or your device
 
-Covox allows the interaction with an application through voice
+Covox allows the interaction with an application or device through voice.
 
-Covox must be used inside an application and configured with eligible commands, containing a list of sentences used as voice triggers.
-Covox is able to take an audio feed and detect an available command in it.
+![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoXGraph.png)
+
+You provide a list of _Commands_, i.e. operations that can be invoked via the voice interface,
+Covox then listens to the audio and when a command matches with the spoken words, it's executed.
+It also has multi-language support!
+
+With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
+
+## Sample
 
 Taking a simple usecase (light switch application): the client application must use Covox and configure it with a set of commands (i.e. switch on the light, switch off the light). Each of the commands will have a unique identifier and a set of voice triggers.  
 
