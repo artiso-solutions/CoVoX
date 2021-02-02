@@ -1,14 +1,14 @@
 # CoVoX 
 ### Cloud enabled library providing a customizable voice-interface for your application or your device
 
-![DraftDraw](assets/CoVoXGraph.png)
+![DraftDraw](assets/CoVoXSimpleGraph.png)
 
 Covox allows the interaction with an application or device through voice.
 You provide a list of _Commands_, i.e. operations that can be invoked via the voice interface,
 Covox then listens to the audio and when a command matches with the spoken words, it's executed.
 It also has multi-language support!
 
-![DraftDraw](assets/CoVoX_MLGraph.png)
+![DraftDraw](assets/CoVoXMultiLanguageGraph.png)
 
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
@@ -18,8 +18,8 @@ Taking a simple usecase (light switch application): the client application must 
 
 | Identifier   |      Voice Triggers
 |----------|:-------------:
-| TURN_ON_COMMAND |  switch on the light, turn on light ...
-| TURN_OFF_COMMAND |    switch off the light, turn off light ...
+| COMMAND_TURN_ON |  Switch on the light, Turn on light ...
+| COMMAND_TURN_OFF |    Switch off the light, Turn off light ...
 
 <br>
 The application starts the Covox engine audio recognition that listens for voice triggers. 
@@ -133,7 +133,7 @@ Guess Who is a game for 2 players.  Each player has a "playing field" with diffe
 Via Voice commands you should be able to ask a question, such as, "Does the woman have red hair?" 
 Image recognition should then return the answer yes / no. 
 
-![image](https://user-images.githubusercontent.com/8939890/106584417-716cbd80-6546-11eb-8fe4-40b047dee3c4.png)
+<img src="https://user-images.githubusercontent.com/8939890/106584417-716cbd80-6546-11eb-8fe4-40b047dee3c4.png" height="250" width="400">
 
 ## Procedure:
 1. Asking a Question via Voice Command
