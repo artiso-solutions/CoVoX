@@ -1,6 +1,32 @@
-# CoVoX
+# CoVoX 
+### Cloud enabled library providing a customizable voice-interface for your application or your device
 
-A plug-in enabled framework for voice-activated commands.
+Covox allows the interaction with an application or device through voice.
+
+![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoXGraph.png)
+
+You provide a list of _Commands_, i.e. operations that can be invoked via the voice interface,
+Covox then listens to the audio and when a command matches with the spoken words, it's executed.
+It also has multi-language support!
+
+![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoX_MLGraph.png)
+
+With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
+
+## Sample
+
+Taking a simple usecase (light switch application): the client application must use Covox and configure it with a set of commands (i.e. switch on the light, switch off the light). Each of the commands will have a unique identifier and a set of voice triggers.  
+
+| Identifier   |      Voice Triggers
+|----------|:-------------:
+| TURN_ON_COMMAND |  switch on the light, turn on light ...
+| TURN_OFF_COMMAND |    switch off the light, turn off light ...
+
+<br>
+The application starts the Covox engine audio recognition that listens for voice triggers. 
+When Covox detects that a voice trigger matches one of the given commands voice trigger [i.e. switch on the light], it returns the corresponding command (i.e. TURN_ON_COMMAND) to the client application.
+
+Then the application will perform the action matching with the recognized command.
 
 ## Overview
 
@@ -97,3 +123,18 @@ Image recognition should then return the answer yes / no.
 
 **[Voice-Unlock](Voice-Unlock.md)**
 
+## Technologies
+The library is developed in .NET 5 and uses the Azure's Cognitive Services.
+
+## RoadMap
+#### Fist Release
+- Simple commands
+- No commands-context
+- Multi-language support
+- Dll only
+
+#### Second Release
+- Simple commands
+- No commands-context
+- Multi-language support
+- Dll only
