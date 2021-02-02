@@ -26,7 +26,7 @@ When Covox detects that a voice trigger matches one of the given commands voice 
 
 Then the application will perform the action matching with the recognized command.
 
-![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CovoxDrawDraw.png)
+![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoX_MLGraph.png)
 
 ## Overview
 
