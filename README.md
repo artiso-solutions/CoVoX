@@ -133,7 +133,7 @@ Guess Who is a game for 2 players.  Each player has a "playing field" with diffe
 Via Voice commands you should be able to ask a question, such as, "Does the woman have red hair?" 
 Image recognition should then return the answer yes / no. 
 
-![image](https://user-images.githubusercontent.com/8939890/106584417-716cbd80-6546-11eb-8fe4-40b047dee3c4.png)
+<img src="https://user-images.githubusercontent.com/8939890/106584417-716cbd80-6546-11eb-8fe4-40b047dee3c4.png" height="250" width="400">
 
 ## Procedure:
 1. Asking a Question via Voice Command
