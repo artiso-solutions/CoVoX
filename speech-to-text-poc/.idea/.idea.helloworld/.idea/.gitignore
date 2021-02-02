@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.helloworld.iml
+# Datasource local storage ignored files
+/../../../../../../../../../../../:\Code\SpareTime\Covox_POC\quickstart\csharp\dotnet\from-microphone\.idea\.idea.helloworld\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
