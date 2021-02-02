@@ -1,14 +1,14 @@
 # CoVoX 
 ### Cloud enabled library providing a customizable voice-interface for your application or your device
 
-![DraftDraw](assets/CoVoXGraph.png)
+![DraftDraw](assets/CoVoXSimpleGraph.png)
 
 Covox allows the interaction with an application or device through voice.
 You provide a list of _Commands_, i.e. operations that can be invoked via the voice interface,
 Covox then listens to the audio and when a command matches with the spoken words, it's executed.
 It also has multi-language support!
 
-![DraftDraw](assets/CoVoX_MLGraph.png)
+![DraftDraw](assets/CoVoXMultiLanguageGraph.png)
 
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
