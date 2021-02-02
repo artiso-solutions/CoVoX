@@ -3,13 +3,13 @@
 
 Covox allows the interaction with an application or device through voice.
 
-![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoXGraph.png)
+![DraftDraw](assets/CoVoXGraph.png)
 
 You provide a list of _Commands_, i.e. operations that can be invoked via the voice interface,
 Covox then listens to the audio and when a command matches with the spoken words, it's executed.
 It also has multi-language support!
 
-![DraftDraw](https://raw.githubusercontent.com/artiso-solutions/CoVoX/doc/assets/CoVoX_MLGraph.png)
+![DraftDraw](assets/CoVoX_MLGraph.png)
 
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
@@ -101,7 +101,7 @@ Guess Who is a game for 2 players.  Each player has a "playing field" with diffe
 Via Voice commands you should be able to ask a question, such as, "Does the woman have red hair?" 
 Image recognition should then return the answer yes / no. 
 
-![image](https://cdn-gamesworldau.pressidium.com/wp-content/uploads/2020/05/guess-who-2.jpg)
+![image](https://user-images.githubusercontent.com/8939890/106584417-716cbd80-6546-11eb-8fe4-40b047dee3c4.png)
 
 **Procedure:**
 1. Asking a Question via Voice Command
@@ -128,12 +128,6 @@ The library is developed in .NET 5 and uses the Azure's Cognitive Services.
 
 ## RoadMap
 #### Fist Release
-- Simple commands
-- No commands-context
-- Multi-language support
-- Dll only
-
-#### Second Release
 - Simple commands
 - No commands-context
 - Multi-language support
