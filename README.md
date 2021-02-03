@@ -13,7 +13,7 @@ It also has multi-language support!
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
 ## How it works
-Download the library and provide to it your own [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s) subscription key. (If you don't know how, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
+Download the library and provide to it your own [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s) subscription key. (If you don't know how to get a subscription key, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
 
 ![DraftDraw](assets/CoVoXHowItWorks.png)
 
