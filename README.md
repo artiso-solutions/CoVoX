@@ -23,7 +23,7 @@ Taking a simple usecase (light switch application): the client application must 
 
 <br>
 The application starts the Covox engine audio recognition that listens for voice triggers. 
-When Covox detects that a voice trigger matches one of the given commands voice trigger [i.e. switch on the light], it returns the corresponding command (i.e. TURN_ON_COMMAND) to the client application.
+When Covox detects that a voice trigger matches one of the given commands voice trigger [i.e. switch on the light], it returns the corresponding command (i.e. COMMAND_TURN_ON) to the client application.
 
 Then the application will perform the action matching with the recognized command.
 
