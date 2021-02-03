@@ -176,6 +176,12 @@ Robobutler is a robot capable of executing voice triggered actions based on its 
 - Basic movements (Stop, rotate, etc)
 - Spatial awarness (e.g. go to the nearest corner)
 
+### Benefit to the real world
+In the real world you could have a warehouse with a lot of heavy weight packages. Working in a human-robot collaboration environment the human would be able to control the robot either with a controller or by voice. Adding intelligence to the robot does simplify the interaction with the robot increasing the overall productivity and performance of the human and the facility. Furthermore it enables the human do multitask.
+
+### What makes this showcase special from the other usecase?
+With this usecase we can showcase that even a device of any kind can use the CoVoX engine.
+
 ### Robo to use
 
 https://www.dji.com/de/robomaster-s1
