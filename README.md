@@ -15,7 +15,7 @@ With some imagination, you could control a calculator, or a virtual assistant, o
 ## How it works
 Download the library and provide to it your own Azure subscription key. (If you don't know how, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
 
-![DraftDraw](assets/CoVoX_HowItWorks.png)
+![DraftDraw](assets/CoVoXHowItWorks.png)
 
 1) Define commands and provide them to Covox
 2) Start the audio capture by calling the method `Covox.Run`
