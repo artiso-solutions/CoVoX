@@ -69,7 +69,7 @@ Basic showcase of the engine and commands invocation.
 </details>
 
 <details>
-  <summary><b>Robobutler</b></summary>
+  <summary><b>Device: Robobutler</b></summary>
   
 ## Overview
 Robobutler is a robot capable of executing voice triggered actions based on its perception of the current environment. The idea is that an operator can tell the robot to "Bring me the yellow box" and the robot will in this case do the following:
@@ -99,7 +99,7 @@ The desired configuration would be an industrial arm on top of a body with wheel
 </details>
 
 <details>
-  <summary><b>Pac-Scream</b></summary>
+  <summary><b>Web application: Pac-Scream</b></summary>
   
 ## Overview
 
@@ -126,7 +126,7 @@ Pac-Scream is a variant on the popular game Pac-Man, in which movements are defi
 </details>
 
 <details>
-  <summary><b>Guess-Who</b></summary>
+  <summary><b>AI/Machine Learning application : Guess-Who</b></summary>
 
 ## Overview 
 Guess Who is a game for 2 players.  Each player has a "playing field" with different people and a fixed person, which must be guessed by the opponent, by exclusion questions.  
@@ -151,7 +151,7 @@ Image recognition should then return the answer yes / no.
 </details>
 
 <details>
-  <summary><b>Find-It</b></summary>
+  <summary><b>Mobile application: Find-It</b></summary>
 
 ## Overview 
 Find-it it's a Mobile App that is able to recognize objects in an image, or in a video, from user voice request.
@@ -168,7 +168,7 @@ Given an image or a video, if the user requests to see a particular object, the 
 </details>
 
 <details>
-  <summary><b>Voice-Unlock</b></summary>
+  <summary><b>Security application: Voice-Unlock</b></summary>
 
 ## Overview 
 Voice-Unlock showcases the voice recognition service from azure. An application will display a locked lock. If the authorized user says "Unlock", the lock should unlock. Instead, if an unauthorized users says "Unlock" the background flashes a few seconds in red.
