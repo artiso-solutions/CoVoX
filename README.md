@@ -12,21 +12,6 @@ It also has multi-language support!
 
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
-## Sample
-
-Taking a simple usecase (light switch application): the client application must use Covox and configure it with a set of commands (i.e. switch on the light, switch off the light). Each of the commands will have a unique identifier and a set of voice triggers.  
-
-| Identifier       |      Voice Triggers
-|------------------|:------------------------------------------:
-| COMMAND_TURN_ON  |  Switch on the light, Turn on light ...
-| COMMAND_TURN_OFF |    Switch off the light, Turn off light ...
-
-
-The application starts the Covox engine audio recognition that listens for voice triggers. 
-When Covox detects that a voice trigger matches one of the given commands voice trigger (i.e. switch on the light), it returns the corresponding command (i.e. `COMMAND_TURN_ON`) to the client application.
-
-Then the application will perform the action matching with the recognized command.
-
 ## How it works
 Download the library and provide to it your own Azure subscription key. (If you don't know how, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
 
@@ -53,6 +38,21 @@ The engine follow these stages:
    using [Language Understanding](https://azure.microsoft.com/en-us/services/cognitive-services/language-understanding-intelligent-service/)
 
 4) **executing:** returns to you the matching command
+
+## Sample
+
+Taking a simple usecase (light switch application): the client application must use Covox and configure it with a set of commands (i.e. switch on the light, switch off the light). Each of the commands will have a unique identifier and a set of voice triggers.
+
+| Identifier       |      Voice Triggers
+|------------------|:------------------------------------------:
+| COMMAND_TURN_ON  |  Switch on the light, Turn on light ...
+| COMMAND_TURN_OFF |    Switch off the light, Turn off light ...
+
+
+The application starts the Covox engine audio recognition that listens for voice triggers.
+When Covox detects that a voice trigger matches one of the given commands voice trigger (i.e. switch on the light), it returns the corresponding command (i.e. `COMMAND_TURN_ON`) to the client application.
+
+Then the application will perform the action matching with the recognized command.
 
 ## Use case scenarios
 
@@ -195,8 +195,12 @@ The desired configuration would be an industrial arm on top of a body with wheel
 The library is developed in .NET 5 and uses the Azure's Cognitive Services.
 
 ## RoadMap
-#### Fist Release
+#### Current Target
 - Simple commands
 - No commands-context
 - Multi-language support
 - Dll only
+
+#### Next Steps
+- WebApi wrapper
+- Contextual commands
