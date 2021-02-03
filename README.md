@@ -13,17 +13,17 @@ It also has multi-language support!
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
 ## How it works
-Download the library and provide to it your own Azure subscription key. (If you don't know how, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
+Download the library and provide to it your own [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s) subscription key. (If you don't know how to get a subscription key, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
 
-![DraftDraw](assets/CoVoX_HowItWorks.png)
+![DraftDraw](assets/CoVoXHowItWorks.png)
 
 1) Define commands and provide them to Covox
 2) Start the audio capture by calling the method `Covox.Run`
-3) Covox will use Azure services and will emit the event `OnCommandDetected` when something matches one of your commands.
+3) Covox will use [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s) and will emit the event `OnCommandDetected` when something matches one of your commands.
 4) Execute the logic connected to the detected command.
 
 ## The Engine
-Covox is a library you can use in your own application. It orchestrates for you the usage of the cloud cognitive services, enabling your application to convert voice instructions into actions or intents defined by you.
+Covox is a library you can use in your own application. It orchestrates for you the usage of the [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s), enabling your application to convert voice instructions into actions or intents defined by you.
 
 The engine follow these stages:
 
