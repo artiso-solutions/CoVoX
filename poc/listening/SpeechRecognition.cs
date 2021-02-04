@@ -1,4 +1,6 @@
-﻿using Microsoft.CognitiveServices.Speech;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.CognitiveServices.Speech;
 
 namespace SpeechToText
 {
@@ -6,7 +8,7 @@ namespace SpeechToText
     {
         private static readonly string SubscriptionKey = "SubscriptionKey";
         private static readonly string Region = "Region";
-        private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE" });
+        private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE", "es-ES", "it-IT" });
 
         public static (string Text, string DetectedLanguage) RecognizeSpeech()
         {
@@ -18,33 +20,42 @@ namespace SpeechToText
             var detectedLanguage = AutoDetectSourceLanguageResult.FromResult(result).Language;
 
             return (result.Text, detectedLanguage);
+        }
 
-            //recognizer.Recognized += (s, e) =>
-            //{
-            //    if (e.Result.Reason == ResultReason.RecognizedSpeech)
-            //    {
-            //        var textResult = e.Result.Text;
+        public static async Task RecognizeSpeechContinuous()
+        {
+            var config = SpeechConfig.FromSubscription(SubscriptionKey, Region);
 
-            //        var autoDetectSourceLanguageResult = AutoDetectSourceLanguageResult.FromResult(e.Result);
+            var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig);
 
-            //        var fromLanguage = autoDetectSourceLanguageResult.Language;
+            await recognizer.StartContinuousRecognitionAsync();
+            
+            recognizer.Recognized += (s, e) =>
+            {
+                if (e.Result.Reason == ResultReason.RecognizedSpeech)
+                {
+                    var textResult = e.Result.Text;
 
-            //        Console.WriteLine($"Recognized '{fromLanguage}': {textResult}");
-            //    }
-            //};
+                    var autoDetectSourceLanguageResult = AutoDetectSourceLanguageResult.FromResult(e.Result);
 
-            //recognizer.Canceled += (s, e) => { Console.WriteLine("Recognizing cancelled"); };
+                    var fromLanguage = autoDetectSourceLanguageResult.Language;
 
-            //recognizer.Recognizing += (s, e) =>
-            //{
-            //    if (e.Result.Reason == ResultReason.RecognizingSpeech) Console.WriteLine("Recognizing...");
-            //};
+                    Console.WriteLine($"Recognized '{fromLanguage}': {textResult}");
+                }
+            };
 
-            //recognizer.SpeechStartDetected += (s, e) => { Console.WriteLine("SpeechStartDetected"); };
+            recognizer.Canceled += (s, e) => { Console.WriteLine("Recognizing cancelled"); };
 
-            //recognizer.SpeechEndDetected += (s, e) => { Console.WriteLine("SpeechEndDetected"); };
+            recognizer.Recognizing += (s, e) =>
+            {
+                if (e.Result.Reason == ResultReason.RecognizingSpeech) Console.WriteLine("Recognizing...");
+            };
 
-            //await Task.Delay(TimeSpan.FromMinutes(1));
+            recognizer.SpeechStartDetected += (s, e) => { Console.WriteLine("SpeechStartDetected"); };
+
+            recognizer.SpeechEndDetected += (s, e) => { Console.WriteLine("SpeechEndDetected"); };
+
+            await Task.Delay(TimeSpan.FromMinutes(1));
         }
     }
 }
