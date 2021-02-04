@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\listening\SpeechToText.csproj" />
-    <ProjectReference Include="..\translating\TextTranslate.csproj" />
+    <ProjectReference Include="..\poc\listening\SpeechToText.csproj" />
+    <ProjectReference Include="..\poc\translating\TextTranslate.csproj" />
   </ItemGroup>
 
 </Project>
