@@ -10,11 +10,9 @@ namespace TextTranslate
 {
     public class TextTranslation
     {
-        private static readonly string SubscriptionKey = "SubscriptionKey";
         private static readonly string Endpoint = "https://api.cognitive.microsofttranslator.com/";
-        private static readonly string Region = "Region";
-
-        public static async Task<string> TranslateToEn(string textToTranslate)
+        
+        public static async Task<string> TranslateToEn(string subscriptionKey, string region, string textToTranslate)
         {
             var route = $"/translate?api-version=3.0&to=en";
             var body = new object[] { new { Text = textToTranslate } };
@@ -28,8 +26,8 @@ namespace TextTranslate
                 Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
             };
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
-            request.Headers.Add("Ocp-Apim-Subscription-Region", Region);
+            request.Headers.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+            request.Headers.Add("Ocp-Apim-Subscription-Region", region);
 
             var response = await client.SendAsync(request);
             var responseBody = await response.Content.ReadAsStringAsync();

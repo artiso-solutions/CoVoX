@@ -6,28 +6,27 @@ namespace SpeechToText
 {
     public class SpeechRecognition
     {
-        private static readonly string SubscriptionKey = "SubscriptionKey";
-        private static readonly string Region = "Region";
         private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE", "es-ES", "it-IT" });
-
-        public static (string Text, string DetectedLanguage) RecognizeSpeech()
+        
+        public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeech(string subscriptionKey, string region)
         {
-            var config = SpeechConfig.FromSubscription(SubscriptionKey, Region);
-
+            var config = SpeechConfig.FromSubscription(subscriptionKey, region);
             var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig);
+            var result = await recognizer.RecognizeOnceAsync();
 
-            var result = recognizer.RecognizeOnceAsync().Result;
+            if (result.Reason == ResultReason.Canceled)
+                throw new Exception("Api Communication Failure");
+
             var detectedLanguage = AutoDetectSourceLanguageResult.FromResult(result).Language;
-
             return (result.Text, detectedLanguage);
         }
 
-        public static async Task RecognizeSpeechContinuous()
+        public static async Task RecognizeSpeechContinuous(string subscriptionKey, string region)
         {
-            var config = SpeechConfig.FromSubscription(SubscriptionKey, Region);
+            var config = SpeechConfig.FromSubscription(subscriptionKey, region);
 
             var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig);
-
+            
             await recognizer.StartContinuousRecognitionAsync();
             
             recognizer.Recognized += (s, e) =>
@@ -54,8 +53,6 @@ namespace SpeechToText
             recognizer.SpeechStartDetected += (s, e) => { Console.WriteLine("SpeechStartDetected"); };
 
             recognizer.SpeechEndDetected += (s, e) => { Console.WriteLine("SpeechEndDetected"); };
-
-            await Task.Delay(TimeSpan.FromMinutes(1));
         }
     }
 }

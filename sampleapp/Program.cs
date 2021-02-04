@@ -7,25 +7,24 @@ namespace SampleApp
 {
     class Program
     {
+        private static readonly string SpeechSubscriptionKey = "SpeechSubscriptionKey";
+        private static readonly string TranslatorKey = "TranslatorKey";
+        private static readonly string Region = "northeurope";
+        
         static async Task Main(string[] args)
         {
-            while (true)
-            {
-                await Recognize();
-            }
+            await Recognize(SpeechSubscriptionKey, TranslatorKey, Region);
+            Console.ReadLine();
         }
 
-        private static async Task Recognize()
+        private static async Task Recognize(string subscriptionKey, string translatorKey, string region)
         {
-            Console.WriteLine("Press <Return> to start recognition");
-            if (Console.ReadKey().Key != ConsoleKey.Enter) return;
-
             Console.WriteLine("I'm listening...");
-            var speechRecognitionResult = SpeechRecognition.RecognizeSpeech();
+            var speechRecognitionResult = await SpeechRecognition.RecognizeSpeech(subscriptionKey, region);
             Console.WriteLine($"Detected: {speechRecognitionResult.Text}");
             Console.WriteLine(speechRecognitionResult.DetectedLanguage == "en-US"
                 ? "English detected, no need to translate"
-                : $"Translated: {await TextTranslation.TranslateToEn(speechRecognitionResult.Text)}");
+                : $"Translated: {await TextTranslation.TranslateToEn(translatorKey, region, speechRecognitionResult.Text)}");
         }
     }
 }
