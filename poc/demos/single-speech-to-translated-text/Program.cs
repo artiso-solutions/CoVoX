@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SpeechToText;
+using SpeechToTextFromMic;
 using TextTranslate;
 
 namespace SingleSTTT
@@ -9,7 +9,7 @@ namespace SingleSTTT
     {
         private static readonly string SpeechSubscriptionKey = "SpeechSubscriptionKey";
         private static readonly string TranslatorKey = "TranslatorKey";
-        private static readonly string Region = "northeurope";
+        private static readonly string Region = "Region";
         
         static async Task Main(string[] args)
         {

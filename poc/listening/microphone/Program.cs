@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace SpeechToText
+namespace SpeechToTextFromMic
 {
     class Program
     {
@@ -29,7 +29,9 @@ namespace SpeechToText
             switch (Console.ReadLine())
             {
                 case "1":
-                    await SpeechRecognition.RecognizeSpeech(SubscriptionKey, Region);
+                    Console.WriteLine("I'm listening...");
+                    var result = await SpeechRecognition.RecognizeSpeech(SubscriptionKey, Region);
+                    Console.WriteLine($"Recognized '{result.DetectedLanguage}': {result.Text}");
                     Console.Write("\r\nPress Enter to return to the menu");
                     Console.ReadLine();
 
@@ -39,10 +41,8 @@ namespace SpeechToText
                     Console.Write("\r\nPress Enter to return to the menu");
                     Console.ReadLine();
                     return true;
-                case "3":
-                    return false;
                 default:
-                    return true;
+                    return false;
             }
         }
     }

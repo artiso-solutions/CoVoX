@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
-namespace SpeechToText
+namespace SpeechToTextFromMic
 {
     public class SpeechRecognition
     {
