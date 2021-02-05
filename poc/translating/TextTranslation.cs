@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ namespace TextTranslate
     {
         private static readonly string Endpoint = "https://api.cognitive.microsofttranslator.com/";
         
-        public static async Task<string> TranslateToEn(string subscriptionKey, string region, string textToTranslate)
+        public static async Task<List<TranslationResponse.Result>> TranslateToEn(string subscriptionKey, string region, string textToTranslate)
         {
             var route = $"/translate?api-version=3.0&to=en";
             var body = new object[] { new { Text = textToTranslate } };
@@ -34,7 +33,7 @@ namespace TextTranslate
             
             var result = JsonConvert.DeserializeObject<List<TranslationResponse.Result>>(responseBody);
 
-            return result.First().Translations.First().Text;
+            return result;
         }
     }
 }

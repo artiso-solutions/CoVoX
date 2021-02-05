@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using SpeechToText;
 using TextTranslate;
 
-namespace SampleApp
+namespace SingleSTTT
 {
     class Program
     {
