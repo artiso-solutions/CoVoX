@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleSTTT", "demos\single-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechToTextFromInMemoryStream", "listening\inmemorystream\SpeechToTextFromInMemoryStream.csproj", "{B3334E60-7D43-4FCB-8565-03DC076927AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demos", "demos", "{A18705B9-F9F6-4304-AAC9-2FF16686DA71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{068B4FD3-4709-4532-ABEC-61EB3FCD29B0} = {A18705B9-F9F6-4304-AAC9-2FF16686DA71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5C4C36C-6E9A-42E5-896D-4B732E01D7FF}
