@@ -43,6 +43,7 @@ The engine follow these stages:
 
 3) **understanding:** matches the intent to an available command given the current context<br/>
    using [Language Understanding](https://azure.microsoft.com/en-us/services/cognitive-services/language-understanding-intelligent-service/)
+   using [Text Analytics](https://azure.microsoft.com/en-gb/services/cognitive-services/text-analytics/)
 
 4) **executing:** returns to you the matching command
 
