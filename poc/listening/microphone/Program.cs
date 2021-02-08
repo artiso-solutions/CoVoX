@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.CognitiveServices.Speech;
 
 namespace SpeechToTextFromMic
 {
@@ -7,7 +8,8 @@ namespace SpeechToTextFromMic
     {
         private static readonly string SubscriptionKey = "SubscriptionKey";
         private static readonly string Region = "Region";
-        
+        private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE", "es-ES", "it-IT" });
+
         static async Task Main(string[] args)
         {
             var showMenu = true;
@@ -30,14 +32,14 @@ namespace SpeechToTextFromMic
             {
                 case "1":
                     Console.WriteLine("I'm listening...");
-                    var result = await SpeechRecognition.RecognizeSpeech(SubscriptionKey, Region);
+                    var result = await SpeechRecognition.RecognizeSpeech(SubscriptionKey, Region, AutoDetectSourceLanguageConfig);
                     Console.WriteLine($"Recognized '{result.DetectedLanguage}': {result.Text}");
                     Console.Write("\r\nPress Enter to return to the menu");
                     Console.ReadLine();
 
                     return true;
                 case "2":
-                    await SpeechRecognition.RecognizeSpeechContinuous(SubscriptionKey, Region);
+                    await SpeechRecognition.RecognizeSpeechContinuous(SubscriptionKey, Region, AutoDetectSourceLanguageConfig);
                     Console.Write("\r\nPress Enter to return to the menu");
                     Console.ReadLine();
                     return true;

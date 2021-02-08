@@ -6,12 +6,10 @@ namespace SpeechToTextFromMic
 {
     public class SpeechRecognition
     {
-        private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE", "es-ES", "it-IT" });
-        
-        public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeech(string subscriptionKey, string region)
+        public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeech(string subscriptionKey, string region, AutoDetectSourceLanguageConfig autoDetectSourceLanguageConfig)
         {
             var config = SpeechConfig.FromSubscription(subscriptionKey, region);
-            var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig);
+            var recognizer = new SpeechRecognizer(config, autoDetectSourceLanguageConfig);
             var result = await recognizer.RecognizeOnceAsync();
 
             if (result.Reason == ResultReason.Canceled)
@@ -21,11 +19,11 @@ namespace SpeechToTextFromMic
             return (result.Text, detectedLanguage);
         }
 
-        public static async Task RecognizeSpeechContinuous(string subscriptionKey, string region)
+        public static async Task RecognizeSpeechContinuous(string subscriptionKey, string region, AutoDetectSourceLanguageConfig autoDetectSourceLanguageConfig)
         {
             var config = SpeechConfig.FromSubscription(subscriptionKey, region);
 
-            var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig);
+            var recognizer = new SpeechRecognizer(config, autoDetectSourceLanguageConfig);
             
             await recognizer.StartContinuousRecognitionAsync();
             
