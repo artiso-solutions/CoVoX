@@ -6,8 +6,8 @@ namespace TextTranslate
 {
     class Program
     {
-        private static readonly string SubscriptionKey = "SubscriptionKey";
-        private static readonly string Region = "Region";
+        private static readonly string SubscriptionKey = "407e84e6aba84e53b646e74f7d25d687";
+        private static readonly string Region = "westeurope";
 
         static async Task Main(string[] args)
         {

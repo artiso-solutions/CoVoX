@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace TextTranslate
             var response = await client.SendAsync(request);
             var responseBody = await response.Content.ReadAsStringAsync();
             
-            var result = JsonConvert.DeserializeObject<List<TranslationResponse.Result>>(responseBody).OrderByDescending(x=>x.DetectedLanguage.Score).ToList();
+            var result = JsonConvert.DeserializeObject<List<TranslationResponse.Result>>(responseBody);
 
             return result;
         }

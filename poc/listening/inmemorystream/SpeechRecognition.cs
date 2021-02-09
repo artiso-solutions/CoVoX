@@ -7,11 +7,13 @@ namespace SpeechToTextFromInMemoryStream
 {
     public class SpeechRecognition
     {
-        public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeechFromStream(string subscriptionKey, string region, AudioInputStream audioInputStream, AutoDetectSourceLanguageConfig autoDetectSourceLanguageConfig)
+        private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE", "es-ES", "it-IT" });
+        
+        public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeechFromStream(string subscriptionKey, string region, AudioInputStream audioInputStream)
         {
             var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, region);
             using var audioConfig = AudioConfig.FromStreamInput(audioInputStream);
-            using var recognizer = new SpeechRecognizer(speechConfig, autoDetectSourceLanguageConfig, audioConfig);
+            using var recognizer = new SpeechRecognizer(speechConfig, AutoDetectSourceLanguageConfig, audioConfig);
 
             var result = await recognizer.RecognizeOnceAsync();
 
