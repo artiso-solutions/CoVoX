@@ -25,7 +25,6 @@ public class LanguageUnderstandingClientConfiguration
 
         public string Region { get; init; }
     }
-
 ```
 
 #### How to Create a LUIS app
