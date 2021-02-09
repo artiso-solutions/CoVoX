@@ -10,7 +10,7 @@
 
 1. Select **Import as JSON**.
 
-   ![Import](Media/create-from-import.png)
+   ![Import](Media/import.png)
 
 1. In the **Import new app** dialog, select the **Choose File** button.
 1. Select the `demo-intents-luis.json` file you downloaded, then select **Open**.
