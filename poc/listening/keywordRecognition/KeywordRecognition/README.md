@@ -2,8 +2,8 @@
 ### Keyword Recognition
 
 #### Requirements
-An Azure Cognitive Services Speech subscription key is required.
-Require to create the `Keyword model` configuration on [Azure Speech Studio](https://speech.microsoft.com/)
+An Azure Cognitive Services Speech subscription key is required, or a multi-service subscription Azure Cognitive Services key.
+Require to create the `Keyword model` configuration on [Azure Speech Studio](https://speech.microsoft.com/).
 
 #### How it works
 The SpeechStudio allows you to define a single `Keyword` per model. 
