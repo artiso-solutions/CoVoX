@@ -75,7 +75,7 @@ namespace SpeechToTextFromInMemoryStream
 
             var recognitionTask = recognizer.RecognizeOnceAsync();
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(10));
 
             var fillAudioStreamTask = Task.Run(() =>
             {
