@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -56,7 +57,10 @@ namespace LanguageUnderstanding
                             var responseBody = await response.Content.ReadAsStringAsync();
 
                             //TODO: fix Response object
-                            var result = JsonConvert.DeserializeObject<List<Response>>(responseBody);
+                            var result = JsonConvert.DeserializeObject<Response>(responseBody);
+
+                            return result.Prediction.Intents.FirstOrDefault().Value.Score.ToString();
+
                         }
                         else
                         {
