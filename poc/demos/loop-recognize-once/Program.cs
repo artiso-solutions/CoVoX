@@ -13,6 +13,8 @@ namespace LoopRecognizeOnce
 
             while (true)
             {
+                var startTime = DateTime.Now;
+
                 Console.WriteLine("I'm listening...");
 
                 var result = await recognizer.RecognizeOnceAsync();
@@ -22,7 +24,10 @@ namespace LoopRecognizeOnce
 
                 var detectedLanguage = AutoDetectSourceLanguageResult.FromResult(result).Language;
 
-                Console.WriteLine($"{detectedLanguage}: {result.Text}");
+                if (result.Text != "")
+                {
+                    Console.WriteLine($"{detectedLanguage}: {result.Text} ({(DateTime.Now - startTime).TotalMilliseconds} ms)");
+                }
             }
         }
     }

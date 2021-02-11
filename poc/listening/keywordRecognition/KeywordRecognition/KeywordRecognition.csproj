@@ -17,7 +17,12 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <None Remove="SpeechStudio\c8fd1fc8-3f5c-4cb8-a3b8-6ccc2ef3b0a3.table" />
-        <Content Include="SpeechStudio\c8fd1fc8-3f5c-4cb8-a3b8-6ccc2ef3b0a3.table">
+        <None Remove="SpeechStudio\helloComputer.table" />
+        <Content Include="SpeechStudio\helloComputer.table">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="SpeechStudio\heyCovox.table" />
+        <Content Include="SpeechStudio\heyCovox.table">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

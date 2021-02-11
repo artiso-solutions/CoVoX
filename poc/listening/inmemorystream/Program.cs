@@ -12,7 +12,6 @@ namespace SpeechToTextFromInMemoryStream
         private static readonly string Region = "Region";
         private static readonly AutoDetectSourceLanguageConfig AutoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US", "de-DE", "es-ES", "it-IT" });
 
-
         static async Task Main(string[] args)
         {
             var showMenu = true;

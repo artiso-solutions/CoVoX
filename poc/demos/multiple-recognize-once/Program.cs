@@ -41,13 +41,14 @@ namespace MultipleRecognizeOnceLoop
 
         private static async Task Recognize(string subscriptionKey, string translatorKey, string region, string language)
         {
+            var startTime = DateTime.Now;
             var autoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { language });
             var (text, detectedLanguage) = await SpeechRecognition.RecognizeSpeech(subscriptionKey, region, autoDetectSourceLanguageConfig);
             if (text != "" && language.Contains(detectedLanguage))
             {
                 var translationResult = await TextTranslation.TranslateToEn(translatorKey, region, text);
                 var translation = translationResult.FirstOrDefault();
-                Console.WriteLine($"{language} - Detected: {text} - Translated: {translation.Translations.FirstOrDefault().Text} ({translation.DetectedLanguage.Language})");
+                Console.WriteLine($"{language} - Detected: {text} - Translated: {translation.Translations.FirstOrDefault().Text} ({translation.DetectedLanguage.Language}) ({(DateTime.Now - startTime).TotalMilliseconds} ms)");
             }
         }
     }

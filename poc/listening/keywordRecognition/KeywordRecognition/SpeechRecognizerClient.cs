@@ -2,38 +2,69 @@
 using System.Threading.Tasks;
 using KeywordRecognition.Settings;
 using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
 
 namespace KeywordRecognition
 {
     internal class SpeechRecognizerClient
     {
         private readonly SpeechRecognitionClientConfiguration _configuration;
-
+        
         public SpeechRecognizerClient(SpeechRecognitionClientConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public async Task StartKeyWordRecognition()
+        /// <summary>
+        /// Starts a KeywordRecognitionSession using the <see cref="KeywordRecognizer"/> 
+        /// Once KeywordRecognizer.RecognizeOnceAsync runs
+        /// its Task wait (with no limit of time) until the given keyword is recognized
+        /// </summary>
+        public async Task StartRecognitionWithKeywordRecognizer(string keywordName, string keywordModelFile)
         {
+            var keywordModel = KeywordRecognitionModel.FromFile(keywordModelFile);
+            
+            var config = AudioConfig.FromDefaultMicrophoneInput();
+            var keywordRecognizer = new KeywordRecognizer(config);
+            
+            Console.WriteLine($"Listen for keyword {keywordName} with KeywordRecognizer...");
+            
+            while (true)
+            {
+                var t = await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+                
+                if (t.Reason == ResultReason.RecognizedKeyword)
+                {
+                    Console.WriteLine($"KEYWORD RECOGNIZED (KeywordRecognizer.Recognized): {keywordName}");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Starts a KeywordRecognitionSession using the <see cref="SpeechRecognizer"/> 
+        /// Once KeywordRecognizer.RecognizeOnceAsync runs
+        /// its Task wait until the given keyword is recognized
+        /// </summary>
+        public async Task StartRecognitionWithSpeechRecognizer()
+        {
+            var keywordModel = KeywordRecognitionModel.FromFile("SpeechStudio/c8fd1fc8-3f5c-4cb8-a3b8-6ccc2ef3b0a3.table");
+            var keywordName = "HEY_COVOX";
+            
+            Console.WriteLine($"Listen for keyword {keywordName} with SpeechRecognizer...");
+            
             var autoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { "en-US"});
 
             var config = SpeechConfig.FromSubscription(_configuration.SubscriptionKey, _configuration.Region);
 
             var recognizer = new SpeechRecognizer(config, autoDetectSourceLanguageConfig);
-
-            var keyRecognitionModel = KeywordRecognitionModel.FromFile("SpeechStudio/c8fd1fc8-3f5c-4cb8-a3b8-6ccc2ef3b0a3.table");
             
-            Console.WriteLine("Start listening");
-            
-            await recognizer.StartKeywordRecognitionAsync(keyRecognitionModel);
+            await recognizer.StartKeywordRecognitionAsync(keywordModel);
             
             recognizer.Recognized += (s, e) =>
             {
                 if (e.Result.Reason == ResultReason.RecognizedKeyword)
                 {
-                    var textResult = e.Result.Text;
-                    Console.WriteLine($"KEYWORD RECOGNIZED : HEY COVOX -> {textResult}");
+                    Console.WriteLine($"KEYWORD RECOGNIZED (SpeechRecognizer.Recognized): {keywordName}");
                 }
             };
 
@@ -41,12 +72,11 @@ namespace KeywordRecognition
 
             recognizer.Recognizing += (s, e) =>
             {
-                if (e.Result.Reason == ResultReason.RecognizingSpeech) Console.WriteLine("Recognizing...");
+                if (e.Result.Reason == ResultReason.RecognizedKeyword)
+                {
+                    Console.WriteLine($"KEYWORD RECOGNIZED (SpeechRecognizer.Recognizing): {keywordName}");
+                }
             };
-
-            recognizer.SpeechStartDetected += (s, e) => { Console.WriteLine("SpeechStartDetected"); };
-
-            recognizer.SpeechEndDetected += (s, e) => { Console.WriteLine("SpeechEndDetected"); };
         }
     }
 }

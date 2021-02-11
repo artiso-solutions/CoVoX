@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using KeywordRecognition.Settings;
 using Microsoft.Extensions.Configuration;
 
@@ -7,12 +6,25 @@ namespace KeywordRecognition
 {
     class Program
     {
-        static async Task Main()
+        static void Main()
         {
             var appSettings = GetAppSettings();
             var speechRecognizerClient = new SpeechRecognizerClient(appSettings.SpeechRecognitionClientConfiguration);
             
-            await speechRecognizerClient.StartKeyWordRecognition();
+            _ = speechRecognizerClient.StartRecognitionWithKeywordRecognizer("HEY_COVOX", "SpeechStudio/heyCovox.table")
+                .ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                        throw task.Exception;
+                    
+                });
+            _ = speechRecognizerClient.StartRecognitionWithKeywordRecognizer("HELLO_COMPUTER", "SpeechStudio/helloComputer.table")
+                .ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                        throw task.Exception;
+                    
+                });
             
             Console.ReadLine();
         }
@@ -34,5 +46,3 @@ namespace KeywordRecognition
         #endregion
     }
 }
-
-
