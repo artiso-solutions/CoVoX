@@ -9,4 +9,8 @@
     <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.15.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\translating\TextTranslate.csproj" />
+  </ItemGroup>
+
 </Project>
