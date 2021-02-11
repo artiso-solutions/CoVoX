@@ -26,7 +26,8 @@ namespace LanguageUnderstanding
             var intent = "hi";
 
             string region = await Luis.GetResult(luisAppId, luisSubscriptionKey, intent).ConfigureAwait(false);
-            Console.Write(string.Format("\n\rLUIS region: {0} \n\r", region));
+            Console.WriteLine("Your Intent is: " + intent);
+            Console.Write(string.Format("\n\rWith a Score of: {0} \n\r", region));
             Console.Write("\nPress any key to continue...");
             Console.Read();
         }
