@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\translating\TextTranslate.csproj" />
+    <ProjectReference Include="..\..\translating\TextTranslation\TextTranslate.csproj" />
   </ItemGroup>
 
 </Project>
