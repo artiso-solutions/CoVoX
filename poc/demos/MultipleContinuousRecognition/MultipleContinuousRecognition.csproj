@@ -7,7 +7,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\listening\microphone\SpeechToTextFromMic.csproj" />
-        <ProjectReference Include="..\..\translating\TextTranslate.csproj" />
+        <ProjectReference Include="..\..\translating\TextTranslation\TextTranslate.csproj" />
     </ItemGroup>
 
 </Project>
