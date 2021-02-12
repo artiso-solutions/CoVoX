@@ -26,8 +26,8 @@ namespace SpeechTranslation
             translationConfig.SpeechRecognitionLanguage = inputLanguage;
 
             // Voices: https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#standard-voices
-            translationConfig.VoiceName = "Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)";
-            translationConfig.AddTargetLanguage("en-US");
+            translationConfig.VoiceName = "Microsoft Server Speech Text to Speech Voice (it-IT, LuciaRUS)";
+            translationConfig.AddTargetLanguage("it-IT");
 
             using var recognizer = new TranslationRecognizer(translationConfig);
 
@@ -46,20 +46,24 @@ namespace SpeechTranslation
             Console.WriteLine($"Say something in '{inputLanguage}'...");
             Console.WriteLine();
 
+            cancellationToken.Register(() => recognizer.StopContinuousRecognitionAsync());
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 var result = await recognizer.RecognizeOnceAsync();
+
+                if (cancellationToken.IsCancellationRequested) break;
+                if (!result.Translations.Any()) continue;
+
                 var (_, translation) = result.Translations.First();
 
                 if (!string.IsNullOrEmpty(translation))
                 {
                     Console.WriteLine();
                     Console.WriteLine($"You: '{result.Text}'");
-                    Console.WriteLine($"Zira: '{translation}'");
+                    Console.WriteLine($"Lucia: '{translation}'");
                 }
             }
-
-            await recognizer.StopContinuousRecognitionAsync();
         }
     }
 }
