@@ -37,6 +37,7 @@ namespace SpeechTranslation
 
             Console.WriteLine();
             Console.WriteLine($"'{result.Text}'");
+
             foreach (var (language, translation) in result.Translations)
                 Console.WriteLine($"  [{language}] '{translation}'");
         }
