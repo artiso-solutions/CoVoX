@@ -40,8 +40,8 @@ namespace SpeechToTextFromMic
                     return true;
                 case "2":
                     await SpeechRecognition.RecognizeSpeechContinuous(SubscriptionKey, Region, AutoDetectSourceLanguageConfig);
-                    Console.Write("\r\nPress Enter to return to the menu");
-                    Console.ReadLine();
+                    Console.ReadKey();
+                    await SpeechRecognition.Recognizer.StopContinuousRecognitionAsync();
                     return true;
                 default:
                     return false;

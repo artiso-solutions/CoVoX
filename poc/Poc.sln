@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "listening", "listening", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "understanding", "understanding", "{6C007DFB-0FE6-490D-9141-A5E078E06D9D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultipleContinuousTranslation", "demos\multiple-continuous-translation\MultipleContinuousTranslation.csproj", "{BF896CA2-569F-4784-A0F8-A56332136575}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{17AFE11E-7CF2-48E9-85E7-2933BD18D79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17AFE11E-7CF2-48E9-85E7-2933BD18D79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17AFE11E-7CF2-48E9-85E7-2933BD18D79D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF896CA2-569F-4784-A0F8-A56332136575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF896CA2-569F-4784-A0F8-A56332136575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF896CA2-569F-4784-A0F8-A56332136575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF896CA2-569F-4784-A0F8-A56332136575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{6C8412C6-13FB-480F-90B4-63C70D86C86D} = {353471E4-113C-4AFE-B885-E22C081714E1}
 		{CD51A7EA-58C6-4880-B91D-E3D60712CA89} = {6C007DFB-0FE6-490D-9141-A5E078E06D9D}
 		{17AFE11E-7CF2-48E9-85E7-2933BD18D79D} = {A18705B9-F9F6-4304-AAC9-2FF16686DA71}
+		{BF896CA2-569F-4784-A0F8-A56332136575} = {A18705B9-F9F6-4304-AAC9-2FF16686DA71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5C4C36C-6E9A-42E5-896D-4B732E01D7FF}
