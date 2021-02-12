@@ -52,9 +52,8 @@ namespace SpeechTranslation
 
             // Setup cancellation
 
-            cancellationToken.Register(() => recognizer.StopContinuousRecognitionAsync().Wait());
-
             await cancellationToken.AsTask();
+            await recognizer.StopContinuousRecognitionAsync();
         }
     }
 }

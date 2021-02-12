@@ -43,8 +43,6 @@ namespace SpeechTranslation
                 }
             };
 
-            cancellationToken.Register(() => recognizer.StopContinuousRecognitionAsync().Wait());
-
             Console.WriteLine($"Say something in '{inputLanguage}'...");
             Console.WriteLine();
 
@@ -60,6 +58,8 @@ namespace SpeechTranslation
                     Console.WriteLine($"Zira: '{translation}'");
                 }
             }
+
+            await recognizer.StopContinuousRecognitionAsync();
         }
     }
 }

@@ -18,14 +18,16 @@ namespace SpeechTranslation
 
             //await RunRecognizeOnceScenario();
             //await RunContinuousRecognitionScenario();
-            await RunTranslateToVoiceScenario();
+            //await RunTranslateToVoiceScenario();
+            //await RunContinuousRecognitionPerfScenario();
+            await RunMultipleContinuousRecognitionPerfScenario();
         }
 
         public static async Task RunRecognizeOnceScenario()
         {
             await new RecognizeOnceScenario(SubscriptionKey, Region).Run(
                 inputLanguage: "it-IT",
-                targetLanguages: new[] { "en-US", "en-UK", "de-DE" });
+                targetLanguages: new[] { "en-US", "de-DE", "es-ES" });
         }
 
         public static async Task RunContinuousRecognitionScenario()
@@ -34,7 +36,7 @@ namespace SpeechTranslation
 
             await new ContinuousRecognitionScenario(SubscriptionKey, Region).Run(
                 inputLanguage: "it-IT",
-                targetLanguages: new[] { "en-US", "en-UK", "de-DE" },
+                targetLanguages: new[] { "en-US", "de-DE", "es-ES" },
                 cancellationToken);
         }
 
@@ -46,6 +48,56 @@ namespace SpeechTranslation
             await new TranslateToVoiceScenario(SubscriptionKey, Region).Run(
                 inputLanguage: "it-IT",
                 cancellationToken);
+        }
+
+        public static async Task RunContinuousRecognitionPerfScenario()
+        {
+            var cancellationToken = Utils.GetUserCancellableToken();
+
+            await new ContinuousRecognitionPerfScenario(SubscriptionKey, Region).Run(
+                inputLanguage: "it-IT",
+                targetLanguages: new[] { "en-US", "de-DE", "es-ES" },
+                outputFormat: OutputFormat.Table,
+                cancellationToken: cancellationToken);
+        }
+
+        public static async Task RunMultipleContinuousRecognitionPerfScenario()
+        {
+            var cancellationToken = Utils.GetUserCancellableToken();
+
+            await Task.WhenAll(
+                new ContinuousRecognitionPerfScenario(SubscriptionKey, Region, false).Run(
+                    inputLanguage: "it-IT",
+                    targetLanguages: new[] { "en-US", "de-DE", "es-ES" },
+                    outputFormat: OutputFormat.Markdown,
+                    iterations: 3,
+                    false,
+                    cancellationToken),
+
+                new ContinuousRecognitionPerfScenario(SubscriptionKey, Region, false).Run(
+                    inputLanguage: "en-US",
+                    targetLanguages: new[] { "it-IT", "de-DE", "es-ES" },
+                    outputFormat: OutputFormat.Markdown,
+                    iterations: 3,
+                    false,
+                    cancellationToken),
+
+                new ContinuousRecognitionPerfScenario(SubscriptionKey, Region, false).Run(
+                    inputLanguage: "de-DE",
+                    targetLanguages: new[] { "en-US", "it-IT", "es-ES" },
+                    outputFormat: OutputFormat.Markdown,
+                    iterations: 3,
+                    false,
+                    cancellationToken),
+
+                new ContinuousRecognitionPerfScenario(SubscriptionKey, Region, false).Run(
+                    inputLanguage: "es-ES",
+                    targetLanguages: new[] { "en-US", "de-DE", "it-IT" },
+                    outputFormat: OutputFormat.Markdown,
+                    iterations: 3,
+                    false,
+                    cancellationToken)
+                );
         }
     }
 }
