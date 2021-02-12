@@ -44,6 +44,7 @@ namespace MultipleRecognizeOnceLoop
             var startTime = DateTime.Now;
             var autoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromLanguages(new[] { language });
             var (text, detectedLanguage) = await SpeechRecognition.RecognizeSpeech(subscriptionKey, region, autoDetectSourceLanguageConfig);
+            Console.WriteLine($"Before translation: {(DateTime.Now - startTime).TotalMilliseconds} ms");
             if (text != "" && language.Contains(detectedLanguage))
             {
                 var translationResult = await TextTranslation.TranslateToEn(translatorKey, region, text);

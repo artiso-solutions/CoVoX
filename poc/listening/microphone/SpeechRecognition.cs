@@ -10,6 +10,7 @@ namespace SpeechToTextFromMic
 {
     public class SpeechRecognition
     {
+        public static SpeechRecognizer Recognizer { get; set; }
         private readonly string _subscriptionKey;
         private readonly string _region;
         private readonly Dictionary<string, SpeechRecognizer> _recognizers = new();
@@ -20,23 +21,23 @@ namespace SpeechToTextFromMic
             _subscriptionKey = subscriptionKey;
             _region = region;
             var config = SpeechConfig.FromSubscription(subscriptionKey, region);
-            
+
             foreach (var languageConfig in languageConfigs)
             {
-                var instanceCreation = Stopwatch.StartNew(); 
+                var instanceCreation = Stopwatch.StartNew();
                 Console.WriteLine($"SpeechRecognizer instance creation : {instanceCreation.ElapsedMilliseconds} ms");
 
-                var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig.FromLanguages(new[] {languageConfig}));
+                var recognizer = new SpeechRecognizer(config, AutoDetectSourceLanguageConfig.FromLanguages(new[] { languageConfig }));
                 var stopWatch = new Stopwatch();
-                
+
                 _recognizers.Add(languageConfig, recognizer);
                 _stopwatches.Add(languageConfig, stopWatch);
-                
+
                 recognizer.SessionStarted += (_, _) =>
                 {
                     // Console.WriteLine($"SessionStarted ({languageConfig}): {stopWatch.ElapsedMilliseconds} ms");
                 };
-            
+
                 recognizer.SpeechStartDetected += (_, _) =>
                 {
                     stopWatch.Start();
@@ -49,13 +50,13 @@ namespace SpeechToTextFromMic
                     // Console.WriteLine($"Recognizing ({languageConfig}) ..... : {stopWatch.ElapsedMilliseconds} ms");
                     stopWatch.Restart();
                 };
-                
+
                 Console.WriteLine($"SpeechRecognizer instance creation ({languageConfig}): {instanceCreation.ElapsedMilliseconds} ms");
                 instanceCreation.Stop();
             }
-            
+
         }
-        
+
         public async Task RecognizeSpeechContinuous(string language)
         {
             var recognizer = _recognizers[language];
@@ -80,7 +81,21 @@ namespace SpeechToTextFromMic
                 stopWatch.Restart();
             };
         }
-        
+
+        public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeech(string subscriptionKey, string region)
+        {
+            var config = SpeechConfig.FromSubscription(subscriptionKey, region);
+            var autoDetectSourceLanguageConfig = AutoDetectSourceLanguageConfig.FromOpenRange();
+            var recognizer = new SpeechRecognizer(config, autoDetectSourceLanguageConfig);
+            var result = await recognizer.RecognizeOnceAsync();
+
+            if (result.Reason == ResultReason.Canceled)
+                throw new Exception("Api Communication Failure");
+
+            var detectedLanguage = AutoDetectSourceLanguageResult.FromResult(result).Language;
+            return (result.Text, detectedLanguage);
+        }
+
         public static async Task<(string Text, string DetectedLanguage)> RecognizeSpeech(string subscriptionKey, string region, AutoDetectSourceLanguageConfig autoDetectSourceLanguageConfig)
         {
             var config = SpeechConfig.FromSubscription(subscriptionKey, region);
@@ -98,11 +113,9 @@ namespace SpeechToTextFromMic
         {
             var config = SpeechConfig.FromSubscription(subscriptionKey, region);
 
-            var recognizer = new SpeechRecognizer(config, autoDetectSourceLanguageConfig);
-            
-            await recognizer.StartContinuousRecognitionAsync();
-            
-            recognizer.Recognized += (s, e) =>
+            Recognizer = new SpeechRecognizer(config, autoDetectSourceLanguageConfig);
+
+            Recognizer.Recognized += (s, e) =>
             {
                 if (e.Result.Reason == ResultReason.RecognizedSpeech)
                 {
@@ -116,16 +129,18 @@ namespace SpeechToTextFromMic
                 }
             };
 
-            recognizer.Canceled += (s, e) => { Console.WriteLine("Recognizing cancelled"); };
+            Recognizer.Canceled += (s, e) => { Console.WriteLine("Recognizing cancelled"); };
 
-            recognizer.Recognizing += (s, e) =>
+            Recognizer.Recognizing += (s, e) =>
             {
                 if (e.Result.Reason == ResultReason.RecognizingSpeech) Console.WriteLine("Recognizing...");
             };
 
-            recognizer.SpeechStartDetected += (s, e) => { Console.WriteLine("SpeechStartDetected"); };
+            Recognizer.SpeechStartDetected += (s, e) => { Console.WriteLine("SpeechStartDetected"); };
 
-            recognizer.SpeechEndDetected += (s, e) => { Console.WriteLine("SpeechEndDetected"); };
+            Recognizer.SpeechEndDetected += (s, e) => { Console.WriteLine("SpeechEndDetected"); };
+         
+            await Recognizer.StartContinuousRecognitionAsync();
         }
     }
 }
