@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CustomCommands.Configuration;
 using CustomCommands.Configuration.AppSettings;
 using CustomCommands.Events;
+using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
 
 namespace CustomCommands
@@ -11,20 +13,30 @@ namespace CustomCommands
         private static async Task Main()
         {
             var configuration = AppSettingsHelper.GetSettings();
-            var customEventHandlers = new CustomBaseEventHandlers(configuration);
+            
+            var synthesizer = CreateSynthesizer(configuration);
+            
+            var customEventHandlers = new CustomBaseEventHandlers(synthesizer);
             var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
             
             var customCommands = new CustomCommandsClient(configuration, audioConfig, customEventHandlers);
                         
-            var speechRecognizerClient = new SpeechRecognizerClient();
+            var keywordRecognizerClient = new SpeechRecognizerClient(synthesizer);
 
             while (true)
             {
-                await speechRecognizerClient.StartRecognitionWithKeywordRecognizer("OK_SPEAKER",
+                // NeverEnded listening for keyword
+                await keywordRecognizerClient.StartRecognitionWithKeywordRecognizer("OK_SPEAKER",
                     "Configuration/Keyword/okSpeakerKwd.table");
                 
+                // Utterance limited listening for commands
                 await customCommands.StartListenForCommands();
             }
+        }
+        
+        private static SpeechSynthesizer CreateSynthesizer(CustomCommandClientConfiguration configuration)
+        {
+            return new(SpeechConfig.FromSubscription(configuration.SubscriptionKey, configuration.Region));
         }
     }
 }

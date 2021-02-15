@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CustomCommands.Configuration;
 using CustomCommands.Messages;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Dialog;
@@ -12,14 +11,9 @@ namespace CustomCommands.Events
     {
         private SpeechSynthesizer _synthesizer;
         
-        public CustomBaseEventHandlers(CustomCommandClientConfiguration configuration)
+        public CustomBaseEventHandlers(SpeechSynthesizer synthesizer)
         {
-            CreateSynthesizer(configuration);
-        }
-        
-        private void CreateSynthesizer(CustomCommandClientConfiguration configuration)
-        {
-            _synthesizer = new SpeechSynthesizer(SpeechConfig.FromSubscription(configuration.SubscriptionKey, configuration.Region));
+            _synthesizer = synthesizer;
         }
         
         public override void OnTurnStatusReceivedHandler(object sender, TurnStatusReceivedEventArgs e)
@@ -40,7 +34,7 @@ namespace CustomCommands.Events
         public override void OnRecognizedHandler(object sender, SpeechRecognitionEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.Result.Text)) 
-                Console.WriteLine($"USER -> {e.Result.Text}");
+                Console.WriteLine($"YOU -> {e.Result.Text}");
         }
 
         public override async void OnActivityReceivedHandler(object sender, ActivityReceivedEventArgs e)

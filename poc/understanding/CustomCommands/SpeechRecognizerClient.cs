@@ -7,6 +7,13 @@ namespace CustomCommands
 {
     internal class SpeechRecognizerClient
     {
+        private readonly SpeechSynthesizer _synthesizer;
+
+        public SpeechRecognizerClient(SpeechSynthesizer synthesizer)
+        {
+            _synthesizer = synthesizer;
+        }
+        
         /// <summary>
         /// Starts a KeywordRecognitionSession using the <see cref="KeywordRecognizer"/> 
         /// Once KeywordRecognizer.RecognizeOnceAsync runs
@@ -25,12 +32,10 @@ namespace CustomCommands
                 
             if (t.Reason == ResultReason.RecognizedKeyword)
             {
-                Console.WriteLine($"KEYWORD RECOGNIZED (KeywordRecognizer.Recognized): {keywordName}");
+                await _synthesizer.SpeakTextAsync("I'm here");
             }
             else
             {
-                Console.WriteLine("Return to listen for keywords...");
-                
                 await StartRecognitionWithKeywordRecognizer(keywordName, keywordModelFile);
             }
         }

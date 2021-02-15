@@ -11,8 +11,7 @@ namespace CustomCommands
     {
         private readonly BaseEventHandlers _baseEventHandlers;
         private DialogServiceConnector _recognizer;
-        private string _user;
-
+        
         public CustomCommandsClient(
             CustomCommandClientConfiguration configuration, 
             AudioConfig audioConfig,
