@@ -331,12 +331,6 @@
   },
   "type": "BaseLanguage",
   "registeredKeywords": [
-    "abigail",
-    "assistant",
-    "computer",
-    "contohso",
-    "hey front desk",
-    "jayden",
     "ok speaker"
   ],
   "webEndpoints": [

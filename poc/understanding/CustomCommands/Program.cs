@@ -16,9 +16,15 @@ namespace CustomCommands
             
             var customCommands = new CustomCommandsClient(configuration, audioConfig, customEventHandlers);
                         
-            await customCommands.StartListenForCommands();
-            
-            Console.ReadLine();
+            var speechRecognizerClient = new SpeechRecognizerClient();
+
+            while (true)
+            {
+                await speechRecognizerClient.StartRecognitionWithKeywordRecognizer("OK_SPEAKER",
+                    "Configuration/Keyword/okSpeakerKwd.table");
+                
+                await customCommands.StartListenForCommands();
+            }
         }
     }
 }

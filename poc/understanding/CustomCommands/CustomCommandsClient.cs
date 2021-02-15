@@ -48,7 +48,7 @@ namespace CustomCommands
         
         public async Task StartListenForCommands()
         {
-            Console.WriteLine("Listening started");
+            Console.WriteLine("Start listening for commands: ");
             
             await _recognizer.ListenOnceAsync();
         }

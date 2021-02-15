@@ -17,6 +17,14 @@
       <Content Include="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Configuration\Keyword\okSpeakerKwd.table" />
+      <Content Include="Configuration\Keyword\okSpeakerKwd.table">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Configuration\Keyword" />
     </ItemGroup>
 
 </Project>
