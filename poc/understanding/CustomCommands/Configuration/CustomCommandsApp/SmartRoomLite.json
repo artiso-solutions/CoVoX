@@ -126,18 +126,6 @@
     "# AdjustTemperature-RoomControlBackendonSuccess-fd34ee9028f311ea88cde3d2ef24c102",
     "- Set the temperature to {Temperature} degrees.",
     "# AdjustTemperature-RoomControlBackendonFailure-fd34ee9028f311ea88cde3d2ef24c102",
-    "- Sorry, unable to connect to the room control service right now",
-    "# OpenClose-RoomControlBackendonSuccess-9bd92d20fc2d11e9bf63b974d90bef6c",
-    "> Blinds",
-    "- IF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'open' && clientContext.Blinds == true}",
-    "    - The blinds have already been opened.",
-    "- ELSEIF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'close' && clientContext.Blinds == false}",
-    "    - The blinds have already been closed.",
-    "- ELSEIF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'open'}",
-    "    - Alright, opening the blinds.",
-    "- ELSEIF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'close'}",
-    "    - Alright, closing the blinds.",
-    "# OpenClose-RoomControlBackendonFailure-9bd92d20fc2d11e9bf63b974d90bef6c",
     "- Sorry, unable to connect to the room control service right now"
   ],
   "lgTemplatesMap": {
@@ -313,27 +301,33 @@
     ],
     "# AdjustTemperature-RoomControlBackendonFailure-fd34ee9028f311ea88cde3d2ef24c102": [
       "- Sorry, unable to connect to the room control service right now"
-    ],
-    "# OpenClose-RoomControlBackendonSuccess-9bd92d20fc2d11e9bf63b974d90bef6c": [
-      "> Blinds",
-      "- IF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'open' && clientContext.Blinds == true}",
-      "    - The blinds have already been opened.",
-      "- ELSEIF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'close' && clientContext.Blinds == false}",
-      "    - The blinds have already been closed.",
-      "- ELSEIF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'open'}",
-      "    - Alright, opening the blinds.",
-      "- ELSEIF: ${OpenCloseSubject == 'blinds' && OpenCloseOperation == 'close'}",
-      "    - Alright, closing the blinds."
-    ],
-    "# OpenClose-RoomControlBackendonFailure-9bd92d20fc2d11e9bf63b974d90bef6c": [
-      "- Sorry, unable to connect to the room control service right now"
     ]
   },
   "type": "BaseLanguage",
   "registeredKeywords": [
+    "abigail",
+    "assistant",
+    "computer",
+    "contohso",
+    "hey front desk",
+    "jayden",
     "ok speaker"
   ],
-  "webEndpoints": [],
+  "webEndpoints": [
+    {
+      "name": "RoomControlBackend",
+      "method": "GET",
+      "url": "https://60265bca186b4a001778006d.mockapi.io/api/turnon",
+      "headers": {
+        "room": "test1",
+        "culture": "en-us"
+      },
+      "parameters": {},
+      "sendFrame": false,
+      "updateFrame": false,
+      "remoteUpdate": true
+    }
+  ],
   "globalParameters": [],
   "commands": [
     {
@@ -531,7 +525,7 @@
                 "type": "CUSTOM.COMMAND",
                 "name": "TURNON",
                 "value": {
-                  "attributes": "{OnOff},{SubjectContext},{SubjectDevice}"
+                  "someAttribute": "{OnOff},{SubjectContext},{SubjectDevice}"
                 }
               }
             }
@@ -719,22 +713,12 @@
           ],
           "actions": [
             {
-              "type": "CallHttpEndpoint",
-              "name": "RoomControlBackend",
-              "content": {},
-              "parameters": "operation=increaseTemperature&value={Temperature}",
-              "onSuccess": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# AdjustTemperature-RoomControlBackendonSuccess-43dd866028e311ea8db34fd5c8a135ab"
-                }
-              },
-              "onFailure": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# AdjustTemperature-RoomControlBackendonFailure-43dd866028e311ea8db34fd5c8a135ab"
+              "type": "SendActivity",
+              "activity": {
+                "type": "CUSTOM.COMMAND",
+                "name": "ADJUSTRAISE",
+                "value": {
+                  "someAttribute": "{Operation},{Temperature}"
                 }
               }
             }
@@ -768,22 +752,12 @@
           ],
           "actions": [
             {
-              "type": "CallHttpEndpoint",
-              "name": "RoomControlBackend",
-              "content": {},
-              "parameters": "operation=decreaseTemperature&value={Temperature}",
-              "onSuccess": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# AdjustTemperature-RoomControlBackendonSuccess-287895e028e311ea8db34fd5c8a135ab"
-                }
-              },
-              "onFailure": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# AdjustTemperature-RoomControlBackendonFailure-287895e028e311ea8db34fd5c8a135ab"
+              "type": "SendActivity",
+              "activity": {
+                "type": "CUSTOM.COMMAND",
+                "name": "ADJUST.LOWER",
+                "value": {
+                  "someAttribute": "{Operation},{Temperature}"
                 }
               }
             }
@@ -849,22 +823,12 @@
           ],
           "actions": [
             {
-              "type": "CallHttpEndpoint",
-              "name": "RoomControlBackend",
-              "content": {},
-              "parameters": "operation=setTemperature&value={Temperature}",
-              "onSuccess": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# AdjustTemperature-RoomControlBackendonSuccess-fd34ee9028f311ea88cde3d2ef24c102"
-                }
-              },
-              "onFailure": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# AdjustTemperature-RoomControlBackendonFailure-fd34ee9028f311ea88cde3d2ef24c102"
+              "type": "SendActivity",
+              "activity": {
+                "type": "CUSTOM.COMMAND",
+                "name": "FINISHSETTEMP",
+                "value": {
+                  "someAttribute": "{Operation},{Temperature}"
                 }
               }
             }
@@ -1160,22 +1124,12 @@
           ],
           "actions": [
             {
-              "type": "CallHttpEndpoint",
-              "name": "RoomControlBackend",
-              "content": {},
-              "parameters": "operation=turn&item={OpenCloseSubject}&value={OpenCloseOperation}",
-              "onSuccess": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# OpenClose-RoomControlBackendonSuccess-9bd92d20fc2d11e9bf63b974d90bef6c"
-                }
-              },
-              "onFailure": {
-                "type": "SpeechResponse",
-                "response": {
-                  "type": "Template",
-                  "templateName": "# OpenClose-RoomControlBackendonFailure-9bd92d20fc2d11e9bf63b974d90bef6c"
+              "type": "SendActivity",
+              "activity": {
+                "type": "CUSTOM.COMMAND",
+                "name": "OPENCLOSE",
+                "value": {
+                  "someAttribute": "{OpenCloseOperation},{OpenCloseSubject}"
                 }
               }
             }

@@ -4,7 +4,6 @@ using CustomCommands.Configuration;
 using CustomCommands.Configuration.AppSettings;
 using CustomCommands.Events;
 using Microsoft.CognitiveServices.Speech;
-using Microsoft.CognitiveServices.Speech.Audio;
 
 namespace CustomCommands
 {

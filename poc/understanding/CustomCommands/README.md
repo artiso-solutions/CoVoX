@@ -29,6 +29,7 @@ Import our [SmartRoomLite.json](Configuration/CustomCommandsApp/SmartRoomLite.js
 ```
 2. Run the application and say `OK SPEAKER`
 3. After the service voice responds, say `TURN ON THE LIGHTS`. 
-4. Then service will respond `COMMAND TURN ON DETECTED`
+4. Then service will return the event defined in the `Completion Rules` of the given `Command`.
+   (You can also setup speech responses, or endpoint interaction.. As you prefer). 
 5. Have fun!
 
