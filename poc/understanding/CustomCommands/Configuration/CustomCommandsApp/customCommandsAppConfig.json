@@ -333,21 +333,7 @@
   "registeredKeywords": [
     "ok speaker"
   ],
-  "webEndpoints": [
-    {
-      "name": "RoomControlBackend",
-      "method": "GET",
-      "url": "https://60265bca186b4a001778006d.mockapi.io/api/turnon",
-      "headers": {
-        "room": "test1",
-        "culture": "en-us"
-      },
-      "parameters": {},
-      "sendFrame": false,
-      "updateFrame": false,
-      "remoteUpdate": true
-    }
-  ],
+  "webEndpoints": [],
   "globalParameters": [],
   "commands": [
     {

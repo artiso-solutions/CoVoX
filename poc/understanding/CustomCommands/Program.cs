@@ -16,21 +16,23 @@ namespace CustomCommands
             
             var synthesizer = CreateSynthesizer(configuration);
             
-            var customEventHandlers = new CustomBaseEventHandlers(synthesizer);
-            var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
-            
-            var customCommands = new CustomCommandsClient(configuration, audioConfig, customEventHandlers);
-                        
             var keywordRecognizerClient = new SpeechRecognizerClient(synthesizer);
-
+            
+            var customEventHandlers = new CustomCommandHandler(configuration, synthesizer);
+            
+            Console.WriteLine("Start Listening...");
+            
             while (true)
             {
                 // NeverEnded listening for keyword
                 await keywordRecognizerClient.StartRecognitionWithKeywordRecognizer("OK_SPEAKER",
                     "Configuration/Keyword/okSpeakerKwd.table");
+                 
+                // Delay to avoid auto-listening
+                await Task.Delay(50);
                 
                 // Utterance limited listening for commands
-                await customCommands.StartListenForCommands();
+                await customEventHandlers.Client.StartListenForCommands();
             }
         }
         

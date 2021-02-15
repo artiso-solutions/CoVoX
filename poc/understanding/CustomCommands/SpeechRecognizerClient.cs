@@ -26,17 +26,11 @@ namespace CustomCommands
             var config = AudioConfig.FromDefaultMicrophoneInput();
             var keywordRecognizer = new KeywordRecognizer(config);
             
-            Console.WriteLine($"Start Listening for keyword {keywordName} with KeywordRecognizer...");
-            
             var t = await keywordRecognizer.RecognizeOnceAsync(keywordModel);
                 
             if (t.Reason == ResultReason.RecognizedKeyword)
             {
                 await _synthesizer.SpeakTextAsync("I'm here");
-            }
-            else
-            {
-                await StartRecognitionWithKeywordRecognizer(keywordName, keywordModelFile);
             }
         }
     }

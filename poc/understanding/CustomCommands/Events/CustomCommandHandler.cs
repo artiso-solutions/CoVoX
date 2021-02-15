@@ -1,19 +1,34 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using CustomCommands.Configuration;
 using CustomCommands.Messages;
 using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
 using Microsoft.CognitiveServices.Speech.Dialog;
 
 namespace CustomCommands.Events
 {
-    internal class CustomBaseEventHandlers : BaseEventHandlers
+    internal class CustomCommandHandler : BaseEventHandlers
     {
-        private SpeechSynthesizer _synthesizer;
-        
-        public CustomBaseEventHandlers(SpeechSynthesizer synthesizer)
+        private readonly SpeechSynthesizer _synthesizer;
+        public readonly CustomCommandsClient Client;
+        public bool ConversationInProgress = false;
+
+        public CustomCommandHandler(CustomCommandClientConfiguration configuration, SpeechSynthesizer synthesizer)
         {
+            var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+            
+            var customCommandClient = new CustomCommandsClient(configuration, audioConfig);
+            
+            Client = customCommandClient;
             _synthesizer = synthesizer;
+            
+            customCommandClient.Recognizer.TurnStatusReceived += OnTurnStatusReceivedHandler;
+            customCommandClient.Recognizer.Recognized += OnRecognizedHandler;
+            customCommandClient.Recognizer.Recognizing += OnRecognizingHandler;
+            customCommandClient.Recognizer.ActivityReceived += OnActivityReceivedHandler;
+            customCommandClient.Recognizer.Canceled += OnCanceledHandler;
         }
         
         public override void OnTurnStatusReceivedHandler(object sender, TurnStatusReceivedEventArgs e)
@@ -47,13 +62,27 @@ namespace CustomCommands.Events
 
             var result = JsonSerializer.Deserialize<ActivityEvent>(e.Activity, options);
 
-            if (result?.Name == "MYEVENT")
+            if (result != null && result.Type == "CUSTOM.COMMAND")
             {
                 Console.WriteLine("command detected");
-                await _synthesizer.SpeakTextAsync("command detected");
+            
+                await _synthesizer.SpeakTextAsync($"command {result.Name} detected");
+
+                return;
             }
 
-            if (e.HasAudio) await TextToSpeechResponse(e, options);
+            if (e.HasAudio)
+            {
+                await TextToSpeechResponse(e, options);
+            }
+
+            if (result?.InputHint == "expectingInput")
+            {
+                await Task.Delay(50);
+                
+                // Utterance limited listening for commands
+                await Client.StartListenForInputs();
+            }
         }
 
         private async Task TextToSpeechResponse(ActivityReceivedEventArgs e, JsonSerializerOptions options)

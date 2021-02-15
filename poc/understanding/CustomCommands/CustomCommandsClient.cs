@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CustomCommands.Configuration;
-using CustomCommands.Events;
 using Microsoft.CognitiveServices.Speech.Audio;
 using Microsoft.CognitiveServices.Speech.Dialog;
 
@@ -9,16 +8,12 @@ namespace CustomCommands
 {
     class CustomCommandsClient
     {
-        private readonly BaseEventHandlers _baseEventHandlers;
-        private DialogServiceConnector _recognizer;
+        public DialogServiceConnector Recognizer;
         
         public CustomCommandsClient(
             CustomCommandClientConfiguration configuration, 
-            AudioConfig audioConfig,
-            BaseEventHandlers baseEventHandlers)
+            AudioConfig audioConfig)
         {
-            _baseEventHandlers = baseEventHandlers;
-
             CreateRecognizer(configuration, audioConfig);
         }
 
@@ -29,27 +24,28 @@ namespace CustomCommands
                 configuration.SubscriptionKey, 
                 configuration.Region);
             
-            _recognizer = new DialogServiceConnector(customCommandsConfig, audioConfig);
-
-            _recognizer.TurnStatusReceived += _baseEventHandlers.OnTurnStatusReceivedHandler;
-            _recognizer.Recognized += _baseEventHandlers.OnRecognizedHandler;
-            _recognizer.Recognizing += _baseEventHandlers.OnRecognizingHandler;
-            _recognizer.ActivityReceived += _baseEventHandlers.OnActivityReceivedHandler;
-            _recognizer.Canceled += _baseEventHandlers.OnCanceledHandler;
+            Recognizer = new DialogServiceConnector(customCommandsConfig, audioConfig);
         }
 
         public async Task Connect()
         {
             Console.WriteLine("connecting..");
             
-            await _recognizer.ConnectAsync();
+            await Recognizer.ConnectAsync();
         }
         
         public async Task StartListenForCommands()
         {
-            Console.WriteLine("Start listening for commands: ");
+            Console.WriteLine("Now listening for commands: ");
             
-            await _recognizer.ListenOnceAsync();
+            await Recognizer.ListenOnceAsync();
+        }
+        
+        public async Task StartListenForInputs()
+        {
+            Console.WriteLine("Now listening for input: ");
+            
+            await Recognizer.ListenOnceAsync();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace CustomCommands.Messages
         
         public string Name { get; set; }
         
+        public string InputHint { get; set; }
+        
         public Recipient Recipient { get; set; }
         
         public string ReplyToId { get; set; }
