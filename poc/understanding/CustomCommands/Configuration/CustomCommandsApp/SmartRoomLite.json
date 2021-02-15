@@ -528,10 +528,10 @@
             {
               "type": "SendActivity",
               "activity": {
-                "type": "TURNON",
-                "name": "MYEVENT",
+                "type": "CUSTOM.COMMAND",
+                "name": "TURNON",
                 "value": {
-                  "someAttribute": "{OnOff},{SubjectContext},{SubjectDevice}"
+                  "attributes": "{OnOff},{SubjectContext},{SubjectDevice}"
                 }
               }
             }
