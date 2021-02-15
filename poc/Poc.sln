@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "understanding", "understand
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultipleContinuousTranslation", "demos\multiple-continuous-translation\MultipleContinuousTranslation.csproj", "{BF896CA2-569F-4784-A0F8-A56332136575}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomCommands", "understanding\CustomCommands\CustomCommands.csproj", "{4666B379-E19F-4C8B-986F-7688AC73E823}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomCommands", "demos\CustomCommands\CustomCommands.csproj", "{4666B379-E19F-4C8B-986F-7688AC73E823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,7 +105,7 @@ Global
 		{CD51A7EA-58C6-4880-B91D-E3D60712CA89} = {6C007DFB-0FE6-490D-9141-A5E078E06D9D}
 		{17AFE11E-7CF2-48E9-85E7-2933BD18D79D} = {A18705B9-F9F6-4304-AAC9-2FF16686DA71}
 		{BF896CA2-569F-4784-A0F8-A56332136575} = {A18705B9-F9F6-4304-AAC9-2FF16686DA71}
-		{4666B379-E19F-4C8B-986F-7688AC73E823} = {6C007DFB-0FE6-490D-9141-A5E078E06D9D}
+		{4666B379-E19F-4C8B-986F-7688AC73E823} = {A18705B9-F9F6-4304-AAC9-2FF16686DA71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5C4C36C-6E9A-42E5-896D-4B732E01D7FF}
