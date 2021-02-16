@@ -27,8 +27,6 @@ namespace CustomCommands.Messages
         public DateTime TimeStamp { get; set; }
         
         public string Type { get; set; }
-        
-        // public string Value { get; set; }
     }
     
     internal class Conversation
