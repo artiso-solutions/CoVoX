@@ -17,6 +17,7 @@ namespace API.Modules
             var translationConfig = SpeechTranslationConfig.FromSubscription(configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
             translationConfig.AddTargetLanguage("en-US");
             translationConfig.SpeechRecognitionLanguage = configuration.InputLanguages.First();
+            translationConfig.SetProfanity(ProfanityOption.Raw);
 
             _translationRecognizer = new TranslationRecognizer(translationConfig);
 
