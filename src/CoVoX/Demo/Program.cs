@@ -19,7 +19,7 @@ namespace Demo
                 InputLanguages = new[] { "de-DE" }
             };
 
-            var commands = new List<Command>()
+            var commands = new List<Command>
             {
                 new()
                 {
