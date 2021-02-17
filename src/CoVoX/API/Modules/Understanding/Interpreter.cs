@@ -55,7 +55,7 @@ namespace API.Modules.Understanding
             public CommandRecognizedArgs(string text)
             {
                 var command = _commands.FirstOrDefault(x =>
-                    x.VoiceTriggers.Any(y => string.Equals(y, text, StringComparison.CurrentCultureIgnoreCase)));
+                    x.VoiceTriggers.Any(y => text.ToLower().Contains(y.ToLower())));
                 Command = command;
             }
         }

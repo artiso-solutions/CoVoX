@@ -47,6 +47,7 @@ namespace Demo
 
         private static void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
         {
+            if (e.Command == null) return;
             Console.WriteLine($"Recognized command: {e.Command.Id}");
         }
     }
