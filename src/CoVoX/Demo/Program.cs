@@ -30,6 +30,16 @@ namespace Demo
                         "turn the light on",
                         "light on"
                     }
+                },
+                new()
+                {
+                    Id = "CloseWindow",
+                    VoiceTriggers = new List<string>
+                    {
+                        "close the window",
+                        "close window",
+                        "window close"
+                    }
                 }
             };
 
@@ -47,7 +57,6 @@ namespace Demo
 
         private static void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
         {
-            if (e.Command == null) return;
             Console.WriteLine($"Recognized command: {e.Command.Id}");
         }
     }

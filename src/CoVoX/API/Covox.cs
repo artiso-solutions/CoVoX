@@ -15,6 +15,7 @@ namespace API
             _understandingModule = new Interpreter(configuration);
             _understandingModule.CommandRecognized += (_, args) =>
             {
+                if (args.Command == null) return;
                 CommandDetected?.Invoke(this, new CommandDetectedArgs(args.Command));
             };
         }
