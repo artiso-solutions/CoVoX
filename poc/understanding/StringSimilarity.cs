@@ -102,11 +102,11 @@ namespace LanguageUnderstanding
             return Fuzz.WeightedRatio(input, target);
         }
 
-        public static void CalculateSimilarity(string input, string target)
+        public static double CalculateSimilarity(string input, string voiceTrigger)
         {
-            var targetTokens = target.Split('_').ToList();
+            var targetTokens = voiceTrigger.Split('_').ToList();
             var inputTokens = new List<string>();
-            var cleanedCommand = target.Replace('_', ' ').ToLower();
+            var cleanedCommand = voiceTrigger.Replace('_', ' ').ToLower();
 
             foreach (var token in targetTokens)
             {
@@ -134,6 +134,23 @@ namespace LanguageUnderstanding
             Console.WriteLine($"Percentage of Token Sort Ratio: {percentageTokenSortRatio}");
             Console.WriteLine($"Total Similarity: {totalPercentage}%");
             Console.WriteLine();
+
+            return totalPercentage;
+        }
+
+        public static double CalculateHighestSimilarity(string input, Command command)
+        {
+            var highestPercentage = 0.0;
+            foreach (var trigger in command.VoiceTriggers)
+            {
+                var percentage = CalculateSimilarity(input, trigger);
+                if (percentage > highestPercentage)
+                {
+                    highestPercentage = percentage;
+                }
+            }
+
+            return highestPercentage;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -11,6 +12,40 @@ namespace LanguageUnderstanding
     {
         static async Task Main()
         {
+            //String Similarity
+            var input = "Turn on the light";
+            var target = "TURN_ON_LIGHT";
+            var voiceTriggers = new List<string>();
+
+            voiceTriggers.Add("Turn on Light");
+            voiceTriggers.Add("Light on");
+            voiceTriggers.Add("Turn Light");
+
+            Command LightOnCommand = new Command();
+            LightOnCommand.Id = target;
+            LightOnCommand.VoiceTriggers = voiceTriggers;
+            var commands = new List<Command>();
+            commands.Add(LightOnCommand);
+            var commandSimilarities = new List<CommandSimilarity>();
+
+            foreach (var command in commands)
+            {
+                var result = StringSimilarity.CalculateHighestSimilarity(input, command);
+                commandSimilarities.Add(new CommandSimilarity(){Command = command, Similarity = result});
+            }
+
+            var commandSimilarity = commandSimilarities.Max(x => x.Similarity);
+
+            Console.WriteLine($"Hier steht die Command Similarity: {commandSimilarity}");
+
+            // -> difficult to predict intent by just comparing the strings. intent is formed by keywords: turn light on. The longer the sentence with missing / wrong words,
+            // the bigger the calculated difference by string comparison will be. keyword parsing / intent recognition is needed.
+
+            //StringSimilarity.CombineMethods(input, target);
+
+            // text analystics
+            TextAnalytics.AnalyseText(input);
+
             // Change to your LUIS app Id
             //string luisAppId = "AppId";
 
@@ -19,20 +54,6 @@ namespace LanguageUnderstanding
 
             ////test
             //var intent = "hi";
-
-            //String Similarity
-            var input = "Turn on the light";
-            var target = "TURN_ON_LIGHT";
-            //StringSimilarity.CombineMethods(input, target);
-
-            StringSimilarity.CalculateSimilarity(input, target);
-
-            // -> difficult to predict intent by just comparing the strings. intent is formed by keywords: turn light on. The longer the sentence with missing / wrong words,
-            // the bigger the calculated difference by string comparison will be. keyword parsing / intent recognition is needed.
-
-            // text analystics
-            TextAnalytics.AnalyseText(input);
-
 
             //string score = await Luis.GetResult(luisAppId, luisSubscriptionKey, intent).ConfigureAwait(false);
             //Console.WriteLine("Your Intent is: " + intent);
