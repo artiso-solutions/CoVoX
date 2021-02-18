@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Translation;
@@ -12,27 +12,32 @@ namespace API.Modules
     {
         public event EventHandler<TextRecognizedArgs> TextRecognized;
 
-        private readonly TranslationRecognizer _translationRecognizer;
+        private readonly List<TranslationRecognizer> _translationRecognizers = new();
 
         public Translator(Configuration configuration)
         {
             try
             {
-                var translationConfig = SpeechTranslationConfig.FromSubscription(configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
-                translationConfig.AddTargetLanguage("en-US");
-                translationConfig.SpeechRecognitionLanguage = configuration.InputLanguages.First();
-                translationConfig.SetProfanity(ProfanityOption.Raw);
-
-                _translationRecognizer = new TranslationRecognizer(translationConfig);
-
-                _translationRecognizer.Recognized += (_, args) =>
+                foreach (var inputLanguage in configuration.InputLanguages)
                 {
-                    if (args.Result.Reason == ResultReason.TranslatedSpeech)
+                    var translationConfig = SpeechTranslationConfig.FromSubscription(configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
+                    translationConfig.AddTargetLanguage("en-US");
+                    translationConfig.SetProfanity(ProfanityOption.Raw);
+                    translationConfig.SpeechRecognitionLanguage = inputLanguage;
+
+                    var translationRecognizer = new TranslationRecognizer(translationConfig);
+
+                    translationRecognizer.Recognized += (_, args) =>
                     {
-                        var translatedText = args.Result.Translations.Values.FirstOrDefault();
-                        TextRecognized?.Invoke(this, new TextRecognizedArgs(translatedText));
-                    }
-                };
+                        if (args.Result.Reason == ResultReason.TranslatedSpeech)
+                        {
+                            var translatedText = args.Result.Translations.Values.FirstOrDefault();
+                            TextRecognized?.Invoke(this, new TextRecognizedArgs(translatedText));
+                        }
+                    };
+
+                    _translationRecognizers.Add(translationRecognizer);
+                }
             }
             catch
             {
@@ -42,14 +47,20 @@ namespace API.Modules
 
         public async Task StartVoiceRecognition()
         {
-            await _translationRecognizer.StartContinuousRecognitionAsync();
-            Log.Debug("Started continuous recognition");
+            foreach (var translationRecognizer in _translationRecognizers)
+            {
+                await translationRecognizer.StartContinuousRecognitionAsync();
+                Log.Debug($"Started continuous recognition {translationRecognizer.SpeechRecognitionLanguage}");
+            }
         }
 
         public async Task StopVoiceRecognition()
         {
-            await _translationRecognizer.StopContinuousRecognitionAsync();
-            Log.Debug("Stopped continuous recognition");
+            foreach (var translationRecognizer in _translationRecognizers)
+            {
+                await translationRecognizer.StopContinuousRecognitionAsync();
+                Log.Debug($"Stopped continuous recognition {translationRecognizer.SpeechRecognitionLanguage}");
+            }
         }
 
         public class TextRecognizedArgs : EventArgs

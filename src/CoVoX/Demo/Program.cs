@@ -14,6 +14,8 @@ namespace Demo
 
         static async Task Main(string[] args)
         {
+            Console.WriteLine($"CoVoX Sample App{Environment.NewLine}Copyright (c) artiso solutions GmbH{Environment.NewLine}{Environment.NewLine}https://github.com/artiso-solutions/CoVoX{Environment.NewLine}");
+            
             SetupStaticLogger();
 
             try
@@ -33,11 +35,6 @@ namespace Demo
             }
         }
 
-        private static void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
-        {
-            Console.WriteLine($"Recognized command: {e.Command.Id}");
-        }
-
         private static void SetupStaticLogger()
         {
             var configuration = new ConfigurationBuilder()
@@ -53,8 +50,6 @@ namespace Demo
         {
             try
             {
-                Console.WriteLine($"CoVoX Sample App{Environment.NewLine}Copyright (c) artiso solutions GmbH{Environment.NewLine}{Environment.NewLine}https://github.com/artiso-solutions/CoVoX{Environment.NewLine}");
-
                 var configuration = new Configuration
                 {
                     AzureConfiguration = new AzureConfiguration
@@ -62,7 +57,7 @@ namespace Demo
                         SubscriptionKey = _subscriptionKey,
                         Region = _region
                     },
-                    InputLanguages = new[] { "de-DE" }
+                    InputLanguages = new[] { "de-DE", "en-US", "es-ES", "it-IT" }
                 };
 
                 var commands = new List<Command>
@@ -100,6 +95,10 @@ namespace Demo
             {
                 Log.Error(exception, exception.Message);
             }
+        }
+        private static void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
+        {
+            Console.WriteLine($"Recognized command: {e.Command.Id}");
         }
     }
 }

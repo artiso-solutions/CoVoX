@@ -57,6 +57,7 @@ namespace API.Modules
 
             public CommandRecognizedArgs(string text)
             {
+                //TODO replace string matching (Text Analytics, Language Understanding?)
                 var command =
                     _commands.FirstOrDefault(x => x.VoiceTriggers.Any(y => text.ToLower().Contains(y.ToLower())));
                 if (command != null)
