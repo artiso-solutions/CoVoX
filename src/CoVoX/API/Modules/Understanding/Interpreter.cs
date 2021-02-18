@@ -13,9 +13,9 @@ namespace API.Modules
 
         private static IReadOnlyList<Command> _commands = new List<Command>();
 
-        public Interpreter(Configuration configuration)
+        public Interpreter(ITranslatingModule translator)
         {
-            _translator = new Translator(configuration);
+            _translator = translator;
             _translator.TextRecognized += (_, args) =>
             {
                 CommandRecognized?.Invoke(this, new CommandRecognizedArgs(args.Text));

@@ -9,9 +9,6 @@ namespace Demo
 {
     public class Program
     {
-        private const string SubscriptionKey = "";
-        private const string Region = "";
-
         public static async Task Main(string[] args)
         {
             Console.WriteLine("CoVoX Sample App" +
@@ -58,11 +55,7 @@ namespace Demo
             {
                 var configuration = new Configuration
                 {
-                    AzureConfiguration = new AzureConfiguration
-                    {
-                        SubscriptionKey = SubscriptionKey,
-                        Region = Region
-                    },
+                    AzureConfiguration = SecretsHelper.GetSecrets(),
                     InputLanguages = new[] {"de-DE", "en-US", "es-ES", "it-IT"}
                 };
 

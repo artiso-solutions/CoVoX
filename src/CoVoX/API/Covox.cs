@@ -13,7 +13,8 @@ namespace API
 
         public Covox(Configuration configuration)
         {
-            _understandingModule = new Interpreter(configuration);
+            var translator = new Translator(configuration);
+            _understandingModule = new Interpreter(translator);
             _understandingModule.CommandRecognized += (_, args) =>
             {
                 if (args.Command == null) return;
