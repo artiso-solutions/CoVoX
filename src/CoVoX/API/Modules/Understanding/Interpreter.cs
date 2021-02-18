@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace API.Modules
 {
@@ -24,6 +25,8 @@ namespace API.Modules
         public void RegisterCommands(List<Command> commands)
         {
             _commands = commands;
+            Log.Debug($"Registered commands");
+
         }
 
         public IReadOnlyList<Command> GetRegisteredCommands()
@@ -54,9 +57,18 @@ namespace API.Modules
 
             public CommandRecognizedArgs(string text)
             {
-                var command = _commands.FirstOrDefault(x =>
-                    x.VoiceTriggers.Any(y => text.ToLower().Contains(y.ToLower())));
-                Command = command;
+                var command =
+                    _commands.FirstOrDefault(x => x.VoiceTriggers.Any(y => text.ToLower().Contains(y.ToLower())));
+                if (command != null)
+                {
+                    Command = command;
+                    Log.Debug($"Detected command: {command?.Id}");
+                }
+                else
+                {
+                    Log.Debug($"No matching command found for '{text}'");
+                }
+
             }
         }
     }

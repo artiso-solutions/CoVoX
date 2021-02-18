@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Modules;
+using Serilog;
 
 namespace API
 {
@@ -23,16 +24,25 @@ namespace API
         public async Task StartListening()
         {
             await _understandingModule.StartCommandDetection();
+            Log.Debug("Started listening for commands");
         }
 
         public async Task StopListening()
         {
             await _understandingModule.StopCommandDetection();
+            Log.Debug("Stopped listening for commands");
         }
 
         public void RegisterCommands(List<Command> commands)
         {
-            _understandingModule.RegisterCommands(commands);
+            try
+            {
+                _understandingModule.RegisterCommands(commands);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, exception.Message);
+            }
         }
 
         public class CommandDetectedArgs : EventArgs
