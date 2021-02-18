@@ -26,7 +26,6 @@ namespace API.Modules
         {
             _commands = commands;
             Log.Debug($"Registered commands");
-
         }
 
         public IReadOnlyList<Command> GetRegisteredCommands()
@@ -69,7 +68,6 @@ namespace API.Modules
                 {
                     Log.Debug($"No matching command found for '{text}'");
                 }
-
             }
         }
     }

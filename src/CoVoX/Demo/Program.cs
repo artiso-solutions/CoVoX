@@ -14,8 +14,9 @@ namespace Demo
 
         static async Task Main(string[] args)
         {
-            Console.WriteLine($"CoVoX Sample App{Environment.NewLine}Copyright (c) artiso solutions GmbH{Environment.NewLine}{Environment.NewLine}https://github.com/artiso-solutions/CoVoX{Environment.NewLine}");
-            
+            Console.WriteLine(
+                $"CoVoX Sample App{Environment.NewLine}Copyright (c) artiso solutions GmbH{Environment.NewLine}{Environment.NewLine}https://github.com/artiso-solutions/CoVoX{Environment.NewLine}");
+
             SetupStaticLogger();
 
             try
@@ -57,32 +58,33 @@ namespace Demo
                         SubscriptionKey = _subscriptionKey,
                         Region = _region
                     },
-                    InputLanguages = new[] { "de-DE", "en-US", "es-ES", "it-IT" }
+                    InputLanguages = new[] {"de-DE", "en-US", "es-ES", "it-IT"}
                 };
 
                 var commands = new List<Command>
-            {
-                new()
                 {
-                    Id = "TurnOnLight",
-                    VoiceTriggers = new List<string>
+                    new()
                     {
-                        "turn on the light",
-                        "turn the light on",
-                        "light on"
-                    }
-                },
-                new()
-                {
-                    Id = "CloseWindow",
-                    VoiceTriggers = new List<string>
+                        Id = "TurnOnLight",
+                        VoiceTriggers = new List<string>
+                        {
+                            "turn on the light",
+                            "turn the light on",
+                            "light on"
+                        }
+                    },
+                    new()
                     {
-                        "close the window",
-                        "close window",
-                        "window close"
+                        Id = "CloseWindow",
+                        VoiceTriggers = new List<string>
+                        {
+                            "close the window",
+                            "close window",
+                            "window close"
+                        }
                     }
-                }
-            };
+                };
+
                 var covox = new Covox(configuration);
                 covox.CommandDetected += Covox_CommandDetected;
 
@@ -96,6 +98,7 @@ namespace Demo
                 Log.Error(exception, exception.Message);
             }
         }
+
         private static void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
         {
             Console.WriteLine($"Recognized command: {e.Command.Id}");

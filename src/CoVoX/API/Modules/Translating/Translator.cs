@@ -20,7 +20,8 @@ namespace API.Modules
             {
                 foreach (var inputLanguage in configuration.InputLanguages)
                 {
-                    var translationConfig = SpeechTranslationConfig.FromSubscription(configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
+                    var translationConfig = SpeechTranslationConfig.FromSubscription(
+                        configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
                     translationConfig.AddTargetLanguage("en-US");
                     translationConfig.SetProfanity(ProfanityOption.Raw);
                     translationConfig.SpeechRecognitionLanguage = inputLanguage;
