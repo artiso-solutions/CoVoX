@@ -20,13 +20,10 @@ namespace LanguageUnderstanding
             //test
             var intent = "hi";
 
-            //levenshtein
-            var input = "Turn on the light";
+            //String Similarity
+            var input = "Turn on light";
             var target = "Turn on the light";
-            Console.WriteLine(StringSimilarity.GetSimilarityLevenshtein(input, target));
-
-            //ngram
-            Console.WriteLine(StringSimilarity.GetSimilarityNGram(input, target));
+            StringSimilarity.CombineMethods(input, target);
 
             // -> difficult to predict intent by just comparing the strings. intent is formed by keywords: turn light on. The longer the sentence with missing / wrong words,
             // the bigger the calculated difference by string comparison will be. keyword parsing / intent recognition is needed.
