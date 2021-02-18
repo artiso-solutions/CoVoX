@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FuzzySharp;
 
@@ -8,6 +9,7 @@ namespace API.Modules.Understanding.Interpreters
     {
         public Command InterpretCommand(IReadOnlyList<Command> commands, string text)
         {
+            Debug.WriteLine(text);
             var commandSimilarities = new List<CommandSimilarity>();
             foreach (var command in commands)
             {
@@ -16,6 +18,11 @@ namespace API.Modules.Understanding.Interpreters
             }
 
             var commandSimilarity = commandSimilarities.OrderByDescending(x => x.Similarity).FirstOrDefault();
+            if (commandSimilarity.Similarity < 80)
+            {
+                return null;
+            }
+
             return commandSimilarity.Command;
         }
 

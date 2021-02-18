@@ -56,7 +56,7 @@ namespace Demo
                 var configuration = new Configuration
                 {
                     AzureConfiguration = SecretsHelper.GetSecrets(),
-                    InputLanguages = new[] {"de-DE"}
+                    InputLanguages = new[] {"de-DE", "it-IT"}
                 };
 
                 var commands = new List<Command>
@@ -69,6 +69,16 @@ namespace Demo
                             "turn on the light",
                             "turn the light on",
                             "light on"
+                        }
+                    },
+                    new()
+                    {
+                        Id = "TurnOffLight",
+                        VoiceTriggers = new List<string>
+                        {
+                            "turn off the light",
+                            "turn the light off",
+                            "light off"
                         }
                     },
                     new()
