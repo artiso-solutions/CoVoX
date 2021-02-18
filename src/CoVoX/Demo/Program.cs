@@ -7,12 +7,12 @@ using Serilog;
 
 namespace Demo
 {
-    class Program
+    public class Program
     {
-        private static readonly string _subscriptionKey = "";
-        private static readonly string _region = "";
+        private const string SubscriptionKey = "";
+        private const string Region = "";
 
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Console.WriteLine(
                 $"CoVoX Sample App{Environment.NewLine}Copyright (c) artiso solutions GmbH{Environment.NewLine}{Environment.NewLine}https://github.com/artiso-solutions/CoVoX{Environment.NewLine}");
@@ -55,8 +55,8 @@ namespace Demo
                 {
                     AzureConfiguration = new AzureConfiguration
                     {
-                        SubscriptionKey = _subscriptionKey,
-                        Region = _region
+                        SubscriptionKey = SubscriptionKey,
+                        Region = Region
                     },
                     InputLanguages = new[] {"de-DE", "en-US", "es-ES", "it-IT"}
                 };
