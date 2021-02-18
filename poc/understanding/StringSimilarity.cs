@@ -81,16 +81,56 @@ namespace LanguageUnderstanding
             //Metric Longest Common Subsequence
             Console.WriteLine("Metric Longest Common Subsequence");
             Console.WriteLine($"{GetSimilarityMetricLongestCommonSubsequence(input, target)}\n");
+
+            // Fuzzy Sort
+            Console.WriteLine("Metric Longest Common Subsequence");
+            Console.WriteLine($"{FuzzyTokenSortRatio(input, target)}\n");
+
+            // Fuzzy Weight
+            Console.WriteLine("Metric Longest Common Subsequence");
+            Console.WriteLine($"{GetSimilarityMetricLongestCommonSubsequence(input, target)}\n");
         }
 
-        public static void FuzzyTokenSortRatio(string input, string target)
+        public static double FuzzyTokenSortRatio(string input, string target)
         {
-            Fuzz.TokenSortRatio(input, target);
+            return Fuzz.TokenSortRatio(input, target);
         }
 
-        public static void FuzzyWeightedRatio(string input, string target)
+        // get % of similarity
+        public static double FuzzyWeightedRatio(string input, string target)
         {
-            Fuzz.WeightedRatio(input, target);
+            return Fuzz.WeightedRatio(input, target);
+        }
+
+        public static void CalculateSimilarity(string input, string target)
+        {
+            var targetTokens = target.Split('_').ToList();
+            var inputTokens = new List<string>();
+            var cleanedCommand = target.Replace('_', ' ').ToLower();
+
+            foreach (var token in targetTokens)
+            {
+                var lowertoken = token.ToLower();
+                if(input.ToLower().Contains(lowertoken))
+                {
+                    inputTokens.Add(token);
+                }
+            }
+
+            var cleanedInputTokenString = "";
+            foreach (string inputToken in inputTokens)
+            {
+                cleanedInputTokenString += $"{inputToken.ToLower()} ";
+            }
+
+            var percentageAmountOfKeywords = (inputTokens.Count / targetTokens.Count) * 100; //80%
+            var percentageStringSimilarity = FuzzyWeightedRatio(input.ToLower(), cleanedCommand); //10%
+            var percentageTokenSortRatio = FuzzyTokenSortRatio(cleanedInputTokenString, cleanedCommand); //10%
+
+            var totalPercentage = percentageAmountOfKeywords * 0.8 + percentageStringSimilarity * 0.1 + percentageTokenSortRatio * 0.1;
+
+            Console.WriteLine($"percentage of keywords {percentageAmountOfKeywords} percentage string similarity {percentageStringSimilarity} percentage token sort ratio {percentageTokenSortRatio}" );
+            Console.WriteLine($"total similarity in % {totalPercentage}");
         }
     }
 }

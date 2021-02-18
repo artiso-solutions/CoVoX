@@ -21,9 +21,11 @@ namespace LanguageUnderstanding
             var intent = "hi";
 
             //String Similarity
-            var input = "Turn on light";
-            var target = "Turn on the light";
+            var input = "Turn on the light";
+            var target = "TURN_ON_LIGHT";
             StringSimilarity.CombineMethods(input, target);
+
+            StringSimilarity.CalculateSimilarity(input, target);
 
             // -> difficult to predict intent by just comparing the strings. intent is formed by keywords: turn light on. The longer the sentence with missing / wrong words,
             // the bigger the calculated difference by string comparison will be. keyword parsing / intent recognition is needed.
