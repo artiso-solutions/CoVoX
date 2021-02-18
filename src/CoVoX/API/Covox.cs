@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Modules;
+using API.Modules.Understanding.Interpreters;
 using Serilog;
 
 namespace API
@@ -14,7 +15,8 @@ namespace API
         public Covox(Configuration configuration)
         {
             var translator = new Translator(configuration);
-            _understandingModule = new Interpreter(translator);
+            var similarityInterpreter = new SimilarityInterpreter();
+            _understandingModule = new UnderstandingModule(translator, similarityInterpreter);
             _understandingModule.CommandRecognized += (_, args) =>
             {
                 if (args.Command == null) return;

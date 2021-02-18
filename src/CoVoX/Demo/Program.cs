@@ -56,7 +56,7 @@ namespace Demo
                 var configuration = new Configuration
                 {
                     AzureConfiguration = SecretsHelper.GetSecrets(),
-                    InputLanguages = new[] {"de-DE", "en-US", "es-ES", "it-IT"}
+                    InputLanguages = new[] {"de-DE"}
                 };
 
                 var commands = new List<Command>
@@ -79,6 +79,16 @@ namespace Demo
                             "close the window",
                             "close window",
                             "window close"
+                        }
+                    },
+                    new()
+                    {
+                        Id = "OpenWindow",
+                        VoiceTriggers = new List<string>
+                        {
+                            "open the window",
+                            "open window",
+                            "window open"
                         }
                     }
                 };

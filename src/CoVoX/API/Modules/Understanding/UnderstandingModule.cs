@@ -6,19 +6,19 @@ using Serilog;
 
 namespace API.Modules
 {
-    public class Interpreter : IUnderstandingModule
+    public class UnderstandingModule : IUnderstandingModule
     {
         private readonly ITranslatingModule _translator;
         public event EventHandler<CommandRecognizedArgs> CommandRecognized;
 
         private static IReadOnlyList<Command> _commands = new List<Command>();
 
-        public Interpreter(ITranslatingModule translator)
+        public UnderstandingModule(ITranslatingModule translator, IInterpreter interpreter)
         {
             _translator = translator;
             _translator.TextRecognized += (_, args) =>
             {
-                CommandRecognized?.Invoke(this, new CommandRecognizedArgs(args.Text));
+                CommandRecognized?.Invoke(this, new CommandRecognizedArgs(interpreter, _commands, args.Text));
             };
         }
 
@@ -48,27 +48,6 @@ namespace API.Modules
         public async Task StopCommandDetection()
         {
             await _translator.StopVoiceRecognition();
-        }
-
-        public class CommandRecognizedArgs : EventArgs
-        {
-            public Command Command { get; }
-
-            public CommandRecognizedArgs(string text)
-            {
-                //TODO replace string matching (Text Analytics, Language Understanding?)
-                var command =
-                    _commands.FirstOrDefault(x => x.VoiceTriggers.Any(y => text.ToLower().Contains(y.ToLower())));
-                if (command != null)
-                {
-                    Command = command;
-                    Log.Debug($"Detected command: {command?.Id}");
-                }
-                else
-                {
-                    Log.Debug($"No matching command found for '{text}'");
-                }
-            }
         }
     }
 }
