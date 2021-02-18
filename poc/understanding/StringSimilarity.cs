@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using F23.StringSimilarity;
+using FuzzySharp;
 
 namespace LanguageUnderstanding
 {
@@ -11,7 +12,6 @@ namespace LanguageUnderstanding
     {
         public static string GetSimilarityNormalizedLevenshtein(string input, string target)
         {
-
             var normalizedLevenshtein = new NormalizedLevenshtein();
             return normalizedLevenshtein.Distance(input, target).ToString();
         }
@@ -24,35 +24,30 @@ namespace LanguageUnderstanding
 
         public static string GetSimilarityLevenshtein(string input, string target)
         {
-
-            var levenshtein = new Levenshtein();
+            var levenshtein = new F23.StringSimilarity.Levenshtein();
             return levenshtein.Distance(input, target).ToString();
         }
 
         public static string GetSimilarityDamerau(string input, string target)
         {
-
             var damerau = new Damerau();
             return damerau.Distance(input, target).ToString();
         }
 
         public static string GetSimilarityJaroWinkler(string input, string target)
         {
-
             var jaroWinkler = new JaroWinkler();
             return jaroWinkler.Distance(input, target).ToString();
         }
 
         public static string GetSimilarityLongestCommonSubsequence(string input, string target)
         {
-
             var lcs = new LongestCommonSubsequence();
             return lcs.Distance(input, target).ToString();
         }
 
         public static string GetSimilarityMetricLongestCommonSubsequence(string input, string target)
         {
-
             var mlcs = new MetricLCS();
             return mlcs.Distance(input, target).ToString();
         }
@@ -86,7 +81,16 @@ namespace LanguageUnderstanding
             //Metric Longest Common Subsequence
             Console.WriteLine("Metric Longest Common Subsequence");
             Console.WriteLine($"{GetSimilarityMetricLongestCommonSubsequence(input, target)}\n");
+        }
 
+        public static void FuzzyTokenSortRatio(string input, string target)
+        {
+            Fuzz.TokenSortRatio(input, target);
+        }
+
+        public static void FuzzyWeightedRatio(string input, string target)
+        {
+            Fuzz.WeightedRatio(input, target);
         }
     }
 }
