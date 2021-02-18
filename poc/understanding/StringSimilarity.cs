@@ -129,8 +129,11 @@ namespace LanguageUnderstanding
 
             var totalPercentage = percentageAmountOfKeywords * 0.8 + percentageStringSimilarity * 0.1 + percentageTokenSortRatio * 0.1;
 
-            Console.WriteLine($"percentage of keywords {percentageAmountOfKeywords} percentage string similarity {percentageStringSimilarity} percentage token sort ratio {percentageTokenSortRatio}" );
-            Console.WriteLine($"total similarity in % {totalPercentage}");
+            Console.WriteLine($"Percentage of similar Keywords: {percentageAmountOfKeywords}");
+            Console.WriteLine($"Percentage of string Similatiry: {percentageStringSimilarity}");
+            Console.WriteLine($"Percentage of Token Sort Ratio: {percentageTokenSortRatio}");
+            Console.WriteLine($"Total Similarity: {totalPercentage}%");
+            Console.WriteLine();
         }
     }
 }

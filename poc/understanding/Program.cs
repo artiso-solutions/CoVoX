@@ -12,18 +12,18 @@ namespace LanguageUnderstanding
         static async Task Main()
         {
             // Change to your LUIS app Id
-            string luisAppId = "AppId";
+            //string luisAppId = "AppId";
 
-            // Change to your LUIS subscription key
-            string luisSubscriptionKey = "SubscriptionKey";
+            //// Change to your LUIS subscription key
+            //string luisSubscriptionKey = "SubscriptionKey";
 
-            //test
-            var intent = "hi";
+            ////test
+            //var intent = "hi";
 
             //String Similarity
             var input = "Turn on the light";
             var target = "TURN_ON_LIGHT";
-            StringSimilarity.CombineMethods(input, target);
+            //StringSimilarity.CombineMethods(input, target);
 
             StringSimilarity.CalculateSimilarity(input, target);
 
@@ -34,11 +34,11 @@ namespace LanguageUnderstanding
             TextAnalytics.AnalyseText(input);
 
 
-            string score = await Luis.GetResult(luisAppId, luisSubscriptionKey, intent).ConfigureAwait(false);
-            Console.WriteLine("Your Intent is: " + intent);
-            Console.Write(string.Format("\n\rWith a Score of: {0} \n\r", score));
-            Console.Write("\nPress any key to continue...");
-            Console.Read();
+            //string score = await Luis.GetResult(luisAppId, luisSubscriptionKey, intent).ConfigureAwait(false);
+            //Console.WriteLine("Your Intent is: " + intent);
+            //Console.Write(string.Format("\n\rWith a Score of: {0} \n\r", score));
+            //Console.Write("\nPress any key to continue...");
+            //Console.Read();
         }
     }
     static class Luis

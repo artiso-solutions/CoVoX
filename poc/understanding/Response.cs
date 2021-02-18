@@ -11,28 +11,4 @@ namespace LanguageUnderstanding
         [JsonProperty("prediction")]
         public Prediction Prediction { get; set; }
     }
-
-    //public class Prediction
-    //{
-    //    [JsonProperty("topIntent")] 
-    //    public string TopIntent { get; set; }
-
-    //    [JsonProperty("intents")] 
-    //    public List<Intent> Intents { get; set; }
-
-    //    [JsonProperty("entities")] 
-    //    public string entity => null;
-
-    //    [JsonProperty("sentiment")]
-    //    public Sentiment Sentiment { get; set; }
-    //}
-
-    //public class Intent
-    //{
-    //    [JsonProperty("")]
-    //    public string IntentName { get; set; }
-
-    //    [JsonProperty("score")]
-    //    public double ScoreValue { get; set; }
-    //}
 }
