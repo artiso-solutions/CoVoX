@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Modules.Understanding
+namespace API.Modules
 {
     public class Interpreter : IUnderstandingModule
     {
