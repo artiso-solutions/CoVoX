@@ -14,8 +14,13 @@ namespace Demo
 
         public static async Task Main(string[] args)
         {
-            Console.WriteLine(
-                $"CoVoX Sample App{Environment.NewLine}Copyright (c) artiso solutions GmbH{Environment.NewLine}{Environment.NewLine}https://github.com/artiso-solutions/CoVoX{Environment.NewLine}");
+            Console.WriteLine("CoVoX Sample App" +
+                              Environment.NewLine +
+                              "Copyright (c) artiso solutions GmbH" +
+                              Environment.NewLine +
+                              Environment.NewLine +
+                              "https://github.com/artiso-solutions/CoVoX" +
+                              Environment.NewLine);
 
             SetupStaticLogger();
 
