@@ -11,14 +11,7 @@ namespace API.Modules
         public CommandRecognizedArgs(IInterpreter interpreter, IReadOnlyList<Command> commands, string text)
         {
             Command = interpreter.InterpretCommand(commands, text);
-            if (Command != null)
-            {
-                Log.Debug($"Detected command: {Command?.Id}");
-            }
-            else
-            {
-                Log.Debug($"No matching command found for '{text}'");
-            }
+            Log.Debug(Command != null ? $"Detected command: {Command?.Id}" : $"No matching command found for '{text}'");
         }
     }
 }

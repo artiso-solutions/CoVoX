@@ -25,7 +25,7 @@ namespace API.Modules
         public void RegisterCommands(List<Command> commands)
         {
             _commands = commands;
-            Log.Debug($"Registered commands");
+            Log.Debug("Registered commands");
         }
 
         public IReadOnlyList<Command> GetRegisteredCommands()

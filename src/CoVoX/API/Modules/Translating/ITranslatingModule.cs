@@ -6,7 +6,7 @@ namespace API
 {
     public interface ITranslatingModule
     {
-        event EventHandler<Translator.TextRecognizedArgs> TextRecognized;
+        event EventHandler<TextRecognizedArgs> TextRecognized;
         Task StartVoiceRecognition();
         Task StopVoiceRecognition();
     }

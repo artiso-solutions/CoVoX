@@ -18,12 +18,12 @@ namespace API.Modules.Understanding.Interpreters
             }
 
             var commandSimilarity = commandSimilarities.OrderByDescending(x => x.Similarity).FirstOrDefault();
-            if (commandSimilarity.Similarity < 80)
+            if (commandSimilarity?.Similarity < 80)
             {
                 return null;
             }
 
-            return commandSimilarity.Command;
+            return commandSimilarity?.Command;
         }
 
         private static double FuzzyTokenSortRatio(string input, string target)
