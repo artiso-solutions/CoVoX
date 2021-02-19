@@ -23,6 +23,7 @@ namespace LigthSwitchDemo
 
         public MainWindow()
         {
+			// Bla
             InitializeComponent();
             SetupStaticLogger();
         }
