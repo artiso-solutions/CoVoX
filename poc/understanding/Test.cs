@@ -8,10 +8,12 @@ namespace LanguageUnderstanding
         {
             Assert(sc is not null);
 
-            // This is what the speech-to-translated-text will recognize.
+            // This is the command's voice trigger.
             const string target = "Turn on the light";
 
-            var exactMatchScore = sc.Calculate(target, "Turn on the light");
+            // The input is what the speech-to-translated-text will recognize
+            var input = "Turn on the light";
+            var exactMatchScore = sc.Calculate(target, input);
             // Each of these target scores (0.99) are what we define as matching threshold
             Assert(exactMatchScore >= 0.99, "Exact match");
 
