@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using LanguageUnderstanding.SimilarityCalculators;
 
 namespace LanguageUnderstanding
 {
@@ -18,7 +19,7 @@ namespace LanguageUnderstanding
              */
             
             // Test.With(new DummySimilarityCalculator());
-            Test.With(new NormalizedLevenshteinSimilarityCalculator());
+            Test.With(new FuzzyWeightedRatioCalculator());
         }
     }
 }
