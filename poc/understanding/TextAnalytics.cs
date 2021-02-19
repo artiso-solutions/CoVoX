@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure;
-using System;
-using System.Globalization;
 using Azure.AI.TextAnalytics;
 
 namespace LanguageUnderstanding
 {
     public class TextAnalytics
     {
-        private static readonly string textAnalyticsApiKey = "8a71b61dd1be4c85a90ab15d39c6c7ac";
+        private static readonly string textAnalyticsApiKey = "";
         private static readonly string textAnalyticsEndpoint = "https://textanalyticscovox.cognitiveservices.azure.com/";
 
         private static readonly AzureKeyCredential credentials = new AzureKeyCredential(textAnalyticsApiKey);
@@ -25,9 +19,6 @@ namespace LanguageUnderstanding
             DetectLanguage(client, input);
             KeyWordExtraction(client, input);
             GetNamedEntities(client, input);
-
-            Console.Write("Press any key to exit.");
-            Console.ReadKey();
 
             return "";
         }
