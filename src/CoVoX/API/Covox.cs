@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Modules;
 using API.Modules.Understanding.Interpreters;
 using Serilog;
+using API.Utils;
 
 namespace API
 {
@@ -14,14 +17,23 @@ namespace API
 
         public Covox(Configuration configuration)
         {
-            var translator = new Translator(configuration);
-            var similarityInterpreter = new SimilarityInterpreter();
-            _understandingModule = new UnderstandingModule(translator, similarityInterpreter);
-            _understandingModule.CommandRecognized += (_, args) =>
+            var errors = ModelValidator.ValidateModel(configuration);
+
+            if (!errors.Any())
             {
-                if (args.Command == null) return;
-                CommandDetected?.Invoke(this, new CommandDetectedArgs(args.Command));
-            };
+                var translator = new Translator(configuration);
+                var similarityInterpreter = new SimilarityInterpreter();
+                _understandingModule = new UnderstandingModule(translator, similarityInterpreter);
+                _understandingModule.CommandRecognized += (_, args) =>
+                {
+                    if (args.Command == null) return;
+                    CommandDetected?.Invoke(this, new CommandDetectedArgs(args.Command));
+                };
+            }
+            else
+            {
+                throw new AggregateException(errors.Select(error => new Exception(error.ErrorMessage)).ToList());
+            }
         }
 
         public async Task StartListening()

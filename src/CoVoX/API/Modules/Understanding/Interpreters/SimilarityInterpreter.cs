@@ -7,18 +7,18 @@ namespace API.Modules.Understanding.Interpreters
 {
     public class SimilarityInterpreter : IInterpreter
     {
-        public Command InterpretCommand(IReadOnlyList<Command> commands, string text)
+        public Command InterpretCommand(IReadOnlyList<Command> commands, double matchingThreshold, string text)
         {
             Debug.WriteLine(text);
             var commandSimilarities = new List<CommandSimilarity>();
             foreach (var command in commands)
             {
                 var result = CalculateHighestSimilarity(text, command);
-                commandSimilarities.Add(new CommandSimilarity() { Command = command, Similarity = result });
+                commandSimilarities.Add(new CommandSimilarity() {Command = command, Similarity = result});
             }
 
             var commandSimilarity = commandSimilarities.OrderByDescending(x => x.Similarity).FirstOrDefault();
-            if (commandSimilarity?.Similarity < 80)
+            if (commandSimilarity?.Similarity < matchingThreshold * 100)
             {
                 return null;
             }
@@ -61,7 +61,8 @@ namespace API.Modules.Understanding.Interpreters
             var percentageStringSimilarity = FuzzyWeightedRatio(input.ToLower(), cleanedCommand); //10%
             var percentageTokenSortRatio = FuzzyTokenSortRatio(cleanedInputTokenString, cleanedCommand); //10%
 
-            var totalPercentage = percentageAmountOfKeywords * 0.8 + percentageStringSimilarity * 0.1 + percentageTokenSortRatio * 0.1;
+            var totalPercentage = percentageAmountOfKeywords * 0.8 + percentageStringSimilarity * 0.1 +
+                                  percentageTokenSortRatio * 0.1;
             return totalPercentage;
         }
 

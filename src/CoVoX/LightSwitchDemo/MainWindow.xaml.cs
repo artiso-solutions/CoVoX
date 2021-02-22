@@ -57,7 +57,8 @@ namespace LigthSwitchDemo
                 var configuration = new Configuration
                 {
                     AzureConfiguration = SecretsHelper.GetSecrets(),
-                    InputLanguages = new[] { "de-DE", "it-IT", "es-ES" }
+                    InputLanguages = new[] { "de-DE", "it-IT", "es-ES" },
+                    MatchingThreshold = 0.8
                 };
 
                 var commands = new List<Command>
