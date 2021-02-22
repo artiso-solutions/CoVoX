@@ -30,13 +30,13 @@ namespace LanguageUnderstanding
             Assert(leanScore >= 0.85, "Input partial target");
 
             var noMatchScore = sc.Calculate(target, "abcdefghijklmnopqrstuvwxyz");
-            Assert(noMatchScore < 0.10, "Input is just wrong");
+            Assert(noMatchScore < 0.25, "Input is just wrong");
 
             var reorderedScore = sc.Calculate(target, "light Turn the on");
-            Assert(reorderedScore < 0.90, "Input is reordered compared to target");
+            Assert(reorderedScore <= 0.95, "Input is reordered compared to target");
 
             var differentSubjectScore = sc.Calculate(target, "Turn on the stove");
-            Assert(differentSubjectScore > 0.80, "Input is not quite accurate");
+            Assert(differentSubjectScore > 0.70, "Input is not quite accurate");
             Assert(differentSubjectScore < 0.95, "Input is not that accurate");
         }
 
