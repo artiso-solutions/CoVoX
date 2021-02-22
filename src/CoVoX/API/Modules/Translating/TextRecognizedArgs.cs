@@ -7,11 +7,12 @@ namespace API.Modules
     public class TextRecognizedArgs : EventArgs
     {
         public string Text { get; }
-
-        public TextRecognizedArgs(string translatedText)
+        public string InputLanguage { get; set; }
+        public TextRecognizedArgs(string translatedText, string inputLanguage)
         {
             Text = new string(translatedText.Where(c => !char.IsPunctuation(c)).ToArray());
-            Log.Debug($"Detected text: {translatedText}");
+            InputLanguage = inputLanguage;
+            Log.Debug($"Detected text ('{inputLanguage}'): {translatedText}");
         }
     }
 }

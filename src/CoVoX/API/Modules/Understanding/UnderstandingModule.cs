@@ -13,12 +13,12 @@ namespace API.Modules
 
         private static IReadOnlyList<Command> _commands = new List<Command>();
 
-        public UnderstandingModule(ITranslatingModule translator, IInterpreter interpreter)
+        public UnderstandingModule(ITranslatingModule translator, IInterpreter interpreter, double matchingThreshold)
         {
             _translator = translator;
             _translator.TextRecognized += (_, args) =>
             {
-                CommandRecognized?.Invoke(this, new CommandRecognizedArgs(interpreter, _commands, args.Text));
+                CommandRecognized?.Invoke(this, new CommandRecognizedArgs(interpreter, _commands, matchingThreshold, args.Text, args.InputLanguage));
             };
         }
 

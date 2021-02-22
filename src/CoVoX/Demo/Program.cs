@@ -56,8 +56,8 @@ namespace Demo
                 var configuration = new Configuration
                 {
                     AzureConfiguration = SecretsHelper.GetSecrets(),
-                    InputLanguages = new[] {"de-DE", "it-IT"},
-                    MatchingThreshold = 0.8
+                    InputLanguages = new[] {"en-US", "de-DE", "it-IT"},
+                    MatchingThreshold = 0.99
                 };
 
                 var commands = new List<Command>

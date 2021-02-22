@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,11 +22,11 @@ namespace API
             {
                 var translator = new Translator(configuration);
                 var similarityInterpreter = new SimilarityInterpreter();
-                _understandingModule = new UnderstandingModule(translator, similarityInterpreter);
+                _understandingModule = new UnderstandingModule(translator, similarityInterpreter, configuration.MatchingThreshold);
                 _understandingModule.CommandRecognized += (_, args) =>
                 {
                     if (args.Command == null) return;
-                    CommandDetected?.Invoke(this, new CommandDetectedArgs(args.Command));
+                    CommandDetected?.Invoke(this, new CommandDetectedArgs(args.Command, args.DetectionContext));
                 };
             }
             else
@@ -63,10 +62,12 @@ namespace API
         public class CommandDetectedArgs : EventArgs
         {
             public Command Command { get; }
+            public DetectionContext DetectionContext { get; }
 
-            public CommandDetectedArgs(Command command)
+            public CommandDetectedArgs(Command command, DetectionContext context)
             {
                 Command = command;
+                DetectionContext = context;
             }
         }
     }

@@ -22,9 +22,9 @@ namespace API.Modules
                 {
                     var translationConfig = SpeechTranslationConfig.FromSubscription(
                         configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
+                    translationConfig.SpeechRecognitionLanguage = inputLanguage;
                     translationConfig.AddTargetLanguage("en-US");
                     translationConfig.SetProfanity(ProfanityOption.Raw);
-                    translationConfig.SpeechRecognitionLanguage = inputLanguage;
 
                     var translationRecognizer = new TranslationRecognizer(translationConfig);
 
@@ -33,7 +33,7 @@ namespace API.Modules
                         if (args.Result.Reason == ResultReason.TranslatedSpeech)
                         {
                             var translatedText = args.Result.Translations.Values.FirstOrDefault();
-                            TextRecognized?.Invoke(this, new TextRecognizedArgs(translatedText));
+                            TextRecognized?.Invoke(this, new TextRecognizedArgs(translatedText, inputLanguage));
                         }
                     };
 

@@ -4,6 +4,7 @@ namespace API.Modules
 {
     public interface IInterpreter
     {
-        Command InterpretCommand(IReadOnlyList<Command> commands, double matchingThreshold, string text);
+        (Command, IReadOnlyList<Command>) InterpretCommand(IReadOnlyList<Command> commands, double matchingThreshold,
+            string text);
     }
 }
