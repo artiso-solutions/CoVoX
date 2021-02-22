@@ -109,7 +109,7 @@ namespace Demo
 
                 covox.RegisterCommands(commands);
 
-                await covox.StartListening();
+                await covox.StartAsync();
                 Console.WriteLine("I'm listening...");
             }
             catch (Exception exception)

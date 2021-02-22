@@ -100,7 +100,7 @@ namespace LigthSwitchDemo
 
                 covox.RegisterCommands(commands);
 
-                await covox.StartListening();
+                await covox.StartAsync();
                 Log.Debug("I'm listening...");
                 while (true)
                 {

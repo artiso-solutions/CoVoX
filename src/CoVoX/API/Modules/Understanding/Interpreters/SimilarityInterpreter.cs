@@ -1,30 +1,26 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FuzzySharp;
 
 namespace API.Modules.Understanding.Interpreters
 {
-    public class SimilarityInterpreter : IInterpreter
+    internal class SimilarityInterpreter : IInterpreter
     {
-        public (Command, IReadOnlyList<Command>) InterpretCommand(IReadOnlyList<Command> commands, double matchingThreshold,
-            string text)
+        public IReadOnlyList<Match> InterpretCommand(
+            IReadOnlyList<Command> commands,
+            string input)
         {
-            Debug.WriteLine(text);
             var candidates = new List<Command>();
+
             foreach (var command in commands)
             {
-                command.MatchScore = CalculateHighestSimilarity(text, command);
+                command.MatchScore = CalculateHighestSimilarity(input, command);
                 candidates.Add(command);
             }
 
             candidates = candidates.OrderByDescending(x => x.MatchScore).ToList();
 
-            var matchedCommand = candidates.FirstOrDefault()?.MatchScore >= matchingThreshold
-                ? candidates.FirstOrDefault()
-                : null;
-
-            return (matchedCommand, candidates);
+            return candidates.Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToArray();
         }
 
         private static double FuzzyTokenSortRatio(string input, string target)

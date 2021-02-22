@@ -1,53 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Serilog;
 
 namespace API.Modules
 {
-    public class UnderstandingModule : IUnderstandingModule
+    internal class UnderstandingModule : IUnderstandingModule
     {
-        private readonly ITranslatingModule _translator;
-        public event EventHandler<CommandRecognizedArgs> CommandRecognized;
+        private readonly IInterpreter _interpreter;
 
-        private static IReadOnlyList<Command> _commands = new List<Command>();
-
-        public UnderstandingModule(ITranslatingModule translator, IInterpreter interpreter, double matchingThreshold)
+        public UnderstandingModule(
+            IInterpreter interpreter,
+            double matchingThreshold)
         {
-            _translator = translator;
-            _translator.TextRecognized += (_, args) =>
-            {
-                CommandRecognized?.Invoke(this, new CommandRecognizedArgs(interpreter, _commands, matchingThreshold, args.Text, args.InputLanguage));
-            };
+            _interpreter = interpreter;
+            MatchingThreshold = matchingThreshold;
         }
 
-        public void RegisterCommands(List<Command> commands)
+        public IReadOnlyList<Command> Commands { get; private set; } = Array.Empty<Command>();
+
+        public double MatchingThreshold { get; }
+
+        public void RegisterCommands(IEnumerable<Command> commands)
         {
-            _commands = commands;
+            Commands = commands?.ToList();
             Log.Debug("Registered commands");
         }
 
-        public IReadOnlyList<Command> GetRegisteredCommands()
+        public (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
         {
-            return _commands;
-        }
+            var matches = _interpreter.InterpretCommand(Commands, input);
 
-        public async Task StartCommandDetection()
-        {
-            if (GetRegisteredCommands().Any())
-            {
-                await _translator.StartVoiceRecognition();
-            }
-            else
-            {
-                throw new Exception("No commands registered");
-            }
-        }
+            var bestMatch = matches
+                .Where(m => m.MatchScore >= MatchingThreshold)
+                .OrderByDescending(m => m.MatchScore)
+                .FirstOrDefault();
 
-        public async Task StopCommandDetection()
-        {
-            await _translator.StopVoiceRecognition();
+            return (bestMatch, matches);
         }
     }
 }

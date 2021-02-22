@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using API.Modules;
+﻿using System.Collections.Generic;
 
 namespace API
 {
-    public interface IUnderstandingModule
+    internal interface IUnderstandingModule
     {
-        event EventHandler<CommandRecognizedArgs> CommandRecognized;
-        void RegisterCommands(List<Command> commands);
-        IReadOnlyList<Command> GetRegisteredCommands();
-        Task StartCommandDetection();
-        Task StopCommandDetection();
+        IReadOnlyList<Command> Commands { get; }
+
+        void RegisterCommands(IEnumerable<Command> commands);
+
+        (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input);
     }
 }
