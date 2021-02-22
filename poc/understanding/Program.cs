@@ -20,6 +20,16 @@ namespace LanguageUnderstanding
             
             // Test.With(new DummySimilarityCalculator());
             Test.With(new FuzzyWeightedRatioCalculator());
+            Test.With(new CosineSimilarityCalculator());
+            Test.With(new DamerauSimilarityCalculator());
+            Test.With(new JaroWinklerSimilarityCalculator());
+            Test.With(new LevenshteinSimilarityCalculator());
+            Test.With(new LongestCommonSubsequenceSimilarityCalculator());
+            Test.With(new MetricLCSSimilarityCalculator());
+            Test.With(new NGramSimilarityCalculator());
+            Test.With(new NormalizedLevenshteinSimilarityCalculator());
+            Test.With(new QGramSimilarityCalculator());
+            //Test.With(new DamerauSimilarityCalcula());
         }
     }
 }
