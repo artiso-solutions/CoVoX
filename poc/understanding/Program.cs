@@ -18,7 +18,6 @@ namespace LanguageUnderstanding
              * FuzzySharp algorithms: https://github.com/JakeBayer/FuzzySharp#usage
              */
             
-            // Test.With(new DummySimilarityCalculator());
             Test.With(new FuzzyWeightedRatioCalculator());
             Test.With(new CosineSimilarityCalculator());
             Test.With(new DamerauSimilarityCalculator());
@@ -29,7 +28,6 @@ namespace LanguageUnderstanding
             Test.With(new NGramSimilarityCalculator());
             Test.With(new NormalizedLevenshteinSimilarityCalculator());
             Test.With(new QGramSimilarityCalculator());
-            //Test.With(new DamerauSimilarityCalcula());
         }
     }
 }
