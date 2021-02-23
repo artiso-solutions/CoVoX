@@ -105,7 +105,7 @@ namespace Demo
                 };
 
                 var covox = new Covox(configuration);
-                covox.CommandDetected += Covox_CommandDetected;
+                covox.Recognized += Covox_Recognized;
 
                 covox.RegisterCommands(commands);
 
@@ -118,9 +118,9 @@ namespace Demo
             }
         }
 
-        private static void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
+        private static void Covox_Recognized(Command command, RecognitionContext context)
         {
-            Console.WriteLine($"Recognized command: {e.Command.Id}");
+            Console.WriteLine($"Recognized command: {command.Id}");
         }
     }
 }
