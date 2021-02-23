@@ -23,7 +23,14 @@ Weighted Algorithms like weighted Levenshtein allow the definition of different 
 This is e.g. used in OCR where P and R are quite similar while P and M are not.
 The definition of these weights is not really needed in our usecase.
 
-#### Result:
+### Fuzzy Sharp
+
+Fuzzy Sharp is a NuGet Package for matching string Similarities. 
+The Algorithm uses Levenshtein Distance to calculate similarity between strings.
+
+The WeightedRatio() Method is the Method we are using most, because it already has an internal weighting.
+
+### Result:
 A normalized algorithm should be used for our usecase. In terms of accuracy, they are all quite similar.
 Levenshteins algortithm could be a good choice. It is commonly used and its normalized version is also used in FuzzySharp.
 It is based on the number of insertions, deletions and substitutiions in strings and is the most commonly used way to calculate the distance between two strings.
