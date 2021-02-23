@@ -12,7 +12,6 @@ namespace LanguageUnderstanding.SimilarityCalculators
         {
             var levenshtein = new F23.StringSimilarity.Levenshtein();
             var distance = levenshtein.Distance(input, target);
-            // TODO
             return 1.0 - distance;
         }
     }

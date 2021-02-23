@@ -13,7 +13,6 @@ namespace LanguageUnderstanding.SimilarityCalculators
         {
             var lcs = new LongestCommonSubsequence();
             var distance = lcs.Distance(input, target);
-            // TODO
             return 1.0 - distance;
         }
     }

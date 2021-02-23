@@ -13,7 +13,6 @@ namespace LanguageUnderstanding.SimilarityCalculators
         {
             var ngram = new NGram(4);
             var distance = ngram.Distance(input, target);
-            // TODO
             return 1.0 - distance;
         }
     }

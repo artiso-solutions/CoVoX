@@ -13,7 +13,6 @@ namespace LanguageUnderstanding.SimilarityCalculators
         {
             var jaroWinkler = new JaroWinkler();
             var distance = jaroWinkler.Distance(input, target);
-            // TODO
             return 1.0 - distance;
         }
     }
