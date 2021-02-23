@@ -18,8 +18,16 @@ namespace LanguageUnderstanding
              * FuzzySharp algorithms: https://github.com/JakeBayer/FuzzySharp#usage
              */
             
-            // Test.With(new DummySimilarityCalculator());
-            Test.With(new FuzzyWeightedRatioCalculator());
+            Test.With(new FuzzyWeightedRatioCalculator()); //not case sensitive
+            Test.With(new CosineSimilarityCalculator()); //case sensitive
+            Test.With(new DamerauSimilarityCalculator()); //case sensitive
+            Test.With(new JaroWinklerSimilarityCalculator()); //case sensitive
+            Test.With(new LevenshteinSimilarityCalculator()); // case sensitive
+            Test.With(new LongestCommonSubsequenceSimilarityCalculator()); //case sensitive
+            Test.With(new MetricLCSSimilarityCalculator()); //case sensitive
+            Test.With(new NGramSimilarityCalculator()); //case sensitive
+            Test.With(new NormalizedLevenshteinSimilarityCalculator()); //case sensitive
+            Test.With(new QGramSimilarityCalculator()); // case sensitive
         }
     }
 }
