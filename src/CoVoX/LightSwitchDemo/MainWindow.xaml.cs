@@ -96,11 +96,11 @@ namespace LigthSwitchDemo
                 };
 
                 var covox = new Covox(configuration);
-                covox.CommandDetected += Covox_CommandDetected;
+                covox.Recognized += Covox_Recognized; ;
 
                 covox.RegisterCommands(commands);
 
-                await covox.StartListening();
+                await covox.StartAsync();
                 Log.Debug("I'm listening...");
                 while (true)
                 {
@@ -112,26 +112,26 @@ namespace LigthSwitchDemo
                 Log.Error(exception, exception.Message);
             }
         }
-
-        private void Covox_CommandDetected(object sender, Covox.CommandDetectedArgs e)
+        
+        private void Covox_Recognized(Command command, RecognitionContext context)
         {
-            if (e.Command == null) return;
+            if (command == null) return;
 
             try
             {
-                if (e.Command.Id.Equals(TurnOffLight))
+                if (command.Id.Equals(TurnOffLight))
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,
                         new Action(() => this.lightGrid.Background = new SolidColorBrush(Colors.Black)));
                 }
-                else if (e.Command.Id.Equals(TurnOnLight))
+                else if (command.Id.Equals(TurnOnLight))
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,
                         new Action(() => this.lightGrid.Background = new SolidColorBrush(Colors.Yellow)));
                 }
-                else if (e.Command.Id.Equals(TurnOnLightRed))
+                else if (command.Id.Equals(TurnOnLightRed))
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,

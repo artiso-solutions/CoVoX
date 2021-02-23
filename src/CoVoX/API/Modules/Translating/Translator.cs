@@ -1,67 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Translation;
-using Serilog;
 
-namespace API.Modules
+namespace API.Translating
 {
-    public class Translator : ITranslatingModule
+    internal class Translator : ITranslatingModule, IAsyncDisposable
     {
-        public event EventHandler<TextRecognizedArgs> TextRecognized;
+        private readonly TranslationRecognizer _recognizer;
+        private readonly AutoResetTaskCompletionSource<string> _atcs = new();
 
-        private readonly List<TranslationRecognizer> _translationRecognizers = new();
-
-        public Translator(Configuration configuration)
+        public Translator(AzureConfiguration azureConfiguration, string inputLanguage)
+            : this(azureConfiguration, inputLanguage, targetLanguage: "en-US")
         {
-            try
-            {
-                foreach (var inputLanguage in configuration.InputLanguages)
-                {
-                    var translationConfig = SpeechTranslationConfig.FromSubscription(
-                        configuration.AzureConfiguration.SubscriptionKey, configuration.AzureConfiguration.Region);
-                    translationConfig.SpeechRecognitionLanguage = inputLanguage;
-                    translationConfig.AddTargetLanguage("en-US");
-                    translationConfig.SetProfanity(ProfanityOption.Raw);
-
-                    var translationRecognizer = new TranslationRecognizer(translationConfig);
-
-                    translationRecognizer.Recognized += (_, args) =>
-                    {
-                        if (args.Result.Reason == ResultReason.TranslatedSpeech)
-                        {
-                            var translatedText = args.Result.Translations.Values.FirstOrDefault();
-                            TextRecognized?.Invoke(this, new TextRecognizedArgs(translatedText, inputLanguage));
-                        }
-                    };
-
-                    _translationRecognizers.Add(translationRecognizer);
-                }
-            }
-            catch
-            {
-                throw new Exception("Error initializing TranslationRecognizer. Missing Azure subscription key?");
-            }
         }
 
-        public async Task StartVoiceRecognition()
+        private Translator(
+            AzureConfiguration azureConfiguration,
+            string inputLanguage,
+            string targetLanguage)
         {
-            foreach (var translationRecognizer in _translationRecognizers)
+            InputLanguage = inputLanguage;
+            TargetLanguage = targetLanguage;
+
+            var recognizerConfig = GetRecognizerConfig(azureConfiguration, inputLanguage, targetLanguage);
+            _recognizer = new TranslationRecognizer(recognizerConfig);
+            _recognizer.Recognized += (_, args) =>
             {
-                await translationRecognizer.StartContinuousRecognitionAsync();
-                Log.Debug($"Started continuous recognition {translationRecognizer.SpeechRecognitionLanguage}");
-            }
+                var translatedText = args.Result.Translations.Values.FirstOrDefault();
+                OnRecognized(translatedText);
+            };
         }
 
-        public async Task StopVoiceRecognition()
+        public string InputLanguage { get; }
+
+        public string TargetLanguage { get; }
+
+        public bool IsActive { get; private set; }
+
+        public event TextRecognized Recognized;
+
+        private static SpeechTranslationConfig GetRecognizerConfig(
+            AzureConfiguration azureConfiguration,
+            string inputLanguage,
+            string targetLanguage)
         {
-            foreach (var translationRecognizer in _translationRecognizers)
-            {
-                await translationRecognizer.StopContinuousRecognitionAsync();
-                Log.Debug($"Stopped continuous recognition {translationRecognizer.SpeechRecognitionLanguage}");
-            }
+            var translationConfig = SpeechTranslationConfig.FromSubscription(
+                azureConfiguration.SubscriptionKey, azureConfiguration.Region);
+
+            translationConfig.SpeechRecognitionLanguage = inputLanguage;
+            translationConfig.AddTargetLanguage(targetLanguage);
+            translationConfig.SetProfanity(ProfanityOption.Raw);
+            return translationConfig;
         }
+
+        private void OnRecognized(string text)
+        {
+            _ = _atcs.TrySetResult(text);
+            Recognized?.Invoke(text);
+        }
+
+        public async Task StartAsync()
+        {
+            IsActive = true;
+            await _recognizer.StartContinuousRecognitionAsync();
+        }
+
+        public async Task StopAsync()
+        {
+            IsActive = false;
+            await _recognizer.StopContinuousRecognitionAsync();
+        }
+
+        public async Task<string> RecognizeOneAsync(CancellationToken cancellationToken)
+        {
+            using var cancellationSource = new CancellationTokenTaskSource<string>(cancellationToken);
+
+            var timeoutTask = cancellationSource.Task;
+            var recognitionTask = _atcs.Task;
+            await Task.WhenAny(recognitionTask, timeoutTask);
+
+            if (cancellationToken.IsCancellationRequested)
+                return default;
+
+            var text = await recognitionTask;
+            return text;
+        }
+
+        public async ValueTask DisposeAsync() => await StopAsync();
     }
 }

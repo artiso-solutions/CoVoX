@@ -1,53 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
-using System.Threading.Tasks;
 using Serilog;
 
-namespace API.Modules
+namespace API.Understanding
 {
-    public class UnderstandingModule : IUnderstandingModule
+    internal class UnderstandingModule : IUnderstandingModule
     {
-        private readonly ITranslatingModule _translator;
-        public event EventHandler<CommandRecognizedArgs> CommandRecognized;
+        private readonly IInterpreter _interpreter;
 
-        private static IReadOnlyList<Command> _commands = new List<Command>();
-
-        public UnderstandingModule(ITranslatingModule translator, IInterpreter interpreter, double matchingThreshold)
+        public UnderstandingModule(
+            IInterpreter interpreter,
+            double matchingThreshold)
         {
-            _translator = translator;
-            _translator.TextRecognized += (_, args) =>
-            {
-                CommandRecognized?.Invoke(this, new CommandRecognizedArgs(interpreter, _commands, matchingThreshold, args.Text, args.InputLanguage));
-            };
+            _interpreter = interpreter;
+            MatchingThreshold = matchingThreshold;
         }
 
-        public void RegisterCommands(List<Command> commands)
+        public IReadOnlyList<Command> Commands { get; private set; } = Array.Empty<Command>();
+
+        public double MatchingThreshold { get; }
+
+        public void RegisterCommands(IEnumerable<Command> commands)
         {
-            _commands = commands;
+            Commands = commands?.ToList();
             Log.Debug("Registered commands");
         }
 
-        public IReadOnlyList<Command> GetRegisteredCommands()
+        public (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
         {
-            return _commands;
+            var candidates = new List<Command>();
+
+            foreach (var command in Commands)
+            {
+                command.MatchScore = CalculateHighestSimilarity(input, command);
+                candidates.Add(command);
+            }
+
+            var matches = candidates.OrderByDescending(x => x.MatchScore)
+                .Select(c => new Match {Command = c, MatchScore = c.MatchScore}).ToImmutableList();
+
+            var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
+
+            return (bestMatch, matches);
         }
 
-        public async Task StartCommandDetection()
+        private double CalculateHighestSimilarity(string input, Command command)
         {
-            if (GetRegisteredCommands().Any())
+            var highestPercentage = 0.0;
+            foreach (var trigger in command.VoiceTriggers)
             {
-                await _translator.StartVoiceRecognition();
+                var percentage = _interpreter.CalculateMatchScore(trigger, input);
+                if (percentage > highestPercentage)
+                {
+                    highestPercentage = percentage;
+                }
             }
-            else
-            {
-                throw new Exception("No commands registered");
-            }
-        }
 
-        public async Task StopCommandDetection()
-        {
-            await _translator.StopVoiceRecognition();
+            return highestPercentage * 0.01;
         }
     }
 }

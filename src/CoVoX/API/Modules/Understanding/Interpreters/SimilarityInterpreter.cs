@@ -1,45 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FuzzySharp;
 
-namespace API.Modules.Understanding.Interpreters
+namespace API.Understanding
 {
-    public class SimilarityInterpreter : IInterpreter
+    internal class SimilarityInterpreter : IInterpreter
     {
-        public (Command, IReadOnlyList<Command>) InterpretCommand(IReadOnlyList<Command> commands, double matchingThreshold,
-            string text)
+        public double CalculateMatchScore(string target, string input)
         {
-            Debug.WriteLine(text);
-            var candidates = new List<Command>();
-            foreach (var command in commands)
-            {
-                command.MatchScore = CalculateHighestSimilarity(text, command);
-                candidates.Add(command);
-            }
-
-            candidates = candidates.OrderByDescending(x => x.MatchScore).ToList();
-
-            var matchedCommand = candidates.FirstOrDefault()?.MatchScore >= matchingThreshold
-                ? candidates.FirstOrDefault()
-                : null;
-
-            return (matchedCommand, candidates);
-        }
-
-        private static double FuzzyTokenSortRatio(string input, string target)
-        {
-            return Fuzz.TokenSortRatio(input, target);
-        }
-
-        private static double FuzzyWeightedRatio(string input, string target)
-        {
-            return Fuzz.WeightedRatio(input, target);
-        }
-
-        private static double CalculateSimilarity(string input, string voiceTrigger)
-        {
-            var targetTokens = voiceTrigger.Split(' ').ToList();
+            var targetTokens = target.Split(' ').ToList();
             var inputTokens = new List<string>();
 
             foreach (var token in targetTokens)
@@ -57,28 +26,23 @@ namespace API.Modules.Understanding.Interpreters
                 cleanedInputTokenString += $"{inputToken.ToLower()} ";
             }
 
-            var percentageAmountOfKeywords = (inputTokens.Count / targetTokens.Count) * 100; //80%
-            var percentageStringSimilarity = FuzzyWeightedRatio(input.ToLower(), voiceTrigger); //10%
-            var percentageTokenSortRatio = FuzzyTokenSortRatio(cleanedInputTokenString, voiceTrigger); //10%
+            var percentageAmountOfKeywords = (inputTokens.Count / targetTokens.Count) * 100;
+            var percentageStringSimilarity = FuzzyWeightedRatio(input.ToLower(), target);
+            var percentageTokenSortRatio = FuzzyTokenSortRatio(cleanedInputTokenString, target);
 
-            var totalPercentage = percentageAmountOfKeywords * 0.8 + percentageStringSimilarity * 0.1 +
-                                  percentageTokenSortRatio * 0.1;
-            return totalPercentage;
+            return percentageAmountOfKeywords * 0.8 +
+                   percentageStringSimilarity * 0.1 +
+                   percentageTokenSortRatio * 0.1;
         }
 
-        private static double CalculateHighestSimilarity(string input, Command command)
+        private static double FuzzyTokenSortRatio(string input, string target)
         {
-            var highestPercentage = 0.0;
-            foreach (var trigger in command.VoiceTriggers)
-            {
-                var percentage = CalculateSimilarity(input, trigger);
-                if (percentage > highestPercentage)
-                {
-                    highestPercentage = percentage;
-                }
-            }
+            return Fuzz.TokenSortRatio(input, target);
+        }
 
-            return highestPercentage / 100.0;
+        private static double FuzzyWeightedRatio(string input, string target)
+        {
+            return Fuzz.WeightedRatio(input, target);
         }
     }
 }

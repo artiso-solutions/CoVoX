@@ -1,13 +1,24 @@
-﻿using System;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using API.Modules;
 
-namespace API
+namespace API.Translating
 {
+    public delegate void TextRecognized(string text);
+
     public interface ITranslatingModule
     {
-        event EventHandler<TextRecognizedArgs> TextRecognized;
-        Task StartVoiceRecognition();
-        Task StopVoiceRecognition();
+        bool IsActive { get; }
+
+        string InputLanguage { get; }
+
+        string TargetLanguage { get; }
+
+        event TextRecognized Recognized;
+
+        Task<string> RecognizeOneAsync(CancellationToken cancellationToken);
+
+        Task StartAsync();
+
+        Task StopAsync();
     }
 }

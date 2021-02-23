@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace API
 {
@@ -12,14 +13,17 @@ namespace API
         public double MatchingThreshold { get; set; }
 
         [Required]
-        public string[] InputLanguages { get; set; }
+        public IReadOnlyList<string> InputLanguages { get; set; }
 
-        public string[] HotWords { get; set; }
+        public IReadOnlyList<string> HotWords { get; set; }
     }
 
     public class AzureConfiguration
     {
+        [Required]
         public string SubscriptionKey { get; set; }
+        
+        [Required]
         public string Region { get; set; }
     }
 }
