@@ -32,7 +32,8 @@ namespace LanguageUnderstanding
                 "Turn on the Light",
                 "Turn the Light on.",
                 "Light on",
-                "noise noise Turn the Light on"
+                "Turn off the Light",
+                "Take a picture of me"
             };
             foreach (var input in inputs)
             {
@@ -41,7 +42,6 @@ namespace LanguageUnderstanding
                 table.AddColumn("Target");
                 table.AddColumn("Input");
                 table.AddColumn("Score");
-                table.Border(TableBorder.HeavyHead);
                 var score = new FuzzyWeightedRatioCalculator().Calculate(target, input);
                 table.AddRow("FuzzyWeightedRatio", $"{target}", $"{input}", $"{score}");
 
@@ -65,13 +65,13 @@ namespace LanguageUnderstanding
 
                 score = new NGramSimilarityCalculator().Calculate(target, input);
                 table.AddRow("NGramSimilarity", $"{target}", $"{input}", $"{score}");
-
+                
                 score = new NormalizedLevenshteinSimilarityCalculator().Calculate(target, input);
                 table.AddRow("NormalizedLevenshteinSimilarity", $"{target}", $"{input}", $"{score}");
 
                 score = new QGramSimilarityCalculator().Calculate(target, input);
                 table.AddRow("QGramSimilarity", $"{target}", $"{input}", $"{score}");
-
+                
                 AnsiConsole.Render(table);
             }
             
