@@ -54,12 +54,15 @@ namespace API.Translating
             var recognitionTasks = _translators.Select(t => RecognizeOneWithLanguageAsync(t, cancellationToken));
             var recognitionsCompletedTask = Task.WhenAll(recognitionTasks);
 
-            await Task.WhenAny(recognitionsCompletedTask, timeoutTask);
+            var completedTask = await Task.WhenAny(recognitionsCompletedTask, timeoutTask);
 
-            var completedTasks = recognitionTasks.Where(t => t.IsCompletedSuccessfully);
-            var results = await Task.WhenAll(completedTasks);
+            if (completedTask == recognitionsCompletedTask)
+            {
+                var results = await recognitionsCompletedTask;
+                return results;
+            }
 
-            return results;
+            return Array.Empty<(string input, string inputLanguage)>();
         }
 
         private static async Task<(string input, string inputLanguage)> RecognizeOneWithLanguageAsync(

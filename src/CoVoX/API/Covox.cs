@@ -24,6 +24,7 @@ namespace API
             var translationModule = new MultiLanguageTranslator(configuration.AzureConfiguration, configuration.InputLanguages);
             _understandingModule = new UnderstandingModule(new SimilarityInterpreter(), configuration.MatchingThreshold);
             _recognitionLoop = new RecognitionLoop(translationModule, _understandingModule);
+            _recognitionLoop.Recognized += Recognized;
         }
 
         public bool IsActive => _recognitionLoop.IsActive;
