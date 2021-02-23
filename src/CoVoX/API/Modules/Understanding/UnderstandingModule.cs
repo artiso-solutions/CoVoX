@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Serilog;
 
-namespace API.Modules
+namespace API.Understanding
 {
     internal class UnderstandingModule : IUnderstandingModule
     {

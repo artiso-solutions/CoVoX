@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace API
+namespace API.Understanding
 {
     internal interface IUnderstandingModule
     {

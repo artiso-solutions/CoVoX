@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace API.Modules
+namespace API.Translating
 {
     public delegate void LanguageRecognized(string text, string inputLanguage);
 

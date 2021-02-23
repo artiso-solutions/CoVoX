@@ -2,7 +2,7 @@
 using System.Linq;
 using FuzzySharp;
 
-namespace API.Modules.Understanding.Interpreters
+namespace API.Understanding
 {
     internal class SimilarityInterpreter : IInterpreter
     {

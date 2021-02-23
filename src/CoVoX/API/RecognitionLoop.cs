@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using API.Modules;
+using API.Translating;
+using API.Understanding;
 
 namespace API
 {
@@ -35,7 +33,7 @@ namespace API
             IsActive = true;
 
             _cts = new CancellationTokenSource();
-            _loop = Task.Factory.StartNew(() => ContinuousRecognitionAsync(_cts.Token), TaskCreationOptions.LongRunning);
+            _loop = Task.Run(() => ContinuousRecognitionAsync(_cts.Token), _cts.Token);
             await _translationModule.StartAsync();
         }
 
@@ -46,6 +44,9 @@ namespace API
 
             _cts.Cancel();
             await _translationModule.StopAsync();
+            
+            await _loop;
+            _loop = null;
         }
 
         private async Task ContinuousRecognitionAsync(CancellationToken cancellationToken)
@@ -56,6 +57,8 @@ namespace API
 
         private async Task RecognizeAsync(CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested) return;
+
             var recognitions = await _translationModule.RecognizeOneOfEachAsync(cancellationToken);
             if (recognitions is null || !recognitions.Any()) return;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Translation;
 
-namespace API.Modules
+namespace API.Translating
 {
     internal class Translator : ITranslatingModule, IAsyncDisposable
     {

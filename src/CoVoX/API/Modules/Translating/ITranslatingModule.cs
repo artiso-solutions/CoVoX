@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace API
+namespace API.Translating
 {
     public delegate void TextRecognized(string text);
 

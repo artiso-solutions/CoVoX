@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Modules;
-using API.Modules.Understanding.Interpreters;
+using API.Translating;
+using API.Understanding;
 using API.Utils;
 using Serilog;
 
@@ -25,6 +25,8 @@ namespace API
             _understandingModule = new UnderstandingModule(new SimilarityInterpreter(), configuration.MatchingThreshold);
             _recognitionLoop = new RecognitionLoop(translationModule, _understandingModule);
         }
+
+        public bool IsActive => _recognitionLoop.IsActive;
 
         public event CommandRecognized Recognized;
 
