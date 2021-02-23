@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
-using API;
+using Covox;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Extensions.Logging;
 
-namespace LigthSwitchDemo
+namespace LightSwitchDemo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -21,7 +23,6 @@ namespace LigthSwitchDemo
 
         public MainWindow()
         {
-			// Bla
             InitializeComponent();
             SetupStaticLogger();
         }
@@ -94,8 +95,10 @@ namespace LigthSwitchDemo
                         }
                     }
                 };
-
-                var covox = new Covox(configuration);
+                
+                var serilogLogger = new SerilogLoggerProvider(Log.Logger).CreateLogger(nameof(MainWindow));
+                
+                var covox = new CovoxEngine(configuration, serilogLogger);
                 covox.Recognized += Covox_Recognized; ;
 
                 covox.RegisterCommands(commands);

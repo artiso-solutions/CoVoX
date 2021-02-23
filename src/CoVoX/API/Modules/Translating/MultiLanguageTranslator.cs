@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace API.Translating
+namespace Covox.Translating
 {
     internal class MultiLanguageTranslator : IMultiLanguageTranslatingModule, IAsyncDisposable
     {
         private readonly IReadOnlyList<Translator> _translators;
         private readonly AutoResetTaskCompletionSource<(string input, string inputLanguage)> _atcs = new();
 
-        public MultiLanguageTranslator(
+        internal MultiLanguageTranslator(
             AzureConfiguration azureConfiguration,
             IReadOnlyList<string> inputLanguages)
         {
@@ -61,8 +61,8 @@ namespace API.Translating
                 var results = await recognitionsCompletedTask;
                 
                 var nonEmptyResults = results.Where(x =>
-                    string.IsNullOrWhiteSpace(x.input) &&
-                    string.IsNullOrWhiteSpace(x.inputLanguage)).ToArray();
+                    !string.IsNullOrWhiteSpace(x.input) &&
+                    !string.IsNullOrWhiteSpace(x.inputLanguage)).ToArray();
 
                 if (nonEmptyResults.Any())
                     return nonEmptyResults;

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Utils
+namespace Covox.Utils
 {
-    public static class ModelValidator
+    internal static class ModelValidator
     {
         public static List<ValidationResult> ValidateModel(object model)
         {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace API.Understanding
+﻿namespace Covox.Understanding
 {
     internal interface IInterpreter
     {

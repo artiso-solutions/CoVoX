@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace API.Translating
+namespace Covox.Translating
 {
     public delegate void TextRecognized(string text);
 
-    public interface ITranslatingModule
+    internal interface ITranslatingModule
     {
         bool IsActive { get; }
 

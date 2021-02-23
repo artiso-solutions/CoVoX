@@ -1,4 +1,4 @@
-﻿namespace API.Understanding
+﻿namespace Covox.Understanding
 {
     public class Match
     {

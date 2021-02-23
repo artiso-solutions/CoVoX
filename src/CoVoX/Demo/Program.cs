@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API;
+using Covox;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace Demo
 {
@@ -104,7 +106,9 @@ namespace Demo
                     }
                 };
 
-                var covox = new Covox(configuration);
+                var serilogLogger = new SerilogLoggerProvider(Log.Logger).CreateLogger(nameof(Program));
+
+                var covox = new CovoxEngine(configuration, serilogLogger);
                 covox.Recognized += Covox_Recognized;
 
                 covox.RegisterCommands(commands);

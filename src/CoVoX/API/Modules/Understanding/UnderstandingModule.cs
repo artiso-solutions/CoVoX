@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Serilog;
 
-namespace API.Understanding
+namespace Covox.Understanding
 {
     internal class UnderstandingModule : IUnderstandingModule
     {
         private readonly IInterpreter _interpreter;
 
-        public UnderstandingModule(
+        internal UnderstandingModule(
             IInterpreter interpreter,
             double matchingThreshold)
         {
@@ -20,12 +19,11 @@ namespace API.Understanding
 
         public IReadOnlyList<Command> Commands { get; private set; } = Array.Empty<Command>();
 
-        public double MatchingThreshold { get; }
+        private double MatchingThreshold { get; }
 
         public void RegisterCommands(IEnumerable<Command> commands)
         {
             Commands = commands?.ToList();
-            Log.Debug("Registered commands");
         }
 
         public (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input)

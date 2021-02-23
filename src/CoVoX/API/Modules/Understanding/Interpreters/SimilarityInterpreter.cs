@@ -2,7 +2,7 @@
 using System.Linq;
 using FuzzySharp;
 
-namespace API.Understanding
+namespace Covox.Understanding
 {
     internal class SimilarityInterpreter : IInterpreter
     {
