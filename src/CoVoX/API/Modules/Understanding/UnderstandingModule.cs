@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Serilog;
 
@@ -29,14 +30,35 @@ namespace API.Understanding
 
         public (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
         {
-            var matches = _interpreter.InterpretCommand(Commands, input);
+            var candidates = new List<Command>();
 
-            var bestMatch = matches
-                .Where(m => m.MatchScore >= MatchingThreshold)
-                .OrderByDescending(m => m.MatchScore)
-                .FirstOrDefault();
+            foreach (var command in Commands)
+            {
+                command.MatchScore = CalculateHighestSimilarity(input, command);
+                candidates.Add(command);
+            }
+
+            var matches = candidates.OrderByDescending(x => x.MatchScore)
+                .Select(c => new Match {Command = c, MatchScore = c.MatchScore}).ToImmutableList();
+
+            var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
 
             return (bestMatch, matches);
+        }
+
+        private double CalculateHighestSimilarity(string input, Command command)
+        {
+            var highestPercentage = 0.0;
+            foreach (var trigger in command.VoiceTriggers)
+            {
+                var percentage = _interpreter.CalculateMatchScore(trigger, input);
+                if (percentage > highestPercentage)
+                {
+                    highestPercentage = percentage;
+                }
+            }
+
+            return highestPercentage * 0.01;
         }
     }
 }
