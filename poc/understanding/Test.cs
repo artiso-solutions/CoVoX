@@ -42,7 +42,7 @@ namespace LanguageUnderstanding
 
         static void Assert(bool condition, string message = null)
         {
-             if (!condition) throw new Exception(message ?? "Assert failed");
+            if (!condition) throw new Exception(message ?? "Assert failed");
         }
     }
 }
