@@ -59,7 +59,13 @@ namespace API.Translating
             if (completedTask == recognitionsCompletedTask)
             {
                 var results = await recognitionsCompletedTask;
-                return results;
+                
+                var nonEmptyResults = results.Where(x =>
+                    string.IsNullOrWhiteSpace(x.input) &&
+                    string.IsNullOrWhiteSpace(x.inputLanguage)).ToArray();
+
+                if (nonEmptyResults.Any())
+                    return nonEmptyResults;
             }
 
             return Array.Empty<(string input, string inputLanguage)>();

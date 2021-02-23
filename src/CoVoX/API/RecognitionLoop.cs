@@ -65,7 +65,7 @@ namespace API
             Match bestMatch = null;
             RecognitionContext context = null;
 
-            foreach (var recognition in recognitions.Where(x => x.input is not null))
+            foreach (var recognition in recognitions)
             {
                 var (input, inputLanguage) = recognition;
                 var (match, candidates) = _understandingModule.Understand(input);
