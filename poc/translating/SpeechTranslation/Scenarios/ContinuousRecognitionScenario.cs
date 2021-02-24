@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Translation;
+using Shared;
 
 namespace SpeechTranslation
 {
@@ -36,9 +37,9 @@ namespace SpeechTranslation
             recognizer.Recognized += (_, args) =>
             {
                 var result = args.Result;
-                
+
                 Console.WriteLine($"'{result.Text}'");
-                
+
                 foreach (var (language, translation) in result.Translations)
                     Console.WriteLine($"  [{language}] '{translation}'");
 

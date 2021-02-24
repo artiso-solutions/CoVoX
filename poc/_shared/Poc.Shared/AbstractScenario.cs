@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SpeechTranslation
+namespace Shared
 {
-    abstract class AbstractScenario
+    public abstract class AbstractScenario
     {
         public string SubscriptionKey { get; }
 

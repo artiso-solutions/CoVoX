@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SpeechTranslation
+namespace Shared
 {
-    static class Utils
+    public static class Utils
     {
         public static Task AsTask(this CancellationToken cancellationToken)
         {

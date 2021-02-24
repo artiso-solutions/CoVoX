@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Translation;
+using Shared;
 
 namespace SpeechTranslation
 {
@@ -17,7 +18,7 @@ namespace SpeechTranslation
         public async Task Run(
             string inputLanguage,
             IReadOnlyList<string> targetLanguages,
-            OutputFormat outputFormat = OutputFormat.Csv,
+            Shared.OutputFormat outputFormat = Shared.OutputFormat.Csv,
             int iterations = 1,
             bool helperLogs = true,
             CancellationToken cancellationToken = default)

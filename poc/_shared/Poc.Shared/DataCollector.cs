@@ -2,16 +2,16 @@
 using System.Text;
 using Spectre.Console;
 
-namespace SpeechTranslation
+namespace Shared
 {
-    enum OutputFormat
+    public enum OutputFormat
     {
         Csv,
         Table,
         Markdown
     }
 
-    class DataCollector
+    public class DataCollector
     {
         public DateTime Start { get; private set; }
 

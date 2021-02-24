@@ -10,7 +10,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.15.0" />
     <PackageReference Include="System.Windows.Extensions" Version="5.0.0" />
-    <PackageReference Include="Spectre.Console" Version="0.37.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\_shared\Poc.Shared\Poc.Shared.csproj" />
   </ItemGroup>
 
 </Project>
