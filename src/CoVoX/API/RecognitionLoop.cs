@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using API.Translating;
-using API.Understanding;
+using Covox.Translating;
+using Covox.Understanding;
 
-namespace API
+namespace Covox
 {
     public delegate void CommandRecognized(Command command, RecognitionContext context);
 
@@ -52,7 +52,10 @@ namespace API
         private async Task ContinuousRecognitionAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
+            {
                 await RecognizeAsync(cancellationToken);
+                await Task.Delay(50, cancellationToken); // TODO: Understand why this fixes the problem
+            }
         }
 
         private async Task RecognizeAsync(CancellationToken cancellationToken)

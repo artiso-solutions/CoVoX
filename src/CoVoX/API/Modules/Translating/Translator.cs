@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Translation;
 
-namespace API.Translating
+namespace Covox.Translating
 {
     internal class Translator : ITranslatingModule, IAsyncDisposable
     {
@@ -31,6 +32,11 @@ namespace API.Translating
             {
                 var translatedText = args.Result.Translations.Values.FirstOrDefault();
                 OnRecognized(translatedText);
+            };
+
+            _recognizer.Canceled += (_, args) =>
+            {
+                OnError(args.ErrorDetails);
             };
         }
 
@@ -60,6 +66,11 @@ namespace API.Translating
         {
             _ = _atcs.TrySetResult(text);
             Recognized?.Invoke(text);
+        }
+        private void OnError(string errorDetails)
+        {
+            _ = _atcs.TrySetCanceled();
+            //TODO: pass error details to event
         }
 
         public async Task StartAsync()

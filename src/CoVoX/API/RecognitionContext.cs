@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using API.Understanding;
+using Covox.Understanding;
 
-namespace API
+namespace Covox
 {
     public record RecognitionContext(
         string Input,

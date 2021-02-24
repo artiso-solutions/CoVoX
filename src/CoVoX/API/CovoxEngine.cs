@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Translating;
-using API.Understanding;
-using API.Utils;
-using Serilog;
+using Covox.Translating;
+using Covox.Understanding;
+using Covox.Utils;
+using Microsoft.Extensions.Logging;
 
-namespace API
+namespace Covox
 {
-    public class Covox
+    public class CovoxEngine
     {
         private readonly UnderstandingModule _understandingModule;
         private readonly RecognitionLoop _recognitionLoop;
-
-        public Covox(Configuration configuration)
+        private readonly ILogger _logger;
+        
+        public CovoxEngine(Configuration configuration, ILogger logger)
         {
+            _logger = logger;
+
             var errors = ModelValidator.ValidateModel(configuration);
 
             if (errors.Any())
@@ -33,14 +36,14 @@ namespace API
 
         public async Task StartAsync()
         {
+            _logger.LogDebug("Starting recognition");
             await _recognitionLoop.StartAsync();
-            Log.Debug("Started listening for commands");
         }
 
         public async Task StopAsync()
         {
+            _logger.LogDebug("Stopping recognition");
             await _recognitionLoop.StopAsync();
-            Log.Debug("Stopped listening for commands");
         }
 
         public void RegisterCommands(List<Command> commands) =>

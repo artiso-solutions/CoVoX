@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace API
+namespace Covox
 {
     public class Command
     {
