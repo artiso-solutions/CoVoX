@@ -105,6 +105,11 @@ The WeightedRatio() Method is the Method we are using most, because it already h
 
 ### Result:
 A normalized algorithm should be used for our usecase. In terms of accuracy, they are all quite similar.
-Levenshteins algortithm could be a good choice. It is commonly used and its normalized version is also used in FuzzySharp.
-It is based on the number of insertions, deletions and substitutiions in strings and is the most commonly used way to calculate the distance between two strings.
+However, since the CosineSimilarity algorithm is using the "bag of words" aproach it could be the most accurate one for our use case.
+Levenshteins algorithm could also be a good choice. It is commonly used and its normalized version is also used in FuzzySharp. However, the FuzzzySharp implmentation
+uses a weighing system of which it is not clear on how it was built.
+Levenshteins is based on number of insertions, deletions and substitutiions in strings and is the most commonly used way to calculate the distance between two strings.
 Please note that it is case sensitive since it takes one substitution to get from 'T' to 't'. (All tested algorithms are case sensitive)
+
+### Conclusion:
+As of this moment it would be recommended to use the Cosine Alogorithm found in the F23.StringSimilarity Nuget Package.
