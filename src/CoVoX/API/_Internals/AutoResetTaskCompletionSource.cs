@@ -10,9 +10,9 @@ namespace Covox
         private readonly TaskCreationOptions _creationOptions;
         private TaskCompletionSource<TResult> _tcs;
 
-        public AutoResetTaskCompletionSource(TaskCreationOptions creationOptions = default)
+        public AutoResetTaskCompletionSource()
         {
-            _creationOptions = creationOptions;
+            _creationOptions = TaskCreationOptions.RunContinuationsAsynchronously;
             InitTcs();
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Covox;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -58,7 +57,7 @@ namespace Demo
                 var configuration = new Configuration
                 {
                     AzureConfiguration = SecretsHelper.GetSecrets(),
-                    InputLanguages = new[] {"en-US", "de-DE", "it-IT"},
+                    InputLanguages = new[] { "en-US", "de-DE", "it-IT" },
                     MatchingThreshold = 0.99
                 };
 

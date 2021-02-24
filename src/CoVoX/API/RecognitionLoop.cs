@@ -52,10 +52,7 @@ namespace Covox
         private async Task ContinuousRecognitionAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
-            {
                 await RecognizeAsync(cancellationToken);
-                await Task.Delay(50, cancellationToken); // TODO: Understand why this fixes the problem
-            }
         }
 
         private async Task RecognizeAsync(CancellationToken cancellationToken)

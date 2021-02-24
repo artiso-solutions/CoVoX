@@ -4,7 +4,7 @@ namespace Covox
 {
     public class Command
     {
-        public string Id { get; set; }
+        public string Id { get; init; }
         
         internal double MatchScore { get; set; } // TODO: remove from Command type.
         
