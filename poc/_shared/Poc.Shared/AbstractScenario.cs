@@ -21,7 +21,6 @@ namespace Shared
                 var scenarioName = GetType().Name.Replace("Scenario", "");
                 Console.WriteLine();
                 Console.WriteLine($"// Scenario: {scenarioName}");
-                Console.WriteLine();
             }
         }
     }
