@@ -39,39 +39,44 @@ namespace LanguageUnderstanding
             {
                 var table = new Table();
                 table.AddColumn("Algorithm");
+                table.AddColumn("Library");
+                table.AddColumn("Normalized");
                 table.AddColumn("Target");
                 table.AddColumn("Input");
                 table.AddColumn("Score");
+
+                table.Border = TableBorder.Markdown;
+
                 var score = new FuzzyWeightedRatioCalculator().Calculate(target, input);
-                table.AddRow("FuzzyWeightedRatio", $"{target}", $"{input}", $"{score}");
+                table.AddRow("FuzzyWeightedRatio", "FuzzySharp", "yes", $"{target}", $"{input}", $"{score}");
 
                 score = new CosineSimilarityCalculator().Calculate(target, input);
-                table.AddRow("CosineSimilarity", $"{target}", $"{input}", $"{score}");
-
-                score = new DamerauSimilarityCalculator().Calculate(target, input);
-                table.AddRow("DamerauSimilarity", $"{target}", $"{input}", $"{score}");
+                table.AddRow("CosineSimilarity", "StringSimilarity", "yes", $"{target}", $"{input}", $"{score}");
 
                 score = new JaroWinklerSimilarityCalculator().Calculate(target, input);
-                table.AddRow("JaroWinklerSimilarity", $"{target}", $"{input}", $"{score}");
-
-                score = new LevenshteinSimilarityCalculator().Calculate(target, input);
-                table.AddRow("LevenshteinSimilarity", $"{target}", $"{input}", $"{score}");
-
-                score = new LongestCommonSubsequenceSimilarityCalculator().Calculate(target, input);
-                table.AddRow("LongestCommonSubsequenceSimilarity", $"{target}", $"{input}", $"{score}");
-
-                score = new MetricLCSSimilarityCalculator().Calculate(target, input);
-                table.AddRow("MetricLCSSimilarity", $"{target}", $"{input}", $"{score}");
+                table.AddRow("JaroWinklerSimilarity", "StringSimilarity", "yes", $"{target}", $"{input}", $"{score}");
 
                 score = new NGramSimilarityCalculator().Calculate(target, input);
-                table.AddRow("NGramSimilarity", $"{target}", $"{input}", $"{score}");
+                table.AddRow("NGramSimilarity", "StringSimilarity", "yes", $"{target}", $"{input}", $"{score}");
                 
                 score = new NormalizedLevenshteinSimilarityCalculator().Calculate(target, input);
-                table.AddRow("NormalizedLevenshteinSimilarity", $"{target}", $"{input}", $"{score}");
+                table.AddRow("NormalizedLevenshteinSimilarity", "StringSimilarity", "yes", $"{target}", $"{input}", $"{score}");
+
+                score = new MetricLCSSimilarityCalculator().Calculate(target, input);
+                table.AddRow("MetricLCSSimilarity", "StringSimilarity", "yes", $"{target}", $"{input}", $"{score}");
 
                 score = new QGramSimilarityCalculator().Calculate(target, input);
-                table.AddRow("QGramSimilarity", $"{target}", $"{input}", $"{score}");
-                
+                table.AddRow("QGramSimilarity", "StringSimilarity", "no", $"{target}", $"{input}", $"{score}");
+
+                score = new DamerauSimilarityCalculator().Calculate(target, input);
+                table.AddRow("DamerauSimilarity", "StringSimilarity", "no", $"{target}", $"{input}", $"{score}");
+
+                score = new LevenshteinSimilarityCalculator().Calculate(target, input);
+                table.AddRow("LevenshteinSimilarity", "StringSimilarity", "no", $"{target}", $"{input}", $"{score}");
+
+                score = new LongestCommonSubsequenceSimilarityCalculator().Calculate(target, input);
+                table.AddRow("LongestCommonSubsequenceSimilarity", "StringSimilarity", "no", $"{target}", $"{input}", $"{score}");
+
                 AnsiConsole.Render(table);
             }
             
