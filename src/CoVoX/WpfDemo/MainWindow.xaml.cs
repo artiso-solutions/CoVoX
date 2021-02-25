@@ -9,16 +9,17 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Extensions.Logging;
 
-namespace LightSwitchDemo
+namespace WpfDemo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string TurnOffLight = "TurnOffLight";
         private const string TurnOnLight = "TurnOnLight";
-        private const string TurnOnLightRed = "TurnOnLightRed";
+        private const string TurnOffLight = "TurnOffLight";
+        private const string OpenWindow = "OpenWindow";
+        private const string CloseWindow = "CloseWindow";
 
         public MainWindow()
         {
@@ -58,7 +59,7 @@ namespace LightSwitchDemo
                 {
                     AzureConfiguration = AzureConfiguration.FromFile(),
                     InputLanguages = new[] { "de-DE", "it-IT", "es-ES" },
-                    MatchingThreshold = 0.8
+                    MatchingThreshold = 0.9
                 };
 
                 var commands = new List<Command>
@@ -85,12 +86,22 @@ namespace LightSwitchDemo
                     },
                     new()
                     {
-                        Id = TurnOnLightRed,
+                        Id = CloseWindow,
                         VoiceTriggers = new List<string>
                         {
-                            "color to red",
-                            "red color",
-                            "turn light red"
+                            "close the window",
+                            "close window",
+                            "window close"
+                        }
+                    },
+                    new()
+                    {
+                        Id = OpenWindow,
+                        VoiceTriggers = new List<string>
+                        {
+                            "open the window",
+                            "open window",
+                            "window open"
                         }
                     }
                 };
@@ -121,23 +132,44 @@ namespace LightSwitchDemo
 
             try
             {
-                if (command.Id.Equals(TurnOffLight))
+                switch (command.Id)
                 {
-                    Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(() => this.LightGrid.Background = new SolidColorBrush(Colors.Black)));
-                }
-                else if (command.Id.Equals(TurnOnLight))
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(() => this.LightGrid.Background = new SolidColorBrush(Colors.Yellow)));
-                }
-                else if (command.Id.Equals(TurnOnLightRed))
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(() => this.LightGrid.Background = new SolidColorBrush(Colors.Red)));
+                    case TurnOnLight:
+                        Application.Current.Dispatcher.BeginInvoke(
+                            DispatcherPriority.Background,
+                            new Action(() =>
+                            {
+                                LightOn.Visibility = Visibility.Visible;
+                                LightOff.Visibility = Visibility.Hidden;
+                            }));
+                        break;
+                    case TurnOffLight:
+                        Application.Current.Dispatcher.BeginInvoke(
+                            DispatcherPriority.Background,
+                            new Action(() =>
+                            {
+                                LightOn.Visibility = Visibility.Hidden;
+                                LightOff.Visibility = Visibility.Visible;
+                            }));
+                        break;
+                    case OpenWindow:
+                        Application.Current.Dispatcher.BeginInvoke(
+                            DispatcherPriority.Background,
+                            new Action(() =>
+                            {
+                                WindowOpen.Visibility = Visibility.Visible;
+                                WindowClose.Visibility = Visibility.Hidden;
+                            }));
+                        break;
+                    case CloseWindow:
+                        Application.Current.Dispatcher.BeginInvoke(
+                            DispatcherPriority.Background,
+                            new Action(() =>
+                            {
+                                WindowOpen.Visibility = Visibility.Hidden;
+                                WindowClose.Visibility = Visibility.Visible;
+                            }));
+                        break;
                 }
             }
             catch (Exception exception)

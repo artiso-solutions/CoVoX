@@ -4,9 +4,16 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>LightSwitchDemo</AssemblyName>
-    <RootNamespace>LightSwitchDemo</RootNamespace>
+    <AssemblyName>WpfDemo</AssemblyName>
+    <RootNamespace>WpfDemo</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="assets\light_off.jpg" />
+    <None Remove="assets\light_on.jpg" />
+    <None Remove="assets\window_close.jpg" />
+    <None Remove="assets\window_open.jpg" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
@@ -31,6 +38,21 @@
     <None Update="secrets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\light_off.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\light_on.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\window_close.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\window_open.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
