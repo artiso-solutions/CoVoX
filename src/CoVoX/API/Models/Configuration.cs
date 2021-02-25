@@ -60,8 +60,13 @@ namespace Covox
                 .Build();
 
             var section = config.GetSection(nameof(AzureConfiguration));
+            
+            var children = section.GetChildren().ToArray();
+            
+            var subscriptionKey = children.FirstOrDefault(x => x.Key == "SubscriptionKey")?.Value;
+            var region = children.FirstOrDefault(x => x.Key == "Region")?.Value;
 
-            return section.Get<AzureConfiguration>();
+            return FromSubscription(subscriptionKey,region);
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace Covox
 
             if (!string.IsNullOrEmpty(config) && config.Contains(separator))
             {
-                return AzureConfiguration.FromSubscription(
+                return FromSubscription(
                     config.Split(separator).FirstOrDefault(),
                     config.Split(separator).LastOrDefault()
                 );
