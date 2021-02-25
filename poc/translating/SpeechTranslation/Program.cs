@@ -20,6 +20,7 @@ namespace SpeechTranslation
             //await RunRecognizeOnceScenario();
             //await RunContinuousRecognitionScenario();
             //await RunTranslateToVoiceScenario();
+            //await RunAudioFromStreamScenario();
             //await RunContinuousRecognitionPerfScenario();
             await RunMultipleContinuousRecognitionPerfScenario();
         }
@@ -49,6 +50,13 @@ namespace SpeechTranslation
             await new TranslateToVoiceScenario(SubscriptionKey, Region).Run(
                 inputLanguage: "en-US",
                 cancellationToken);
+        }
+
+        public static async Task RunAudioFromStreamScenario()
+        {
+            await new AudioFromStreamScenario(SubscriptionKey, Region).Run(
+                inputLanguage: "en-US",
+                targetLanguages: new[] { "it-IT", "de-DE", "es-ES" });
         }
 
         public static async Task RunContinuousRecognitionPerfScenario()

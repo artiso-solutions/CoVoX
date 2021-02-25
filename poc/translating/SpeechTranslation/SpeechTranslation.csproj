@@ -16,4 +16,10 @@
     <ProjectReference Include="..\..\_shared\Poc.Shared\Poc.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="whatstheweatherlike.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
