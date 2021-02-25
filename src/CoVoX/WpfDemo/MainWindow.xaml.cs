@@ -59,7 +59,7 @@ namespace WpfDemo
                 {
                     AzureConfiguration = AzureConfiguration.FromFile(),
                     InputLanguages = new[] { "de-DE", "it-IT", "es-ES" },
-                    MatchingThreshold = 0.9
+                    MatchingThreshold = 0.6
                 };
 
                 var commands = new List<Command>
