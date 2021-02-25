@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Covox.Attributes;
 using Microsoft.Extensions.Configuration;
 
 namespace Covox
@@ -10,12 +11,11 @@ namespace Covox
     {
         [Required]
         public AzureConfiguration AzureConfiguration { get; set; }
-
-        [Required]
+        
         [Range(0, 1)]
         public double MatchingThreshold { get; set; } = 0.95;
 
-        [Required]
+        [NotEmpty, MustHaveValidLanguages]
         public IReadOnlyList<string> InputLanguages { get; set; }
 
         public IReadOnlyList<string> HotWords { get; set; }
@@ -23,11 +23,11 @@ namespace Covox
 
     public class AzureConfiguration
     {
-        [Required]
-        public string SubscriptionKey { get; init; }
+        [NotEmpty]
+        public string SubscriptionKey { get; private init; }
 
-        [Required]
-        public string Region { get; init; }
+        [NotEmpty]
+        public string Region { get; private init; }
 
         private AzureConfiguration()
         {
@@ -66,7 +66,11 @@ namespace Covox
             var subscriptionKey = children.FirstOrDefault(x => x.Key == "SubscriptionKey")?.Value;
             var region = children.FirstOrDefault(x => x.Key == "Region")?.Value;
 
-            return FromSubscription(subscriptionKey,region);
+            return new AzureConfiguration()
+            {
+                SubscriptionKey = subscriptionKey,
+                Region = region
+            };
         }
 
         /// <summary>
@@ -82,15 +86,18 @@ namespace Covox
         {
             var config = Environment.GetEnvironmentVariable(variableName);
 
-            if (!string.IsNullOrEmpty(config) && config.Contains(separator))
+            if (string.IsNullOrEmpty(config) || !config.Contains(separator)) 
+                return null;
+            
+            var tokens = config.Split(separator);
+            var subscriptionKey = tokens.FirstOrDefault();
+            var region = tokens.LastOrDefault();
+                
+            return new AzureConfiguration()
             {
-                return FromSubscription(
-                    config.Split(separator).FirstOrDefault(),
-                    config.Split(separator).LastOrDefault()
-                );
-            }
-
-            return null;
+                SubscriptionKey = subscriptionKey,
+                Region = region
+            };
         }
     }
 }
