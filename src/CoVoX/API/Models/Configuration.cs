@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace Covox
 {
@@ -21,11 +24,20 @@ namespace Covox
     public class AzureConfiguration
     {
         [Required]
-        public string SubscriptionKey { get; set; }
+        public string SubscriptionKey { get; init; }
 
         [Required]
-        public string Region { get; set; }
+        public string Region { get; init; }
 
+        private AzureConfiguration()
+        {
+        }
+
+        /// <summary>
+        /// Creates AzureConfiguration from parameters.
+        /// </summary>
+        /// <param name="subscriptionKey">Azure Cognitive Services Speech subscription key.</param>
+        /// <param name="region">Azure Cognitive Services Speech region.</param>
         public static AzureConfiguration FromSubscription(string subscriptionKey, string region)
         {
             return new AzureConfiguration
@@ -35,14 +47,45 @@ namespace Covox
             };
         }
 
+        /// <summary>
+        /// Reads AzureConfiguration from secrets.json file.
+        /// </summary>
+        /// <param name="secretsPath">Full path off the secrets.json file.</param>
+        /// <returns>AzureConfiguration with values read from secrets.json located in path.</returns>
         public static AzureConfiguration FromFile(string secretsPath = "secrets.json")
         {
-            return SecretsHelper.GetAzureConfigurationFromSecretsJson(secretsPath);
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile(secretsPath)
+                .Build();
+
+            var section = config.GetSection(nameof(AzureConfiguration));
+
+            return section.Get<AzureConfiguration>();
         }
 
-        public static AzureConfiguration FromEnvironmentVariable(string variableName = "COVOX_AZURE_CONFIG")
+        /// <summary>
+        /// Reads AzureConfiguration from COVOX_AZURE_CONFIG environment variable.
+        /// Default: "COVOX_AZURE_CONFIG" variable with values split by ':'
+        /// </summary>
+        /// <param name="variableName">Environment variable name</param>
+        /// <param name="separator">Value separator character</param>
+        /// <returns>AzureConfiguration with values read from environment variable.</returns>
+        public static AzureConfiguration FromEnvironmentVariable(
+            string variableName = "COVOX_AZURE_CONFIG",
+            char separator = ':')
         {
-            return SecretsHelper.GetAzureConfigurationFromEnvironmentVariables(variableName);
+            var config = Environment.GetEnvironmentVariable(variableName);
+
+            if (!string.IsNullOrEmpty(config) && config.Contains(separator))
+            {
+                return AzureConfiguration.FromSubscription(
+                    config.Split(separator).FirstOrDefault(),
+                    config.Split(separator).LastOrDefault()
+                );
+            }
+
+            return null;
         }
     }
 }
