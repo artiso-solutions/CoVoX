@@ -4,17 +4,18 @@ using Microsoft.Extensions.Configuration;
 
 namespace Covox
 {
-    public class SecretsHelper
+    internal class SecretsHelper
     {
         /// <summary>
         /// Reads AzureConfiguration from secrets.json file located in the application folder.
         /// </summary>
-        /// <returns>AzureConfiguration with values read from secrets.json.</returns>
-        public static AzureConfiguration GetAzureConfigurationFromSecretsJson()
+        /// <param name="path">Path to the secrets.json file.</param>
+        /// <returns>AzureConfiguration with values read from secrets.json located in path.</returns>
+        internal static AzureConfiguration GetAzureConfigurationFromSecretsJson(string path)
         {
             IConfiguration config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("secrets.json")
+                .AddJsonFile(path)
                 .Build();
 
             var section = config.GetSection(nameof(AzureConfiguration));
@@ -25,10 +26,11 @@ namespace Covox
         /// <summary>
         /// Reads AzureConfiguration from COVOX_AZURE_CONFIG environment variable. Variable format must be subscriptionKey:region.
         /// </summary>
+        /// <param name="variable">Name of the environment variable where the keys are stored.</param>
         /// <returns>AzureConfiguration with values read from environment variable.</returns>
-        public static AzureConfiguration GetAzureConfigurationFromEnvironmentVariables()
+        internal static AzureConfiguration GetAzureConfigurationFromEnvironmentVariables(string variable)
         {
-            var config = Environment.GetEnvironmentVariable("COVOX_AZURE_CONFIG");
+            var config = Environment.GetEnvironmentVariable(variable);
 
             if (!string.IsNullOrEmpty(config) && config.Contains(':'))
             {

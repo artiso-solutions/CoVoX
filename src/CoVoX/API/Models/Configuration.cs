@@ -22,8 +22,27 @@ namespace Covox
     {
         [Required]
         public string SubscriptionKey { get; set; }
-        
+
         [Required]
         public string Region { get; set; }
+
+        public static AzureConfiguration FromSubscription(string subscriptionKey, string region)
+        {
+            return new AzureConfiguration
+            {
+                SubscriptionKey = subscriptionKey,
+                Region = region
+            };
+        }
+
+        public static AzureConfiguration FromFile(string secretsPath = "secrets.json")
+        {
+            return SecretsHelper.GetAzureConfigurationFromSecretsJson(secretsPath);
+        }
+
+        public static AzureConfiguration FromEnvironmentVariable(string variableName = "COVOX_AZURE_CONFIG")
+        {
+            return SecretsHelper.GetAzureConfigurationFromEnvironmentVariables(variableName);
+        }
     }
 }
