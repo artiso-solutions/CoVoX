@@ -6,7 +6,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Covox;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -95,11 +94,11 @@ namespace LightSwitchDemo
                         }
                     }
                 };
-                
+
                 var serilogLogger = new SerilogLoggerProvider(Log.Logger).CreateLogger(nameof(MainWindow));
-                
+
                 var covox = new CovoxEngine(configuration, serilogLogger);
-                covox.Recognized += Covox_Recognized; ;
+                covox.Recognized += Covox_Recognized;
 
                 covox.RegisterCommands(commands);
 
@@ -115,7 +114,7 @@ namespace LightSwitchDemo
                 Log.Error(exception, exception.Message);
             }
         }
-        
+
         private void Covox_Recognized(Command command, RecognitionContext context)
         {
             if (command == null) return;

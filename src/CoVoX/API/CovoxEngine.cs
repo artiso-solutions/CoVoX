@@ -14,18 +14,24 @@ namespace Covox
         private readonly UnderstandingModule _understandingModule;
         private readonly RecognitionLoop _recognitionLoop;
         private readonly ILogger _logger;
-        
+
+        public CovoxEngine(Configuration configuration)
+            : this(configuration, DefaultLogger.CreateLogger())
+        {
+        }
+
         public CovoxEngine(Configuration configuration, ILogger logger)
         {
             _logger = logger;
-
+            
             var errors = ModelValidator.ValidateModel(configuration);
 
             if (errors.Any())
                 throw new AggregateException(errors.Select(error => new Exception(error.ErrorMessage)).ToList());
 
-            var translationModule = new MultiLanguageTranslator(configuration.AzureConfiguration, configuration.InputLanguages);
-            _understandingModule = new UnderstandingModule(new SimilarityInterpreter(), configuration.MatchingThreshold);
+            var translationModule =
+                new MultiLanguageTranslator(configuration.AzureConfiguration, configuration.InputLanguages);
+            _understandingModule = new UnderstandingModule(new TokenSimilarityInterpreter(), configuration.MatchingThreshold);
             _recognitionLoop = new RecognitionLoop(translationModule, _understandingModule);
             _recognitionLoop.Recognized += (command, context) => Recognized?.Invoke(command, context);
         }
