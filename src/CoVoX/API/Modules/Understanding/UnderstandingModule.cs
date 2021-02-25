@@ -56,7 +56,7 @@ namespace Covox.Understanding
                 }
             }
 
-            return highestPercentage * 0.01;
+            return highestPercentage;
         }
     }
 }

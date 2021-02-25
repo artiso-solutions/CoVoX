@@ -12,7 +12,7 @@ namespace Covox.Understanding
             var targetTokens = target.Split(' ').ToList();
             var inputTokens = targetTokens.Where(token => input.ToLower().Contains(token)).ToList();
 
-            var percentageAmountOfKeywords = (inputTokens.Count / targetTokens.Count) * 100;
+            var percentageAmountOfKeywords = inputTokens.Count / targetTokens.Count;
 
             return percentageAmountOfKeywords;
         }
