@@ -56,7 +56,7 @@ namespace LightSwitchDemo
             {
                 var configuration = new Configuration
                 {
-                    AzureConfiguration = SecretsHelper.GetSecrets(),
+                    AzureConfiguration = AzureConfiguration.FromFile(),
                     InputLanguages = new[] { "de-DE", "it-IT", "es-ES" },
                     MatchingThreshold = 0.8
                 };
