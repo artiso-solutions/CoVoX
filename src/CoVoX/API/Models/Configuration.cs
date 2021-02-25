@@ -40,7 +40,7 @@ namespace Covox
         /// <param name="region">Azure Cognitive Services Speech region.</param>
         public static AzureConfiguration FromSubscription(string subscriptionKey, string region)
         {
-            return new AzureConfiguration
+            return new()
             {
                 SubscriptionKey = subscriptionKey,
                 Region = region

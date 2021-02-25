@@ -1,7 +1,6 @@
-﻿<Application x:Class="LigthSwitchDemo.App"
+﻿<Application x:Class="LightSwitchDemo.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LigthSwitchDemo"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

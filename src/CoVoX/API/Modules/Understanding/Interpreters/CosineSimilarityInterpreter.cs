@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Covox.Understanding;
+﻿using Covox.Understanding;
 using F23.StringSimilarity;
 
 namespace Covox.Modules.Understanding.Interpreters

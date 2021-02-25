@@ -125,19 +125,19 @@ namespace LightSwitchDemo
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,
-                        new Action(() => this.lightGrid.Background = new SolidColorBrush(Colors.Black)));
+                        new Action(() => this.LightGrid.Background = new SolidColorBrush(Colors.Black)));
                 }
                 else if (command.Id.Equals(TurnOnLight))
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,
-                        new Action(() => this.lightGrid.Background = new SolidColorBrush(Colors.Yellow)));
+                        new Action(() => this.LightGrid.Background = new SolidColorBrush(Colors.Yellow)));
                 }
                 else if (command.Id.Equals(TurnOnLightRed))
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,
-                        new Action(() => this.lightGrid.Background = new SolidColorBrush(Colors.Red)));
+                        new Action(() => this.LightGrid.Background = new SolidColorBrush(Colors.Red)));
                 }
             }
             catch (Exception exception)

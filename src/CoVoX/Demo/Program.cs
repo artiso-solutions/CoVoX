@@ -57,7 +57,7 @@ namespace Demo
                 var configuration = new Configuration
                 {
                     AzureConfiguration = AzureConfiguration.FromFile(),
-                    InputLanguages = new[] {"en-US", "de-DE", "it-IT"},
+                    InputLanguages = new[] { "en-US", "de-DE", "it-IT" },
                     MatchingThreshold = 0.99
                 };
 
@@ -109,7 +109,6 @@ namespace Demo
 
                 var covox = new CovoxEngine(configuration, serilogLogger);
                 covox.Recognized += Covox_Recognized;
-
                 covox.RegisterCommands(commands);
 
                 await covox.StartAsync();

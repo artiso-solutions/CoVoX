@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
-using System.Xml.Schema;
 
 namespace Covox.Understanding
 {
@@ -42,7 +40,7 @@ namespace Covox.Understanding
                 .Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToList();
 
             var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
-
+            
             return (bestMatch, matches);
         }
 
