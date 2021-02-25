@@ -416,7 +416,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# Editor-based Rest Client
+# JetBrains editors folder
 .idea
 
 # Editor-based Rest Client
