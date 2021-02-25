@@ -51,22 +51,25 @@ namespace Covox.Translating
             using var cancellationSource = new CancellationTokenTaskSource<(string, string)>(cancellationToken);
 
             var timeoutTask = cancellationSource.Task;
-            var recognitionTasks = _translators.Select(t => RecognizeOneWithLanguageAsync(t, cancellationToken));
+            var recognitionTasks = _translators.Select(t => RecognizeOneWithLanguageAsync(t, cancellationToken)).ToArray();
             var recognitionsCompletedTask = Task.WhenAll(recognitionTasks);
 
             var completedTask = await Task.WhenAny(recognitionsCompletedTask, timeoutTask);
 
-            if (completedTask == recognitionsCompletedTask)
-            {
-                var results = await recognitionsCompletedTask;
-                
-                var nonEmptyResults = results.Where(x =>
-                    !string.IsNullOrWhiteSpace(x.input) &&
-                    !string.IsNullOrWhiteSpace(x.inputLanguage)).ToArray();
+            if (completedTask == timeoutTask)
+                return Array.Empty<(string input, string inputLanguage)>();
 
-                if (nonEmptyResults.Any())
-                    return nonEmptyResults;
-            }
+            var completedRecognitions = recognitionTasks
+                .Where(t => t.IsCompletedSuccessfully)
+                .Select(t => t.Result)
+                .ToArray();
+
+            var nonEmptyResults = completedRecognitions.Where(x =>
+                !string.IsNullOrWhiteSpace(x.input) &&
+                !string.IsNullOrWhiteSpace(x.inputLanguage)).ToArray();
+
+            if (nonEmptyResults.Any())
+                return nonEmptyResults;
 
             return Array.Empty<(string input, string inputLanguage)>();
         }

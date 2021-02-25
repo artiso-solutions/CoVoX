@@ -10,7 +10,7 @@ namespace Covox
 
         [Required]
         [Range(0, 1)]
-        public double MatchingThreshold { get; set; }
+        public double MatchingThreshold { get; set; } = 0.95;
 
         [Required]
         public IReadOnlyList<string> InputLanguages { get; set; }
