@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Xml.Schema;
 
 namespace Covox.Understanding
 {
@@ -37,7 +38,8 @@ namespace Covox.Understanding
             }
 
             var matches = candidates.OrderByDescending(x => x.MatchScore)
-                .Select(c => new Match {Command = c, MatchScore = c.MatchScore}).ToImmutableList();
+                .Where(x => x.MatchScore >= MatchingThreshold - 0.05)
+                .Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToList();
 
             var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
 
