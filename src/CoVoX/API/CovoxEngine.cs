@@ -25,7 +25,7 @@ namespace Covox
         {
             _logger = logger;
 
-            var errors = ModelValidator.ValidateModel(configuration);
+            var errors = ModelValidator.Validate(configuration);
 
             if (errors.Any())
                 throw new AggregateException(errors.Select(error => new Exception(error.ErrorMessage)).ToList());
