@@ -74,25 +74,18 @@ namespace Covox
         }
 
         /// <summary>
-        /// Reads AzureConfiguration from COVOX_AZURE_CONFIG environment variable.
-        /// Default: "COVOX_AZURE_CONFIG" variable with values split by ':'
+        /// Reads AzureConfiguration from environment variables.
         /// </summary>
-        /// <param name="variableName">Environment variable name</param>
-        /// <param name="separator">Value separator character</param>
-        /// <returns>AzureConfiguration with values read from environment variable.</returns>
+        /// <param name="subscriptionKeyVariable">Environment variable name for Azure subscription key</param>
+        /// <param name="regionVariable">Environment variable name for Azure region</param>
+        /// <returns>AzureConfiguration with values read from environment variables.</returns>
         public static AzureConfiguration FromEnvironmentVariable(
-            string variableName = "COVOX_AZURE_CONFIG",
-            char separator = ':')
+            string subscriptionKeyVariable = "COVOX_AZURE_SUBSCRIPTION_KEY",
+            string regionVariable = "COVOX_AZURE_REGION")
         {
-            var config = Environment.GetEnvironmentVariable(variableName);
-
-            if (string.IsNullOrEmpty(config) || !config.Contains(separator)) 
-                return null;
+            var subscriptionKey = Environment.GetEnvironmentVariable(subscriptionKeyVariable);
+            var region = Environment.GetEnvironmentVariable(regionVariable);
             
-            var tokens = config.Split(separator);
-            var subscriptionKey = tokens.FirstOrDefault();
-            var region = tokens.LastOrDefault();
-                
             return new AzureConfiguration()
             {
                 SubscriptionKey = subscriptionKey,
