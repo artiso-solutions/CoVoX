@@ -59,7 +59,7 @@ namespace Demo
                 {
                     AzureConfiguration = AzureConfiguration.FromEnvironmentVariable(),
                     InputLanguages = new[] { "en-US", "de-DE", "it-IT" },
-                    MatchingThreshold = 0.99
+                    MatchingThreshold = 0.85
                 };
 
                 var commands = new List<Command>

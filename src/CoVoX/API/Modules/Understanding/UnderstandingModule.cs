@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Covox.Understanding
 {
     internal class UnderstandingModule : IUnderstandingModule, IExposeErrors
     {
+        private const double CloseMatchesThreshold = 0.05;
         private readonly IInterpreter _interpreter;
 
         internal UnderstandingModule(
@@ -29,14 +31,14 @@ namespace Covox.Understanding
 
         public (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
         {
-            var candidates = new List<Command>();
+            var evaluations = new List<Command>();
 
             foreach (var command in Commands)
             {
                 try
                 {
                     command.MatchScore = CalculateHighestSimilarity(input, command);
-                    candidates.Add(command);
+                    evaluations.Add(command);
                 }
                 catch (Exception ex)
                 {
@@ -46,13 +48,17 @@ namespace Covox.Understanding
 
             try
             {
-                var matches = candidates.OrderByDescending(x => x.MatchScore)
-                    .Where(x => x.MatchScore >= MatchingThreshold - 0.05)
+                var matches = evaluations.OrderByDescending(x => x.MatchScore)
+                    .Where(x => x.MatchScore >= MatchingThreshold)
                     .Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToList();
 
-                var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
+                var bestMatch = matches.FirstOrDefault();
 
-                return (bestMatch, matches);
+                if (bestMatch is null) return (default, Array.Empty<Match>());
+                {
+                    var closeMatches = matches.Where(x => x.MatchScore >= bestMatch.MatchScore - CloseMatchesThreshold).ToImmutableList();
+                    return (bestMatch, closeMatches);
+                }
             }
             catch (Exception ex)
             {
