@@ -36,7 +36,9 @@ namespace Covox.Translating
 
             _recognizer.Canceled += (_, args) =>
             {
-                OnRecognizerError(args.ErrorDetails);
+                if (args.Reason == CancellationReason.Error)
+                    // args.ErrorCode may be useful to categorize the errors
+                    OnRecognizerError(args.ErrorDetails);
             };
         }
 
