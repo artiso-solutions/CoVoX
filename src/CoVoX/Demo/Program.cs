@@ -110,6 +110,7 @@ namespace Demo
                 var covox = new CovoxEngine(logger, configuration);
 
                 covox.Recognized += Covox_Recognized;
+                covox.Unrecognized += Covox_Unrecognized;
                 covox.OnError += Covox_OnError;
                 covox.RegisterCommands(commands);
 
@@ -119,6 +120,14 @@ namespace Demo
             catch (Exception exception)
             {
                 Log.Error(exception, exception.Message);
+            }
+        }
+
+        private static void Covox_Unrecognized(List<(string input, string inputLanguage)> inputs)
+        {
+            foreach (var (input, inputLanguage) in inputs)
+            {
+                Console.WriteLine($"No command found for: {input} ('{inputLanguage}')");
             }
         }
 

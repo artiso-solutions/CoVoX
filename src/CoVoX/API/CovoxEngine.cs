@@ -40,6 +40,7 @@ namespace Covox
 
             _recognitionLoop = new RecognitionLoop(_translationModule, _understandingModule);
             _recognitionLoop.Recognized += (command, context) => Recognized?.Invoke(command, context);
+            _recognitionLoop.Unrecognized += (unrecognizedInputs) => Unrecognized?.Invoke(unrecognizedInputs);
             _recognitionLoop.OnError += ex => OnError_Internal(ex);
         }
 
@@ -48,6 +49,7 @@ namespace Covox
         public IReadOnlyList<Command> Commands => _understandingModule.Commands;
 
         public event CommandRecognized Recognized;
+        public event InputUnrecognized Unrecognized;
 
         public event ErrorHandler OnError;
 

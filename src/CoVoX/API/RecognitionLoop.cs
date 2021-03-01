@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Covox.Understanding;
 namespace Covox
 {
     public delegate void CommandRecognized(Command command, RecognitionContext context);
+    public delegate void InputUnrecognized(List<(string input, string inputLanguage)> inputs);
 
     internal class RecognitionLoop : IExposeErrors
     {
@@ -27,6 +29,7 @@ namespace Covox
         public bool IsActive { get; private set; }
 
         public event CommandRecognized Recognized;
+        public event InputUnrecognized Unrecognized;
 
         public event ErrorHandler OnError;
 
@@ -70,12 +73,18 @@ namespace Covox
                 Match bestMatch = null;
                 RecognitionContext context = null;
 
+                var unrecognizedInputs = new List<(string input, string inputLanguage)>();
+
                 foreach (var recognition in recognitions)
                 {
                     var (input, inputLanguage) = recognition;
                     var (match, candidates) = _understandingModule.Understand(input);
 
-                    if (match is null) continue;
+                    if (match is null)
+                    {
+                        unrecognizedInputs.Add(recognition);
+                        continue;
+                    }
 
                     if (bestMatch is null || bestMatch.MatchScore < match.MatchScore)
                     {
@@ -86,6 +95,8 @@ namespace Covox
 
                 if (bestMatch is not null && context is not null)
                     Recognized?.Invoke(bestMatch.Command, context);
+                else
+                    Unrecognized?.Invoke(unrecognizedInputs);
             }
             catch (Exception ex)
             {
