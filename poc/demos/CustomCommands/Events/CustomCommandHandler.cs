@@ -13,8 +13,7 @@ namespace CustomCommands.Events
     {
         private readonly SpeechSynthesizer _synthesizer;
         public readonly CustomCommandsClient Client;
-        public bool ConversationInProgress = false;
-
+        
         public CustomCommandHandler(CustomCommandClientConfiguration configuration, SpeechSynthesizer synthesizer)
         {
             var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
@@ -64,9 +63,11 @@ namespace CustomCommands.Events
 
             if (result != null && result.Type == "CUSTOM.COMMAND")
             {
-                Console.WriteLine("command detected");
-            
+                Console.WriteLine("recognized..");
                 await _synthesizer.SpeakTextAsync($"command {result.Name} detected");
+                Console.WriteLine($"command {result.Name} detected");
+                Console.Write(Environment.NewLine);
+                Console.WriteLine("Write a command or say OK SPEAKER and speech your command");
 
                 return;
             }
