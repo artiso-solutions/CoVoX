@@ -68,10 +68,12 @@ namespace Covox.Understanding
 
         private double CalculateHighestSimilarity(string input, Command command)
         {
+            input = NormalizeString(input);
+
             var highestPercentage = 0.0;
             foreach (var trigger in command.VoiceTriggers)
             {
-                var percentage = _interpreter.CalculateMatchScore(trigger, input);
+                var percentage = _interpreter.CalculateMatchScore(NormalizeString(trigger), input);
                 if (percentage > highestPercentage)
                 {
                     highestPercentage = percentage;
@@ -79,6 +81,11 @@ namespace Covox.Understanding
             }
 
             return highestPercentage;
+        }
+
+        private string NormalizeString(string input)
+        {
+            return new string(input.Where(c => !char.IsPunctuation(c)).ToArray()).ToLowerInvariant();
         }
     }
 }
