@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Covox.Utils
+namespace Covox
 {
     internal static class ModelValidator
     {
@@ -13,7 +12,6 @@ namespace Covox.Utils
             if (configuration == null)
             {
                 results.Add(new ValidationResult($"{nameof(configuration)} is invalid"));
-
                 return results;
             }
 
@@ -30,7 +28,7 @@ namespace Covox.Utils
             var ctx = new ValidationContext(model, null, null);
             var results = new List<ValidationResult>();
             Validator.TryValidateObject(model, ctx, results, true);
-            
+
             return results;
         }
     }

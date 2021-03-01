@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Covox.Attributes;
+using Covox.Validation;
 using Microsoft.Extensions.Configuration;
 
 namespace Covox
