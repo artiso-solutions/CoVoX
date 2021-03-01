@@ -129,7 +129,7 @@ namespace Demo
 
         private static void Covox_OnError(Exception ex)
         {
-            Log.Error(ex, ex.Message);
+            Log.Error(ex, $"Got CoVox error: {ex.Message}");
         }
     }
 }

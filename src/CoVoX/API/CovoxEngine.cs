@@ -52,6 +52,7 @@ namespace Covox
 
         private void OnTranslationError(Exception ex)
         {
+            _logger.LogError(ex, ex.Message);
             OnError?.Invoke(ex);
         }
 
