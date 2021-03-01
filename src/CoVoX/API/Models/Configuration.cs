@@ -83,14 +83,24 @@ namespace Covox
             string subscriptionKeyVariable = "COVOX_AZURE_SUBSCRIPTION_KEY",
             string regionVariable = "COVOX_AZURE_REGION")
         {
-            var subscriptionKey = Environment.GetEnvironmentVariable(subscriptionKeyVariable);
-            var region = Environment.GetEnvironmentVariable(regionVariable);
+            var subscriptionKey = TryGetEnvironmentVariable(subscriptionKeyVariable);
+            var region = TryGetEnvironmentVariable(regionVariable);
             
             return new AzureConfiguration()
             {
                 SubscriptionKey = subscriptionKey,
                 Region = region
             };
+
+            // Local functions.
+
+            static string TryGetEnvironmentVariable(string varName)
+            {
+                return
+                    Environment.GetEnvironmentVariable(varName, EnvironmentVariableTarget.Process) ??
+                    Environment.GetEnvironmentVariable(varName, EnvironmentVariableTarget.User) ??
+                    Environment.GetEnvironmentVariable(varName, EnvironmentVariableTarget.Machine);
+            }
         }
     }
 }
