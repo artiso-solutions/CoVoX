@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 using Covox;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -106,10 +106,8 @@ namespace WpfDemo
                     }
                 };
 
-                var serilogLogger = new SerilogLoggerProvider(Log.Logger).CreateLogger(nameof(MainWindow));
-
-                var covox = new CovoxEngine(configuration, serilogLogger);
-                covox.Recognized += Covox_Recognized;
+                var logger = new SerilogLoggerFactory(Log.Logger).CreateLogger<CovoxEngine>();
+                var covox = new CovoxEngine(logger, configuration);
 
                 covox.RegisterCommands(commands);
 

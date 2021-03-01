@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Covox.Translating
 {
-    internal class MultiLanguageTranslator : IMultiLanguageTranslatingModule, IAsyncDisposable
+    internal class MultiLanguageTranslator : IMultiLanguageTranslatingModule, IExposeErrors, IAsyncDisposable
     {
         private readonly IReadOnlyList<Translator> _translators;
         private readonly AutoResetTaskCompletionSource<(string input, string inputLanguage)> _atcs = new();
@@ -18,17 +18,28 @@ namespace Covox.Translating
             _translators = inputLanguages.Select(lang => new Translator(azureConfiguration, lang)).ToArray();
 
             foreach (var translator in _translators)
+            {
                 translator.Recognized += text => OnRecognized(text, translator.InputLanguage);
+                translator.OnError += ex => OnTranslatorError(ex);
+            }
         }
 
         public bool IsActive { get; private set; }
 
         public event LanguageRecognized Recognized;
 
+        public event ErrorHandler OnError;
+
         private void OnRecognized(string input, string inputLanguage)
         {
             _ = _atcs.TrySetResult((input, inputLanguage));
             Recognized?.Invoke(input, inputLanguage);
+        }
+
+        private void OnTranslatorError(Exception ex)
+        {
+            _ = _atcs.TrySetException(ex);
+            OnError?.Invoke(ex);
         }
 
         public async Task<(string input, string inputLanguage)> RecognizeOneAsync(CancellationToken cancellationToken)

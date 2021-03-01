@@ -9,8 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Covox
 {
-    public class CovoxEngine
+    public class CovoxEngine : IExposeErrors
     {
+        private readonly MultiLanguageTranslator _translationModule;
         private readonly UnderstandingModule _understandingModule;
         private readonly RecognitionLoop _recognitionLoop;
         private readonly ILogger _logger;
@@ -44,7 +45,15 @@ namespace Covox
         public bool IsActive => _recognitionLoop.IsActive;
 
         public IReadOnlyList<Command> Commands => _understandingModule.Commands;
+
         public event CommandRecognized Recognized;
+
+        public event ErrorHandler OnError;
+
+        private void OnTranslationError(Exception ex)
+        {
+            OnError?.Invoke(ex);
+        }
 
         public async Task StartAsync()
         {
