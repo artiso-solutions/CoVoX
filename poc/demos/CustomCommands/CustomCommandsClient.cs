@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CustomCommands.Configuration;
 using Microsoft.CognitiveServices.Speech.Audio;
@@ -34,7 +35,7 @@ namespace CustomCommands
             await Recognizer.ConnectAsync();
         }
         
-        public async Task StartListenForCommands()
+        public async Task StartListenForSpeech()
         {
             Console.WriteLine("Now listening for commands: ");
             
@@ -46,6 +47,13 @@ namespace CustomCommands
             Console.WriteLine("Now listening for input: ");
             
             await Recognizer.ListenOnceAsync();
+        }
+
+        public async Task SendActivity(string sentence)
+        {
+            var activity = new { Text = sentence, Type = "message" };
+            var activitySerialized = JsonSerializer.Serialize(activity);
+            await Recognizer.SendActivityAsync(activitySerialized);
         }
     }
 }
