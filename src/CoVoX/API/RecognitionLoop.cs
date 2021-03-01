@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Covox.Translating;
@@ -8,7 +9,7 @@ namespace Covox
 {
     public delegate void CommandRecognized(Command command, RecognitionContext context);
 
-    internal class RecognitionLoop
+    internal class RecognitionLoop : IExposeErrors
     {
         private readonly IMultiLanguageTranslatingModule _translationModule;
         private readonly IUnderstandingModule _understandingModule;
@@ -27,6 +28,8 @@ namespace Covox
 
         public event CommandRecognized Recognized;
 
+        public event ErrorHandler OnError;
+
         public async Task StartAsync()
         {
             if (IsActive) return;
@@ -44,7 +47,7 @@ namespace Covox
 
             _cts.Cancel();
             await _translationModule.StopAsync();
-            
+
             await _loop;
             _loop = null;
         }
@@ -57,30 +60,37 @@ namespace Covox
 
         private async Task RecognizeAsync(CancellationToken cancellationToken)
         {
-            if (cancellationToken.IsCancellationRequested) return;
-
-            var recognitions = await _translationModule.RecognizeOneOfEachAsync(cancellationToken);
-            if (recognitions is null || !recognitions.Any()) return;
-
-            Match bestMatch = null;
-            RecognitionContext context = null;
-
-            foreach (var recognition in recognitions)
+            try
             {
-                var (input, inputLanguage) = recognition;
-                var (match, candidates) = _understandingModule.Understand(input);
+                if (cancellationToken.IsCancellationRequested) return;
 
-                if (match is null) continue;
+                var recognitions = await _translationModule.RecognizeOneOfEachAsync(cancellationToken);
+                if (recognitions is null || !recognitions.Any()) return;
 
-                if (bestMatch is null || bestMatch.MatchScore < match.MatchScore)
+                Match bestMatch = null;
+                RecognitionContext context = null;
+
+                foreach (var recognition in recognitions)
                 {
-                    bestMatch = match;
-                    context = new RecognitionContext(input, inputLanguage, match.MatchScore, candidates);
-                }
-            }
+                    var (input, inputLanguage) = recognition;
+                    var (match, candidates) = _understandingModule.Understand(input);
 
-            if (bestMatch is not null && context is not null)
-                Recognized?.Invoke(bestMatch.Command, context);
+                    if (match is null) continue;
+
+                    if (bestMatch is null || bestMatch.MatchScore < match.MatchScore)
+                    {
+                        bestMatch = match;
+                        context = new RecognitionContext(input, inputLanguage, match.MatchScore, candidates);
+                    }
+                }
+
+                if (bestMatch is not null && context is not null)
+                    Recognized?.Invoke(bestMatch.Command, context);
+            }
+            catch (Exception ex)
+            {
+                OnError?.Invoke(ex);
+            }
         }
     }
 }

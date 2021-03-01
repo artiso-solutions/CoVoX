@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Covox.Understanding
 {
-    internal class UnderstandingModule : IUnderstandingModule
+    internal class UnderstandingModule : IUnderstandingModule, IExposeErrors
     {
         private readonly IInterpreter _interpreter;
 
@@ -20,6 +20,8 @@ namespace Covox.Understanding
 
         private double MatchingThreshold { get; }
 
+        public event ErrorHandler OnError;
+
         public void RegisterCommands(IEnumerable<Command> commands)
         {
             Commands = commands?.ToList();
@@ -31,17 +33,37 @@ namespace Covox.Understanding
 
             foreach (var command in Commands)
             {
-                command.MatchScore = CalculateHighestSimilarity(input, command);
-                candidates.Add(command);
+                try
+                {
+                    command.MatchScore = CalculateHighestSimilarity(input, command);
+                    candidates.Add(command);
+                }
+                catch (Exception ex)
+                {
+                    OnUnderstandError(ex);
+                }
             }
 
-            var matches = candidates.OrderByDescending(x => x.MatchScore)
-                .Where(x => x.MatchScore >= MatchingThreshold - 0.05)
-                .Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToList();
+            try
+            {
+                var matches = candidates.OrderByDescending(x => x.MatchScore)
+                    .Where(x => x.MatchScore >= MatchingThreshold - 0.05)
+                    .Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToList();
 
-            var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
-            
-            return (bestMatch, matches);
+                var bestMatch = matches.FirstOrDefault(m => m.MatchScore >= MatchingThreshold);
+
+                return (bestMatch, matches);
+            }
+            catch (Exception ex)
+            {
+                OnUnderstandError(ex);
+                return (default, Array.Empty<Match>());
+            }
+        }
+
+        private void OnUnderstandError(Exception ex)
+        {
+            OnError?.Invoke(ex);
         }
 
         private double CalculateHighestSimilarity(string input, Command command)

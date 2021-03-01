@@ -5,46 +5,63 @@ using System.Threading.Tasks;
 using Covox.Modules.Understanding.Interpreters;
 using Covox.Translating;
 using Covox.Understanding;
-using Covox.Utils;
 using Microsoft.Extensions.Logging;
 
 namespace Covox
 {
-    public class CovoxEngine
+    public class CovoxEngine : IExposeErrors
     {
+        private readonly MultiLanguageTranslator _translationModule;
         private readonly UnderstandingModule _understandingModule;
         private readonly RecognitionLoop _recognitionLoop;
         private readonly ILogger _logger;
 
         public CovoxEngine(Configuration configuration)
-            : this(configuration, DefaultLogger.CreateLogger())
+            : this(DefaultLogger.CreateLogger<CovoxEngine>(), configuration)
         {
         }
 
-        public CovoxEngine(Configuration configuration, ILogger logger)
+        public CovoxEngine(
+            ILogger<CovoxEngine> logger,
+            Configuration configuration)
         {
             _logger = logger;
 
             var errors = ModelValidator.Validate(configuration);
+            if (errors.Any()) throw errors.AsException();
 
-            if (errors.Any())
-                throw new AggregateException(errors.Select(error => new Exception(error.ErrorMessage)).ToList());
+            _translationModule = new MultiLanguageTranslator(
+                configuration.AzureConfiguration, configuration.InputLanguages);
 
-            var translationModule =
-                new MultiLanguageTranslator(configuration.AzureConfiguration, configuration.InputLanguages);
-            _understandingModule =
-                new UnderstandingModule(new CosineSimilarityInterpreter(), configuration.MatchingThreshold);
+            _translationModule.OnError += ex => OnError_Internal(ex);
 
-            _recognitionLoop = new RecognitionLoop(translationModule, _understandingModule);
+            _understandingModule = new UnderstandingModule(
+                new CosineSimilarityInterpreter(), configuration.MatchingThreshold);
+
+            _recognitionLoop = new RecognitionLoop(_translationModule, _understandingModule);
             _recognitionLoop.Recognized += (command, context) => Recognized?.Invoke(command, context);
+            _recognitionLoop.OnError += ex => OnError_Internal(ex);
         }
 
         public bool IsActive => _recognitionLoop.IsActive;
 
+        public IReadOnlyList<Command> Commands => _understandingModule.Commands;
+
         public event CommandRecognized Recognized;
+
+        public event ErrorHandler OnError;
+
+        private void OnError_Internal(Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            OnError?.Invoke(ex);
+        }
 
         public async Task StartAsync()
         {
+            if (!Commands.Any())
+                throw new InvalidOperationException("No commands were registered.");
+
             _logger.LogDebug("Starting recognition");
             await _recognitionLoop.StartAsync();
         }

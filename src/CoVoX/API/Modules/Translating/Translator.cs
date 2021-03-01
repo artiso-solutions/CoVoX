@@ -8,7 +8,7 @@ using Microsoft.CognitiveServices.Speech.Translation;
 
 namespace Covox.Translating
 {
-    internal class Translator : ITranslatingModule, IAsyncDisposable
+    internal class Translator : ITranslatingModule, IExposeErrors, IAsyncDisposable
     {
         private readonly TranslationRecognizer _recognizer;
         private readonly AutoResetTaskCompletionSource<string> _atcs = new();
@@ -36,7 +36,9 @@ namespace Covox.Translating
 
             _recognizer.Canceled += (_, args) =>
             {
-                OnError(args.ErrorDetails);
+                if (args.Reason == CancellationReason.Error)
+                    // args.ErrorCode may be useful to categorize the errors
+                    OnRecognizerError(args.ErrorDetails);
             };
         }
 
@@ -47,6 +49,8 @@ namespace Covox.Translating
         public bool IsActive { get; private set; }
 
         public event TextRecognized Recognized;
+
+        public event ErrorHandler OnError;
 
         private static SpeechTranslationConfig GetRecognizerConfig(
             AzureConfiguration azureConfiguration,
@@ -67,10 +71,12 @@ namespace Covox.Translating
             _ = _atcs.TrySetResult(text);
             Recognized?.Invoke(text);
         }
-        private void OnError(string errorDetails)
+
+        private void OnRecognizerError(string errorDetails)
         {
-            _ = _atcs.TrySetCanceled();
-            //TODO: pass error details to event
+            var ex = new Exception(errorDetails);
+            _ = _atcs.TrySetException(ex);
+            OnError?.Invoke(ex);
         }
 
         public async Task StartAsync()

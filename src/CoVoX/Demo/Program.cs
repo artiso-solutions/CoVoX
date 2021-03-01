@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Covox;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -10,7 +11,7 @@ namespace Demo
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static async Task Main()
         {
             Console.WriteLine("CoVoX Sample App" +
                               Environment.NewLine +
@@ -105,10 +106,11 @@ namespace Demo
                     }
                 };
 
-                var serilogLogger = new SerilogLoggerProvider(Log.Logger).CreateLogger(nameof(Program));
+                var logger = new SerilogLoggerFactory(Log.Logger).CreateLogger<CovoxEngine>();
+                var covox = new CovoxEngine(logger, configuration);
 
-                var covox = new CovoxEngine(configuration, serilogLogger);
                 covox.Recognized += Covox_Recognized;
+                covox.OnError += Covox_OnError;
                 covox.RegisterCommands(commands);
 
                 await covox.StartAsync();
@@ -123,6 +125,11 @@ namespace Demo
         private static void Covox_Recognized(Command command, RecognitionContext context)
         {
             Console.WriteLine($"Recognized command: {command.Id}");
+        }
+
+        private static void Covox_OnError(Exception ex)
+        {
+            Log.Error(ex, $"Got CoVox error: {ex.Message}");
         }
     }
 }

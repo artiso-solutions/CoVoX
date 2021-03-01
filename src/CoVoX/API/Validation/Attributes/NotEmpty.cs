@@ -2,7 +2,7 @@ using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Covox.Attributes
+namespace Covox.Validation
 {
     internal class NotEmpty : ValidationAttribute
     {
