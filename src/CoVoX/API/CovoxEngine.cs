@@ -33,13 +33,14 @@ namespace Covox
             _translationModule = new MultiLanguageTranslator(
                 configuration.AzureConfiguration, configuration.InputLanguages);
 
-            _translationModule.OnError += ex => OnTranslationError(ex);
+            _translationModule.OnError += ex => OnError_Internal(ex);
 
             _understandingModule = new UnderstandingModule(
                 new CosineSimilarityInterpreter(), configuration.MatchingThreshold);
 
             _recognitionLoop = new RecognitionLoop(_translationModule, _understandingModule);
             _recognitionLoop.Recognized += (command, context) => Recognized?.Invoke(command, context);
+            _recognitionLoop.OnError += ex => OnError_Internal(ex);
         }
 
         public bool IsActive => _recognitionLoop.IsActive;
@@ -50,7 +51,7 @@ namespace Covox
 
         public event ErrorHandler OnError;
 
-        private void OnTranslationError(Exception ex)
+        private void OnError_Internal(Exception ex)
         {
             _logger.LogError(ex, ex.Message);
             OnError?.Invoke(ex);
