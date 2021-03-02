@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace Covox.Understanding
@@ -54,11 +53,15 @@ namespace Covox.Understanding
 
                 var bestMatch = matches.FirstOrDefault();
 
-                if (bestMatch is null) return (default, Array.Empty<Match>());
-                {
-                    var closeMatches = matches.Where(x => x.MatchScore >= bestMatch.MatchScore - CloseMatchesThreshold).ToImmutableList();
-                    return (bestMatch, closeMatches);
-                }
+                if (bestMatch is null)
+                    return (default, Array.Empty<Match>());
+
+                var closeMatches = matches
+                    .Where(x => x != bestMatch)
+                    .Where(x => x.MatchScore >= bestMatch.MatchScore - CloseMatchesThreshold)
+                    .ToArray();
+
+                return (bestMatch, closeMatches);
             }
             catch (Exception ex)
             {
@@ -77,13 +80,13 @@ namespace Covox.Understanding
             input = NormalizeString(input);
 
             var highestPercentage = 0.0;
+
             foreach (var trigger in command.VoiceTriggers)
             {
                 var percentage = _interpreter.CalculateMatchScore(NormalizeString(trigger), input);
+                
                 if (percentage > highestPercentage)
-                {
                     highestPercentage = percentage;
-                }
             }
 
             return highestPercentage;
