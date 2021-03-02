@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
@@ -12,8 +12,7 @@ namespace Covox.Validation
 
         private string GetErrorMessage(ValidationContext ctx) => string.Format(ErrorMessageString, ctx.MemberName);
 
-        protected override ValidationResult IsValid(object value,
-            ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
             var validCultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(c => c.Name).ToHashSet();
 

@@ -21,14 +21,15 @@ namespace Covox.Understanding
 
         private double MatchingThreshold { get; }
 
-        public event ErrorHandler OnError;
+        public event ErrorHandler? OnError;
 
         public void RegisterCommands(IEnumerable<Command> commands)
         {
-            Commands = commands?.ToList();
+            if (commands is not null)
+                Commands = commands.ToList();
         }
 
-        public (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
+        public (Match? bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
         {
             var evaluations = new List<Command>();
 
@@ -49,7 +50,7 @@ namespace Covox.Understanding
             {
                 var matches = evaluations.OrderByDescending(x => x.MatchScore)
                     .Where(x => x.MatchScore >= MatchingThreshold)
-                    .Select(c => new Match { Command = c, MatchScore = c.MatchScore }).ToList();
+                    .Select(command => new Match(command, command.MatchScore)).ToList();
 
                 var bestMatch = matches.FirstOrDefault();
 

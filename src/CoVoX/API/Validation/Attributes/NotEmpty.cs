@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -8,8 +8,7 @@ namespace Covox.Validation
     {
         private string GetErrorMessage(ValidationContext ctx) => string.Format(ErrorMessageString, ctx.MemberName);
         
-        protected override ValidationResult IsValid(object value,
-            ValidationContext validationContext)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value is string strValue && !string.IsNullOrWhiteSpace(strValue))
                 return ValidationResult.Success;

@@ -26,9 +26,9 @@ namespace Covox.Translating
 
         public bool IsActive { get; private set; }
 
-        public event LanguageRecognized Recognized;
+        public event LanguageRecognized? Recognized;
 
-        public event ErrorHandler OnError;
+        public event ErrorHandler? OnError;
 
         private void OnRecognized(string input, string inputLanguage)
         {
@@ -80,12 +80,12 @@ namespace Covox.Translating
                 !string.IsNullOrWhiteSpace(x.inputLanguage)).ToArray();
 
             if (nonEmptyResults.Any())
-                return nonEmptyResults;
+                return nonEmptyResults!;
 
             return Array.Empty<(string input, string inputLanguage)>();
         }
 
-        private static async Task<(string input, string inputLanguage)> RecognizeOneWithLanguageAsync(
+        private static async Task<(string? input, string? inputLanguage)> RecognizeOneWithLanguageAsync(
             Translator translator,
             CancellationToken cancellationToken)
         {

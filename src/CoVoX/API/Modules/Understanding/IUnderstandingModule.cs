@@ -9,6 +9,6 @@ namespace Covox.Understanding
 
         void RegisterCommands(IEnumerable<Command> commands);
 
-        (Match bestMatch, IReadOnlyList<Match> candidates) Understand(string input);
+        (Match? bestMatch, IReadOnlyList<Match> candidates) Understand(string input);
     }
 }

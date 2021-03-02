@@ -15,8 +15,8 @@ namespace Covox
     {
         private readonly IMultiLanguageTranslatingModule _translationModule;
         private readonly IUnderstandingModule _understandingModule;
-        private CancellationTokenSource _cts;
-        private Task _loop;
+        private CancellationTokenSource? _cts;
+        private Task? _loop;
 
         public RecognitionLoop(
             IMultiLanguageTranslatingModule translationModule,
@@ -28,10 +28,10 @@ namespace Covox
 
         public bool IsActive { get; private set; }
 
-        public event CommandRecognized Recognized;
-        public event InputUnrecognized Unrecognized;
+        public event CommandRecognized? Recognized;
+        public event InputUnrecognized? Unrecognized;
 
-        public event ErrorHandler OnError;
+        public event ErrorHandler? OnError;
 
         public async Task StartAsync()
         {
@@ -48,10 +48,12 @@ namespace Covox
             if (!IsActive) return;
             IsActive = false;
 
-            _cts.Cancel();
+            _cts?.Cancel();
             await _translationModule.StopAsync();
 
-            await _loop;
+            if (_loop is not null)
+                await _loop;
+
             _loop = null;
         }
 
@@ -70,8 +72,8 @@ namespace Covox
                 var recognitions = await _translationModule.RecognizeOneOfEachAsync(cancellationToken);
                 if (recognitions is null || !recognitions.Any()) return;
 
-                Match bestMatch = null;
-                RecognitionContext context = null;
+                Match? bestMatch = null;
+                RecognitionContext? context = null;
 
                 var unrecognizedInputs = new List<(string input, string inputLanguage)>();
 

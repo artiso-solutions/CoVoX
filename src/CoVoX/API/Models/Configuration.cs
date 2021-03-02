@@ -5,6 +5,8 @@ using System.Linq;
 using Covox.Validation;
 using Microsoft.Extensions.Configuration;
 
+#nullable disable
+
 namespace Covox
 {
     public class Configuration
@@ -79,7 +81,7 @@ namespace Covox
         /// <param name="subscriptionKeyVariable">Environment variable name for Azure subscription key</param>
         /// <param name="regionVariable">Environment variable name for Azure region</param>
         /// <returns>AzureConfiguration with values read from environment variables.</returns>
-        public static AzureConfiguration FromEnvironmentVariable(
+        public static AzureConfiguration FromEnvironmentVariables(
             string subscriptionKeyVariable = "COVOX_AZURE_SUBSCRIPTION_KEY",
             string regionVariable = "COVOX_AZURE_REGION")
         {

@@ -10,7 +10,7 @@ namespace Covox
     /// </summary>
     internal sealed class CancellationTokenTaskSource<T> : IDisposable
     {
-        private readonly IDisposable _registration;
+        private readonly IDisposable? _registration;
 
         public CancellationTokenTaskSource(CancellationToken cancellationToken)
         {

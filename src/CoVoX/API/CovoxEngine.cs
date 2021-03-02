@@ -48,10 +48,10 @@ namespace Covox
 
         public IReadOnlyList<Command> Commands => _understandingModule.Commands;
 
-        public event CommandRecognized Recognized;
-        public event InputUnrecognized Unrecognized;
+        public event CommandRecognized? Recognized;
+        public event InputUnrecognized? Unrecognized;
 
-        public event ErrorHandler OnError;
+        public event ErrorHandler? OnError;
 
         private void OnError_Internal(Exception ex)
         {
@@ -74,7 +74,10 @@ namespace Covox
             await _recognitionLoop.StopAsync();
         }
 
-        public void RegisterCommands(List<Command> commands) =>
+        public void RegisterCommands(params Command[] commands) =>
+            _understandingModule.RegisterCommands(commands);
+
+        public void RegisterCommands(IEnumerable<Command> commands) =>
             _understandingModule.RegisterCommands(commands);
     }
 }

@@ -13,7 +13,7 @@ namespace Covox
         public AutoResetTaskCompletionSource()
         {
             _creationOptions = TaskCreationOptions.RunContinuationsAsynchronously;
-            InitTcs();
+            _tcs = new TaskCompletionSource<TResult>(_creationOptions);
         }
 
         public Task<TResult> Task => _tcs.Task;

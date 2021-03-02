@@ -31,7 +31,9 @@ namespace Covox.Translating
             _recognizer.Recognized += (_, args) =>
             {
                 var translatedText = args.Result.Translations.Values.FirstOrDefault();
-                OnRecognized(translatedText);
+
+                if (!string.IsNullOrWhiteSpace(translatedText))
+                    OnRecognized(translatedText);
             };
 
             _recognizer.Canceled += (_, args) =>
@@ -48,9 +50,9 @@ namespace Covox.Translating
 
         public bool IsActive { get; private set; }
 
-        public event TextRecognized Recognized;
+        public event TextRecognized? Recognized;
 
-        public event ErrorHandler OnError;
+        public event ErrorHandler? OnError;
 
         private static SpeechTranslationConfig GetRecognizerConfig(
             AzureConfiguration azureConfiguration,
@@ -91,7 +93,7 @@ namespace Covox.Translating
             await _recognizer.StopContinuousRecognitionAsync();
         }
 
-        public async Task<string> RecognizeOneAsync(CancellationToken cancellationToken)
+        public async Task<string?> RecognizeOneAsync(CancellationToken cancellationToken)
         {
             using var cancellationSource = new CancellationTokenTaskSource<string>(cancellationToken);
 

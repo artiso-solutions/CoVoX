@@ -15,7 +15,7 @@ namespace Covox.Translating
 
         event TextRecognized Recognized;
 
-        Task<string> RecognizeOneAsync(CancellationToken cancellationToken);
+        Task<string?> RecognizeOneAsync(CancellationToken cancellationToken);
 
         Task StartAsync();
 
