@@ -29,7 +29,7 @@ namespace Covox.Understanding
                 Commands = commands.ToList();
         }
 
-        public (Match? bestMatch, IReadOnlyList<Match> candidates) Understand(string input)
+        public (Match? bestMatch, IReadOnlyList<Match> closeMatches) Understand(string input)
         {
             var evaluations = new List<Command>();
 

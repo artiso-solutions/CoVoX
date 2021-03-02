@@ -80,7 +80,7 @@ namespace Covox
                 foreach (var recognition in recognitions)
                 {
                     var (input, inputLanguage) = recognition;
-                    var (match, candidates) = _understandingModule.Understand(input);
+                    var (match, closeMatches) = _understandingModule.Understand(input);
 
                     if (match is null)
                     {
@@ -91,7 +91,7 @@ namespace Covox
                     if (bestMatch is null || bestMatch.MatchScore < match.MatchScore)
                     {
                         bestMatch = match;
-                        context = new RecognitionContext(input, inputLanguage, match.MatchScore, candidates);
+                        context = new RecognitionContext(input, inputLanguage, match.MatchScore, closeMatches);
                     }
                 }
 

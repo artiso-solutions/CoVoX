@@ -7,5 +7,5 @@ namespace Covox
         string Input,
         string InputLanguage,
         double MatchScore,
-        IReadOnlyList<Match> Candidates);
+        IReadOnlyList<Match> CloseMatches);
 }
