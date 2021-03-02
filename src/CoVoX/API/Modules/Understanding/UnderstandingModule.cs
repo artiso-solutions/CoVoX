@@ -91,7 +91,7 @@ namespace Covox.Understanding
 
         private string NormalizeString(string input)
         {
-            return new string(input.Where(c => !char.IsPunctuation(c)).ToArray()).ToLowerInvariant();
+            return new string(input.Where(c => !char.IsPunctuation(c)).ToArray()).ToLowerInvariant().Trim();
         }
     }
 }
