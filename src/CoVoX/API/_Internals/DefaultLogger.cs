@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace Covox
 {
@@ -7,14 +6,9 @@ namespace Covox
     {
         public static ILogger<T> CreateLogger<T>(LogLevel logLevel = LogLevel.Trace)
         {
-            using var loggerFactory = LoggerFactory.Create(builder =>
-                builder.AddSimpleConsole(options =>
-                {
-                    options.IncludeScopes = false;
-                    options.ColorBehavior = LoggerColorBehavior.Disabled;
-                    options.SingleLine = true;
-                    options.TimestampFormat = "yyyy-MM-yy HH:mm:ss.fff zzz ";
-                }).SetMinimumLevel(logLevel));
+            using var loggerFactory = LoggerFactory.Create(builder => builder
+                .AddDebug()
+                .SetMinimumLevel(logLevel));
 
             return loggerFactory.CreateLogger<T>();
         }

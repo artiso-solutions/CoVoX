@@ -39,8 +39,8 @@ namespace Covox
                 new CosineSimilarityInterpreter(), configuration.MatchingThreshold);
 
             _recognitionLoop = new RecognitionLoop(_translationModule, _understandingModule);
-            _recognitionLoop.Recognized += (command, context) => Recognized?.Invoke(command, context);
-            _recognitionLoop.Unrecognized += (unrecognizedInputs) => Unrecognized?.Invoke(unrecognizedInputs);
+            _recognitionLoop.Recognized += Recognized_Internal;
+            _recognitionLoop.Unrecognized += Unrecognized_Internal;
             _recognitionLoop.OnError += ex => OnError_Internal(ex);
         }
 
@@ -50,8 +50,22 @@ namespace Covox
 
         public event CommandRecognized? Recognized;
         public event InputUnrecognized? Unrecognized;
-
         public event ErrorHandler? OnError;
+
+        private void Recognized_Internal(Command command, RecognitionContext context)
+        {
+            _logger.LogDebug($"Recognized command via input '{context.Input}' ({context.InputLanguage}) with score: {context.MatchScore}");
+            Recognized?.Invoke(command, context);
+        }
+
+        private void Unrecognized_Internal(List<(string input, string inputLanguage)> unrecognizedInputs)
+        {
+            var inputsString = string.Join(" , ", unrecognizedInputs.Select(x => $"'{x.input}' ({x.inputLanguage})"));
+            string log = $"Unrecognized: {inputsString}";
+            _logger.LogDebug(log);
+
+            Unrecognized?.Invoke(unrecognizedInputs);
+        }
 
         private void OnError_Internal(Exception ex)
         {
