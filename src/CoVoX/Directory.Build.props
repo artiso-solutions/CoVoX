@@ -4,4 +4,17 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <Authors>artiso solutions GmbH</Authors>
+    <Company>artiso solutions GmbH</Company>
+    <Copyright>Copyright © artiso solutions GmbH 2021</Copyright>
+    <PackageProjectUrl>https://github.com/artiso-solutions/CoVoX</PackageProjectUrl>
+    <PackageTags>speech voice voice-control command</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/artiso-solutions/CoVoX</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
 </Project>
