@@ -416,6 +416,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# JetBrains editors folder
+.idea
+
 # Editor-based Rest Client
 .idea/httpRequests
 
@@ -423,4 +426,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # End of https://www.toptal.com/developers/gitignore/api/rider
-.idea
+
+# Account and Subscriptions file container
+secrets.json
