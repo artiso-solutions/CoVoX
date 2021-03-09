@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.basic", "01.basic", "{91C9C85A-F9E4-42D1-AE27-35748CB18F0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightSwitch", "basic\LightSwitch\LightSwitch.csproj", "{061B52E2-5585-492A-8218-30931B5A33EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightSwitch", "basic\LightSwitch\LightSwitch.csproj", "{061B52E2-5585-492A-8218-30931B5A33EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

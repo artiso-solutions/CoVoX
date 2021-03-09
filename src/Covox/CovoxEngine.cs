@@ -11,10 +11,10 @@ namespace Covox
 {
     public class CovoxEngine : IExposeErrors
     {
+        private readonly ILogger _logger;
         private readonly MultiLanguageTranslator _translationModule;
         private readonly UnderstandingModule _understandingModule;
         private readonly RecognitionLoop _recognitionLoop;
-        private readonly ILogger _logger;
 
         public CovoxEngine(Configuration configuration)
             : this(DefaultLogger.CreateLogger<CovoxEngine>(), configuration)

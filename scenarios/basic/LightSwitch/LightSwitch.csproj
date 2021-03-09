@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\CoVoX\API\Covox.csproj" />
+    <ProjectReference Include="..\..\..\src\CoVoX\Covox.csproj" />
   </ItemGroup>
 
 </Project>
