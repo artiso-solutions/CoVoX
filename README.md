@@ -12,6 +12,13 @@ It also has multi-language support!
 
 With some imagination, you could control a calculator, or a virtual assistant, or even CRM application!
 
+## What do you need to start
+Covox is offered as .NET library and acts on behalf of the [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s), therefore to use it you will need:
+1) An [Azure](https://azure.microsoft.com) account (most of the Azure Cognitive Services have free tier plans)
+1) A .NET project or application
+2) A device connected to internet
+3) A device with a working Microphone 
+
 ## How it works
 Download the library and provide to it your own [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/?&ef_id=CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s&OCID=AID2100063_SEM_CjwKCAiAsOmABhAwEiwAEBR0ZnGHrvlWX0UGTbsmNt_o3jMSn2l-AiDqIeSMrQ-J2BgRJDmhTMrVgBoCjgoQAvD_BwE:G:s) subscription key. (If you don't know how to get a subscription key, follow this [guideline](https://azure.microsoft.com/en-us/try/cognitive-services/)).
 
@@ -36,6 +43,7 @@ The engine follow these stages:
 
 3) **understanding:** matches the intent to an available command given the current context<br/>
    using [Language Understanding](https://azure.microsoft.com/en-us/services/cognitive-services/language-understanding-intelligent-service/)
+   using [Text Analytics](https://azure.microsoft.com/en-gb/services/cognitive-services/text-analytics/)
 
 4) **executing:** returns to you the matching command
 
