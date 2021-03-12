@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Covox.Validation;
 using Microsoft.Extensions.Configuration;
@@ -9,20 +7,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace Covox
 {
-    public class Configuration
-    {
-        [Required]
-        public AzureConfiguration AzureConfiguration { get; set; }
-        
-        [Range(0, 1)]
-        public double MatchingThreshold { get; set; } = 0.95;
-
-        [NotEmpty, MustHaveValidLanguages]
-        public IReadOnlyList<string> InputLanguages { get; set; }
-
-        public IReadOnlyList<string> HotWords { get; set; }
-    }
-
     public class AzureConfiguration
     {
         [NotEmpty]
@@ -62,9 +46,9 @@ namespace Covox
                 .Build();
 
             var section = config.GetSection(nameof(AzureConfiguration));
-            
+
             var children = section.GetChildren().ToArray();
-            
+
             var subscriptionKey = children.FirstOrDefault(x => x.Key == "SubscriptionKey")?.Value;
             var region = children.FirstOrDefault(x => x.Key == "Region")?.Value;
 
@@ -87,7 +71,7 @@ namespace Covox
         {
             var subscriptionKey = TryGetEnvironmentVariable(subscriptionKeyVariable);
             var region = TryGetEnvironmentVariable(regionVariable);
-            
+
             return new AzureConfiguration()
             {
                 SubscriptionKey = subscriptionKey,
