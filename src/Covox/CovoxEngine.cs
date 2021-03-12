@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Covox
 {
-    public class CovoxEngine : IExposeErrors
+    public class CovoxEngine : IExposeErrors, IAsyncDisposable
     {
         private readonly ILogger _logger;
         private readonly MultiLanguageTranslator _translationModule;
@@ -52,27 +52,6 @@ namespace Covox
         public event InputUnrecognized? Unrecognized;
         public event ErrorHandler? OnError;
 
-        private void Recognized_Internal(Command command, RecognitionContext context)
-        {
-            _logger.LogDebug($"Recognized command via input '{context.Input}' ({context.InputLanguage}) with score: {context.MatchScore}");
-            Recognized?.Invoke(command, context);
-        }
-
-        private void Unrecognized_Internal(List<(string input, string inputLanguage)> unrecognizedInputs)
-        {
-            var inputsString = string.Join(" , ", unrecognizedInputs.Select(x => $"'{x.input}' ({x.inputLanguage})"));
-            string log = $"Unrecognized: {inputsString}";
-            _logger.LogDebug(log);
-
-            Unrecognized?.Invoke(unrecognizedInputs);
-        }
-
-        private void OnError_Internal(Exception ex)
-        {
-            _logger.LogError(ex, ex.Message);
-            OnError?.Invoke(ex);
-        }
-
         public async Task StartAsync()
         {
             if (!Commands.Any())
@@ -93,5 +72,29 @@ namespace Covox
 
         public void RegisterCommands(IEnumerable<Command> commands) =>
             _understandingModule.RegisterCommands(commands);
+
+        public async ValueTask DisposeAsync() =>
+            await StopAsync();
+
+        private void Recognized_Internal(Command command, RecognitionContext context)
+        {
+            _logger.LogDebug($"Recognized command via input '{context.Input}' ({context.InputLanguage}) with score: {context.MatchScore}");
+            Recognized?.Invoke(command, context);
+        }
+
+        private void Unrecognized_Internal(List<(string input, string inputLanguage)> unrecognizedInputs)
+        {
+            var inputsString = string.Join(" , ", unrecognizedInputs.Select(x => $"'{x.input}' ({x.inputLanguage})"));
+            string log = $"Unrecognized: {inputsString}";
+            _logger.LogDebug(log);
+
+            Unrecognized?.Invoke(unrecognizedInputs);
+        }
+
+        private void OnError_Internal(Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            OnError?.Invoke(ex);
+        }
     }
 }
