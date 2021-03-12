@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.basic", "01.basic", "{91C9C85A-F9E4-42D1-AE27-35748CB18F0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightSwitch", "basic\LightSwitch\LightSwitch.csproj", "{061B52E2-5585-492A-8218-30931B5A33EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{061B52E2-5585-492A-8218-30931B5A33EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061B52E2-5585-492A-8218-30931B5A33EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{061B52E2-5585-492A-8218-30931B5A33EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{061B52E2-5585-492A-8218-30931B5A33EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{061B52E2-5585-492A-8218-30931B5A33EC} = {91C9C85A-F9E4-42D1-AE27-35748CB18F0E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB725E5B-09CD-4E48-AC34-903200C85DF5}
+	EndGlobalSection
+EndGlobal
