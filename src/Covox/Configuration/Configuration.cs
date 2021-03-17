@@ -9,15 +9,22 @@ namespace Covox
 {
     public class Configuration
     {
+        public Configuration()
+        {
+            MatchingThreshold = 0.95;
+            AudioSource = AudioSource.FromDefaultMicrophone();
+        }
+
         [Required]
         public AzureConfiguration AzureConfiguration { get; set; }
 
         [Range(0, 1)]
-        public double MatchingThreshold { get; set; } = 0.95;
+        public double MatchingThreshold { get; set; }
 
         [NotEmpty, MustHaveValidLanguages]
         public IReadOnlyList<string> InputLanguages { get; set; }
 
-        public IReadOnlyList<string> HotWords { get; set; }
+        [Required]
+        public AudioSource AudioSource { get; set; }
     }
 }

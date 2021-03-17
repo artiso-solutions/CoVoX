@@ -9,15 +9,13 @@ namespace Covox
 {
     public class AzureConfiguration
     {
+        private AzureConfiguration() { }
+
         [NotEmpty]
         public string SubscriptionKey { get; private init; }
 
         [NotEmpty]
         public string Region { get; private init; }
-
-        private AzureConfiguration()
-        {
-        }
 
         /// <summary>
         /// Creates AzureConfiguration from parameters.
@@ -26,7 +24,7 @@ namespace Covox
         /// <param name="region">Azure Cognitive Services Speech region.</param>
         public static AzureConfiguration FromSubscription(string subscriptionKey, string region)
         {
-            return new()
+            return new AzureConfiguration
             {
                 SubscriptionKey = subscriptionKey,
                 Region = region
@@ -52,7 +50,7 @@ namespace Covox
             var subscriptionKey = children.FirstOrDefault(x => x.Key == "SubscriptionKey")?.Value;
             var region = children.FirstOrDefault(x => x.Key == "Region")?.Value;
 
-            return new AzureConfiguration()
+            return new AzureConfiguration
             {
                 SubscriptionKey = subscriptionKey,
                 Region = region
@@ -72,7 +70,7 @@ namespace Covox
             var subscriptionKey = TryGetEnvironmentVariable(subscriptionKeyVariable);
             var region = TryGetEnvironmentVariable(regionVariable);
 
-            return new AzureConfiguration()
+            return new AzureConfiguration
             {
                 SubscriptionKey = subscriptionKey,
                 Region = region
