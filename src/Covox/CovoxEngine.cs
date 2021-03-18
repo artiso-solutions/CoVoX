@@ -31,7 +31,10 @@ namespace Covox
             if (errors.Any()) throw errors.AsException();
 
             _translationModule = new MultiLanguageTranslator(
-                configuration.AzureConfiguration, configuration.InputLanguages);
+                configuration.AzureConfiguration, configuration.InputLanguages, configuration.AudioSource);
+
+            _translationModule.Recognizing += (input, language, translation) =>
+                _logger.LogTrace($"Recognizing: '{input}' as '{translation}' [{language}]");
 
             _translationModule.OnError += ex => OnError_Internal(ex);
 

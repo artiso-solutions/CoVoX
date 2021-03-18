@@ -36,6 +36,14 @@ namespace Covox.Translating
                     OnRecognized(translatedText);
             };
 
+            _recognizer.Recognizing += (_, args) =>
+            {
+                var result = args.Result;
+
+                if (result is not null && !string.IsNullOrWhiteSpace(result.Text))
+                    Recognizing?.Invoke(result.Text, result.Translations);
+            };
+
             _recognizer.Canceled += (_, args) =>
             {
                 if (args.Reason == CancellationReason.Error)
@@ -51,6 +59,8 @@ namespace Covox.Translating
         public bool IsActive { get; private set; }
 
         public event TextRecognized? Recognized;
+
+        public event TextRecognizing? Recognizing;
 
         public event ErrorHandler? OnError;
 

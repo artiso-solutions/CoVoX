@@ -13,13 +13,18 @@ namespace Covox.Translating
 
         internal MultiLanguageTranslator(
             AzureConfiguration azureConfiguration,
-            IReadOnlyList<string> inputLanguages)
+            IReadOnlyList<string> inputLanguages,
+            AudioSource audioSource)
         {
-            _translators = inputLanguages.Select(lang => new Translator(azureConfiguration, lang)).ToArray();
+            _translators = inputLanguages.Select(lang => new Translator(azureConfiguration, audioSource, lang)).ToArray();
 
             foreach (var translator in _translators)
             {
                 translator.Recognized += text => OnRecognized(text, translator.InputLanguage);
+
+                translator.Recognizing += (input, translations) => OnRecognizing(
+                    input, translator.InputLanguage, translations.Values.FirstOrDefault());
+
                 translator.OnError += ex => OnTranslatorError(ex);
             }
         }
@@ -28,12 +33,20 @@ namespace Covox.Translating
 
         public event LanguageRecognized? Recognized;
 
+        public event LanguageRecognizing? Recognizing;
+
         public event ErrorHandler? OnError;
 
         private void OnRecognized(string input, string inputLanguage)
         {
             _ = _atcs.TrySetResult((input, inputLanguage));
             Recognized?.Invoke(input, inputLanguage);
+        }
+
+        private void OnRecognizing(string input, string inputLanguage, string? translation)
+        {
+            if (!string.IsNullOrWhiteSpace(translation))
+                Recognizing?.Invoke(input, inputLanguage, translation);
         }
 
         private void OnTranslatorError(Exception ex)
