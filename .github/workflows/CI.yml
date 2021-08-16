@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+jobs:
+  build:
+    runs-on: [windows-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+    - name: Install dependencies CoVoX
+      run: dotnet restore ./src/CoVoX.sln
+    - name: Install dependencies Samples
+      run: dotnet restore ./samples/Samples.sln
+    - name: Install dependencies Scenarios
+      run: dotnet restore ./scenarios/Scenarios.sln
+    - name: Build CoVoX
+      run: dotnet build --configuration Release --no-restore ./src/CoVoX.sln
+    - name: Build Samples
+      run: dotnet build --configuration Release --no-restore ./samples/Samples.sln
+    - name: Build Senarios
+      run: dotnet build --configuration Release --no-restore ./scenarios/Scenarios.sln
