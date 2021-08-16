@@ -1,16 +1,12 @@
-name: .NET Core
-
+name: CI
 on:
   push:
-    branches: [ master ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ master ]
-
+    branches: [ main, dev ]
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -19,7 +15,11 @@ jobs:
         dotnet-version: '5.0.x'
     - name: Install dependencies
       run: dotnet restore ./src/CoVoX.sln
-    - name: Build
+      run: dotnet restore ./samples/Samples.sln
+      run: dotnet restore ./scenarios/Scenarios.sln
+    - name: Build CoVoX
       run: dotnet build --configuration Release --no-restore ./src/CoVoX.sln
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal ./src/CoVoX.sln
+    - name: Build Samples
+      run: dotnet build --configuration Release --no-restore ./samples/Samples.sln
+    - name: Build Senarios
+      run: dotnet build --configuration Release --no-restore ./scenarios/Scenarios.sln
