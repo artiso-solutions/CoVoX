@@ -1,5 +1,9 @@
 # CoVoX
 
+[![net5.0](https://img.shields.io/badge/.net-5.0-blue)](https://docs.microsoft.com/en-us/dotnet/core/dotnet-five)
+[![CI](https://img.shields.io/github/workflow/status/artiso-solutions/CoVoX/CI/main)](https://github.com/artiso-solutions/CoVoX/actions?query=workflow%3ACI+branch%3Amain)
+[![License MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **Cloud enabled library providing a customizable voice-interface for your application or your device**
 
 ![CoVoXSimpleGraph](assets/CoVoXSimpleGraph.png)
